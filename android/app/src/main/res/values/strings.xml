@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">SpareGrow</string>
+    <string name="title_activity_main">SpareGrow</string>
+    <string name="package_name">com.sparegrow.app</string>
+    <string name="custom_url_scheme">com.sparegrow.app</string>
+</resources>

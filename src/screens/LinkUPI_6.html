@@ -1,0 +1,72 @@
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white/80 backdrop-blur-md border-b border-slate-200/50 shadow-sm">
+    <div class="flex items-center gap-3">
+        <button class="material-symbols-outlined text-teal-900 hover:opacity-80 transition-opacity cursor-pointer" data-icon="arrow_back" onclick="navigate('ProfileSettings_dbb3792156614cb5ae492572ff792679.html')">arrow_back</button>
+        <span class="text-teal-900 font-extrabold tracking-tight font-manrope text-lg">Link UPI</span>
+    </div>
+</header>
+
+<main class="pt-24 px-gutter max-w-[576px] mx-auto space-y-md pb-20">
+    
+    <!-- Header Illustration -->
+    <div class="flex flex-col items-center text-center mt-8 mb-10">
+        <div class="w-20 h-20 bg-secondary-container rounded-full flex items-center justify-center text-on-secondary-container mb-4 border-4 border-secondary/20 shadow-md">
+            <span class="material-symbols-outlined" style="font-size: 36px;">qr_code_scanner</span>
+        </div>
+        <h1 class="font-display-lg text-2xl text-primary tracking-tight">Add UPI ID</h1>
+        <p class="font-body-md text-sm text-on-surface-variant max-w-[384px] mt-2">Connect your Virtual Payment Address (VPA) for fast, zero-fee deposits and withdrawals.</p>
+    </div>
+
+    <!-- Input Form -->
+    <div class="bg-white p-6 rounded-2xl border border-slate-200/50 shadow-sm">
+        <form class="space-y-6" onsubmit="event.preventDefault(); document.getElementById('successState').classList.remove('hidden'); document.getElementById('inputState').classList.add('hidden');">
+            
+            <div id="inputState" class="space-y-6 transition-all">
+                <div class="group">
+                    <label class="block font-label-caps text-label-caps text-outline mb-2" for="upi-id">UPI ID (VPA)</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">alternate_email</span>
+                        <input id="upi-id" class="w-full h-14 pl-12 pr-4 bg-surface-container-low border border-outline-variant rounded-xl focus:ring-2 focus:ring-secondary focus:border-transparent outline-none font-body-md text-primary" placeholder="username@bankname" type="text" required>
+                    </div>
+                    <p class="text-xs text-on-surface-variant mt-2 flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[14px]">lock</span>
+                        Your data is encrypted and securely stored.
+                    </p>
+                </div>
+
+                <div class="pt-4 border-t border-slate-100 flex gap-4">
+                    <button type="button" class="flex-1 py-4 bg-surface-container text-on-surface-variant rounded-xl font-label-caps hover:bg-surface-container-high transition-colors" onclick="navigate('ProfileSettings_dbb3792156614cb5ae492572ff792679.html')">Cancel</button>
+                    <button type="submit" class="flex-1 py-4 bg-primary text-white rounded-xl font-label-caps hover:bg-primary/90 transition-colors shadow-md">Verify &amp; Link</button>
+                </div>
+            </div>
+
+            <!-- Success State (Hidden initially) -->
+            <div id="successState" class="hidden flex flex-col items-center text-center py-6 animate-pulse">
+                <div class="w-16 h-16 bg-secondary text-white rounded-full flex items-center justify-center mb-4">
+                    <span class="material-symbols-outlined" style="font-size: 32px;">check</span>
+                </div>
+                <h3 class="font-title-sm text-primary mb-1">UPI ID Verified!</h3>
+                <p class="font-body-md text-sm text-on-surface-variant mb-6">Your account has been successfully linked.</p>
+                <button type="button" class="w-full py-4 bg-surface-container text-primary rounded-xl font-label-caps hover:bg-surface-container-high transition-colors" onclick="navigate('ProfileSettings_dbb3792156614cb5ae492572ff792679.html')">Done</button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Supported UPI Apps Info -->
+    <div class="mt-12">
+        <p class="font-label-caps text-xs text-outline text-center mb-4 uppercase tracking-widest">Supports all major UPI apps</p>
+        <div class="flex justify-center gap-6 opacity-60">
+            <!-- Mock App Icons -->
+            <div class="w-12 h-12 bg-surface-container-high rounded-xl flex items-center justify-center">
+                <span class="font-bold text-primary font-manrope">GPay</span>
+            </div>
+            <div class="w-12 h-12 bg-surface-container-high rounded-xl flex items-center justify-center text-primary">
+                <span class="material-symbols-outlined">payments</span>
+            </div>
+            <div class="w-12 h-12 bg-surface-container-high rounded-xl flex items-center justify-center text-primary font-bold font-manrope">
+                PPe
+            </div>
+        </div>
+    </div>
+</main>

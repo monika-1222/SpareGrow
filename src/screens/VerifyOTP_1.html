@@ -1,0 +1,39 @@
+<!-- Top App Bar for Back Navigation -->
+<header class="fixed top-0 w-full z-50 flex items-center px-6 h-16 bg-white/80 backdrop-blur-md">
+    <button class="material-symbols-outlined text-primary hover:opacity-80 transition-opacity cursor-pointer" data-icon="arrow_back" onclick="navigate('ForgotPassword_0.html')">arrow_back</button>
+</header>
+
+<main class="min-h-screen flex flex-col items-center justify-center px-gutter py-xl bg-background">
+    <!-- Header Section -->
+    <div class="mb-lg flex flex-col items-center text-center">
+        <div class="w-20 h-20 mb-md rounded-full bg-primary-container flex items-center justify-center text-on-primary-container shadow-lg">
+            <span class="material-symbols-outlined" style="font-size: 36px;">mark_email_read</span>
+        </div>
+        <h1 class="font-display-lg text-[32px] text-primary tracking-tight leading-tight">Verify Identity</h1>
+        <p class="font-body-md text-on-surface-variant mt-xs max-w-[384px]">We've sent a secure 6-digit code to your email. Enter it below to proceed.</p>
+    </div>
+
+    <!-- OTP Input Area -->
+    <div class="w-full max-w-[448px]">
+        <div class="flex justify-between gap-2 mb-lg">
+            <input class="w-12 h-16 text-center text-2xl font-bold bg-white border border-outline-variant rounded-lg focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none shadow-sm" type="text" maxlength="1" placeholder="•">
+            <input class="w-12 h-16 text-center text-2xl font-bold bg-white border border-outline-variant rounded-lg focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none shadow-sm" type="text" maxlength="1" placeholder="•">
+            <input class="w-12 h-16 text-center text-2xl font-bold bg-white border border-outline-variant rounded-lg focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none shadow-sm" type="text" maxlength="1" placeholder="•">
+            <input class="w-12 h-16 text-center text-2xl font-bold bg-white border border-outline-variant rounded-lg focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none shadow-sm" type="text" maxlength="1" placeholder="•">
+            <input class="w-12 h-16 text-center text-2xl font-bold bg-white border border-outline-variant rounded-lg focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none shadow-sm" type="text" maxlength="1" placeholder="•">
+            <input class="w-12 h-16 text-center text-2xl font-bold bg-white border border-outline-variant rounded-lg focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none shadow-sm" type="text" maxlength="1" placeholder="•">
+        </div>
+
+        <button class="w-full h-[56px] bg-primary text-white font-title-sm text-body-md font-bold rounded-lg shadow-md hover:shadow-lg active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2" type="button" onclick="navigate('Login_7b98119117794e4a97e4c84627fe9615.html')">
+            <span>Verify &amp; Continue</span>
+            <span class="material-symbols-outlined" style="font-size: 18px;">check_circle</span>
+        </button>
+        
+        <div class="mt-md text-center">
+            <p class="font-body-md text-on-surface-variant text-sm">
+                Didn't receive the code? 
+                <button class="font-bold text-secondary hover:text-on-secondary-container ml-1 transition-colors">Resend (00:45)</button>
+            </p>
+        </div>
+    </div>
+</main>

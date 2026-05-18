@@ -1,0 +1,50 @@
+<main class="min-h-screen flex flex-col items-center justify-center px-gutter pt-10 pb-10 bg-[#00111d] relative overflow-hidden">
+    <!-- Abstract Visual Background for Card -->
+    <div class="absolute -right-32 -top-32 w-96 h-96 bg-primary/30 rounded-full blur-[100px]"></div>
+    <div class="absolute -left-32 -bottom-32 w-96 h-96 bg-secondary/20 rounded-full blur-[100px]"></div>
+
+    <!-- Header Section -->
+    <div class="mb-12 flex flex-col items-center text-center z-10">
+        <div class="w-20 h-20 mb-6 rounded-full overflow-hidden border-2 border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+            <img class="w-full h-full object-cover" data-alt="User Avatar" src="/logo.png"/>
+        </div>
+        <h1 class="font-display-lg text-2xl text-white tracking-wide">Welcome back, Alex</h1>
+        <p class="font-body-md text-white/60 mt-1">Enter your MPIN to unlock</p>
+    </div>
+
+    <!-- MPIN Input Visualization -->
+    <div id="mpin-dots" class="w-full max-w-[384px] flex justify-center gap-6 mb-12 z-10">
+        <div class="w-4 h-4 rounded-full bg-white/20 transition-all"></div>
+        <div class="w-4 h-4 rounded-full bg-white/20 transition-all"></div>
+        <div class="w-4 h-4 rounded-full bg-white/20 transition-all"></div>
+        <div class="w-4 h-4 rounded-full bg-white/20 transition-all"></div>
+    </div>
+
+    <!-- Numpad -->
+    <div id="mpin-numpad" class="w-full max-w-[280px] grid grid-cols-3 gap-6 mb-10 z-10">
+        <!-- Row 1 -->
+        <button class="w-16 h-16 rounded-full bg-white/5 text-white font-display-lg text-2xl border border-white/10 hover:bg-white/10 active:scale-95 transition-all backdrop-blur-sm">1</button>
+        <button class="w-16 h-16 rounded-full bg-white/5 text-white font-display-lg text-2xl border border-white/10 hover:bg-white/10 active:scale-95 transition-all backdrop-blur-sm">2</button>
+        <button class="w-16 h-16 rounded-full bg-white/5 text-white font-display-lg text-2xl border border-white/10 hover:bg-white/10 active:scale-95 transition-all backdrop-blur-sm">3</button>
+        <!-- Row 2 -->
+        <button class="w-16 h-16 rounded-full bg-white/5 text-white font-display-lg text-2xl border border-white/10 hover:bg-white/10 active:scale-95 transition-all backdrop-blur-sm">4</button>
+        <button class="w-16 h-16 rounded-full bg-white/5 text-white font-display-lg text-2xl border border-white/10 hover:bg-white/10 active:scale-95 transition-all backdrop-blur-sm">5</button>
+        <button class="w-16 h-16 rounded-full bg-white/5 text-white font-display-lg text-2xl border border-white/10 hover:bg-white/10 active:scale-95 transition-all backdrop-blur-sm">6</button>
+        <!-- Row 3 -->
+        <button class="w-16 h-16 rounded-full bg-white/5 text-white font-display-lg text-2xl border border-white/10 hover:bg-white/10 active:scale-95 transition-all backdrop-blur-sm">7</button>
+        <button class="w-16 h-16 rounded-full bg-white/5 text-white font-display-lg text-2xl border border-white/10 hover:bg-white/10 active:scale-95 transition-all backdrop-blur-sm">8</button>
+        <button class="w-16 h-16 rounded-full bg-white/5 text-white font-display-lg text-2xl border border-white/10 hover:bg-white/10 active:scale-95 transition-all backdrop-blur-sm">9</button>
+        <!-- Row 4 -->
+        <button class="w-16 h-16 rounded-full flex items-center justify-center text-white/50 hover:text-white active:scale-95 transition-all cursor-pointer" onclick="navigate('WalletOverview_5609f92e5e924a72a75b627360229f5f.html')">
+            <span class="material-symbols-outlined" style="font-size: 28px;">fingerprint</span>
+        </button>
+        <button class="w-16 h-16 rounded-full bg-white/5 text-white font-display-lg text-2xl border border-white/10 hover:bg-white/10 active:scale-95 transition-all backdrop-blur-sm">0</button>
+        <button class="w-16 h-16 rounded-full flex items-center justify-center text-white/50 hover:text-white active:scale-95 transition-all">
+            <span class="material-symbols-outlined" style="font-size: 28px;">backspace</span>
+        </button>
+    </div>
+
+    <div class="z-10 text-center">
+        <button class="text-white/60 text-sm hover:text-white transition-colors cursor-pointer" onclick="navigate('Login_7b98119117794e4a97e4c84627fe9615.html')">Login with Password</button>
+    </div>
+</main>

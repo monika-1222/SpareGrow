@@ -1,0 +1,86 @@
+
+<div class="min-h-screen flex flex-col md:flex-row">
+<!-- Left Side: Branding and Visual (Desktop) -->
+<div class="hidden md:flex md:w-1/2 bg-primary relative overflow-hidden flex-col justify-between p-lg">
+<div class="z-10">
+<h1 class="font-headline-md text-headline-md text-primary-fixed-dim tracking-tighter">SpareGrow</h1>
+</div>
+<div class="z-10 max-w-[448px]">
+<h2 class="font-display-lg text-display-lg text-white mb-md">Secure your future, one spare bit at a time.</h2>
+<p class="font-body-md text-body-md text-on-primary-container leading-relaxed">Join a community of sophisticated investors leveraging automated micro-investing to achieve long-term wealth stability.</p>
+</div>
+<!-- Background Decorative Elements -->
+<div class="absolute top-[-10%] right-[-10%] w-96 h-96 bg-primary-container rounded-full blur-[120px] opacity-40"></div>
+<div class="absolute bottom-[-5%] left-[-5%] w-80 h-80 bg-secondary rounded-full blur-[100px] opacity-30"></div>
+<div class="absolute inset-0 z-0 opacity-20 grayscale mix-blend-overlay">
+<img alt="Clean abstract architectural design" class="w-full h-full object-cover" data-alt="A clean, minimalist architectural detail showing sharp geometric shadows and pristine white concrete surfaces under bright, direct sunlight. The composition is highly balanced and symmetrical, evoking a sense of structural stability and modern precision. The overall aesthetic is light-mode corporate with subtle teal highlights reflecting off glass panels, projecting professional growth and security." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPYUHw9lGuDirdwKsE8gYlJ1VwTCUBBMdzLp7-w3gX-zyQgiF5t3cNJQEQv2oSJ-VIuDWJzT98n1M7sKc7rGTODtdrRoPNa1sBuYoAnsFFi1QhKV2DkJeM8bg-0FTPztFsmm-bXbnogLJq_rqSeo4vAm7Sh3peNYO-VXYIxo9C0snbGyChUJ8y6t6h4kEns191mzGtL7moL26f_vDaa-lIFZH9z4ENbHcWGH0MRVIbOM7kaKt6iKKQYGZfwgNiP_GaxfzHpxuL0rmo"/>
+</div>
+</div>
+<!-- Right Side: Signup Form -->
+<div class="flex-1 flex items-center justify-center p-gutter relative">
+<div class="w-full max-w-[448px] space-y-lg">
+<!-- Mobile Branding -->
+<div class="md:hidden text-center mb-lg">
+<h1 class="font-headline-md text-headline-md text-primary tracking-tighter">SpareGrow</h1>
+</div>
+<div class="space-y-sm">
+<h3 class="font-headline-md text-headline-md text-on-surface">Create an Account</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Start your journey toward financial freedom today.</p>
+</div>
+<!-- Signup Form -->
+<form id="signup-form" class="space-y-md">
+<div class="space-y-base">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="name">FULL NAME</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">person</span>
+<input class="w-full h-12 pl-12 pr-4 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary focus:ring-offset-4 focus:border-primary transition-all outline-none" id="name" placeholder="John Doe" type="text"/>
+</div>
+</div>
+<div class="space-y-base">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="signup-email">EMAIL ADDRESS</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">mail</span>
+<input class="w-full h-12 pl-12 pr-4 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary focus:ring-offset-4 focus:border-primary transition-all outline-none" id="signup-email" placeholder="john@example.com" type="email" required/>
+</div>
+</div>
+<div class="space-y-base">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="signup-password">PASSWORD</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">lock</span>
+<input class="w-full h-12 pl-12 pr-4 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary focus:ring-offset-4 focus:border-primary transition-all outline-none" id="signup-password" placeholder="••••••••" type="password" required/>
+</div>
+</div>
+<div class="space-y-base">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="phone">PHONE NUMBER</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">call</span>
+<input class="w-full h-12 pl-12 pr-4 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary focus:ring-offset-4 focus:border-primary transition-all outline-none" id="phone" placeholder="+1 (555) 000-0000" type="tel"/>
+</div>
+</div>
+<button class="w-full h-14 bg-primary text-white font-label-caps text-label-caps py-4 rounded-lg shadow-sm hover:shadow-md active:scale-[0.98] transition-all duration-200" type="submit" id="signup-submit-btn">
+                        CREATE ACCOUNT
+                    </button>
+</form>
+<!-- Divider -->
+<div class="relative py-base">
+<div class="absolute inset-0 flex items-center"><div class="w-full border-t border-outline-variant/50"></div></div>
+<div class="relative flex justify-center text-xs"><span class="bg-background px-4 font-label-caps text-outline uppercase tracking-widest">or continue with</span></div>
+</div>
+<!-- Social Options -->
+<div class="grid grid-cols-2 gap-md">
+<button class="flex items-center justify-center h-12 px-gutter border border-outline-variant bg-surface-container-lowest rounded-lg hover:bg-surface-container transition-colors group"><svg class="w-5 h-5 mr-2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path></svg><span class="font-label-caps text-label-caps text-on-surface-variant">Google</span></button>
+<button class="flex items-center justify-center h-12 px-gutter border border-outline-variant bg-surface-container-lowest rounded-lg hover:bg-surface-container transition-colors group"><svg class="w-5 h-5 mr-2" fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.05 20.28c-.98.95-2.05 1.88-3.19 1.88-.36 0-.7-.08-1.01-.21-.31-.13-.6-.3-.88-.3-.28 0-.58.17-.89.3-.32.13-.66.21-1.02.21-1.15 0-2.26-1-3.23-1.95-1.98-1.95-3-5.07-3-8.2 0-3.14 1.05-6.19 3.03-8.15 1.15-1.14 2.45-1.78 3.82-1.78.36 0 .73.05 1.07.16.34.11.66.28.96.28.29 0 .61-.17.95-.28.34-.11.71-.16 1.07-.16 1.35 0 2.65.64 3.79 1.78.32.32.61.66.86 1.02-2.58 1.06-4.32 3.65-4.32 6.64 0 3.01 1.77 5.61 4.38 6.66-.23.36-.51.7-.81 1.05zM12.03 5.45c0-1.89.76-3.7 2.05-5.05.15-.16.34-.3.55-.41-.12.89-.47 1.73-1.02 2.45-.55.72-1.28 1.29-2.12 1.68.17-.5.39-.96.65-1.38.26-.42.56-.81.89-1.29z"></path></svg><span class="font-label-caps text-label-caps text-on-surface-variant">Apple</span></button>
+</div>
+<!-- Footer Link -->
+<div class="text-center pt-md">
+<p class="font-body-md text-on-surface-variant">
+                        Already have an account? 
+                        <a class="font-bold text-secondary hover:text-on-secondary-container transition-colors ml-1 cursor-pointer" onclick="navigate('Login_7b98119117794e4a97e4c84627fe9615.html')">Login instead</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Background Decoration for Mobile -->
+<div class="md:hidden fixed top-[-100px] right-[-100px] w-64 h-64 bg-primary-fixed opacity-10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="md:hidden fixed bottom-[-100px] left-[-100px] w-64 h-64 bg-secondary-container opacity-10 rounded-full blur-3xl pointer-events-none"></div>

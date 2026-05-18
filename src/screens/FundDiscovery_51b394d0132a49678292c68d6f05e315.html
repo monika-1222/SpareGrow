@@ -1,0 +1,173 @@
+
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm border-b border-slate-200/50 dark:border-slate-800/50">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User profile photo" data-alt="A professional headshot of a middle-aged male executive with a confident expression, wearing a tailored navy suit and a white shirt. The background is a blurred high-end corporate office with soft, warm lighting. The image quality is crisp, maintaining a premium financial services aesthetic with natural skin tones and sharp details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAssTWnpu3wcffu28FTP7OS3ipeEBj_99dCzt7iOP-v2h8rXkdCPGgpDWBStVIKBuwmdqTL5hFhUVdjaIGcfH3sCYHJ8ygpUMvM-H0AEqpj2KxB7wN8LFp0llmoY_3nas1x5xxDkLBNIhPOL-MoDH4Kq-7eHdHSUJL1SBDPsYSpRBBLnoW4rxgCTMJCzjGD2T4lJgT56MruCtnQGytp5K53nteCakipnbBE7bHtXuthgek4tExDFY12pivcOJMdQi43PUEJ-uVy1WBm"/>
+</div>
+<span class="text-teal-900 dark:text-teal-50 font-manrope font-bold text-lg">SpareGrow</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-teal-900 dark:text-teal-50 hover:opacity-80 transition-opacity cursor-pointer" onclick="navigate('Notifications_4.html')">notifications</button>
+</div>
+</header>
+<main class="pt-24 pb-32 px-gutter max-w-[1280px] mx-auto">
+<!-- Hero Section -->
+<section class="mb-12 relative rounded-xl overflow-hidden h-[300px] flex items-center">
+<img alt="Canvas Image" class="absolute inset-0 w-full h-full object-cover" data-alt="An abstract, high-resolution digital rendering of flowing silk-like ribbons in shades of emerald green and deep teal, weaving through a bright, minimalist architectural space. The lighting is soft and ethereal, casting gentle shadows that create a sense of depth and stability. Tiny golden particles float in the air, symbolizing wealth and growth. The overall mood is sophisticated, serene, and prosperous, perfectly aligning with a premium financial brand." src="/logo.png"/>
+<div class="absolute inset-0 bg-gradient-to-r from-primary/60 to-transparent"></div>
+<div class="relative z-10 px-md">
+<h1 class="font-display-lg text-display-lg text-white mb-4">Discover Growth</h1>
+<p class="text-on-primary-container max-w-[448px] font-body-md">Curated investment strategies designed for long-term wealth preservation and aggressive asset appreciation.</p>
+</div>
+</section>
+<!-- Search and Filter -->
+<div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+<div class="relative w-full md:w-96">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-12 pr-4 py-3 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-body-md" placeholder="Search funds..." type="text"/>
+</div>
+<div class="flex gap-3 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
+<button class="px-4 py-2 bg-primary text-white rounded-full font-label-caps whitespace-nowrap">All Funds</button>
+<button class="px-4 py-2 bg-white border border-outline-variant text-on-surface-variant rounded-full font-label-caps whitespace-nowrap hover:bg-surface-container transition-colors">High Growth</button>
+<button class="px-4 py-2 bg-white border border-outline-variant text-on-surface-variant rounded-full font-label-caps whitespace-nowrap hover:bg-surface-container transition-colors">Stable Income</button>
+<button class="px-4 py-2 bg-white border border-outline-variant text-on-surface-variant rounded-full font-label-caps whitespace-nowrap hover:bg-surface-container transition-colors">Tax Savers</button>
+</div>
+</div>
+<!-- Investment Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Balanced Growth Fund -->
+<div class="glass-card premium-shadow border border-slate-200/50 rounded-xl p-md flex flex-col h-full hover:translate-y-[-4px] transition-transform">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-secondary-container flex items-center justify-center rounded-lg">
+<span class="material-symbols-outlined text-on-secondary-container">account_balance</span>
+</div>
+<span class="px-2 py-1 bg-on-secondary-container/10 text-on-secondary-container text-[10px] font-bold rounded uppercase tracking-wider">Moderate Risk</span>
+</div>
+<h3 class="font-title-sm text-title-sm text-primary mb-2">Balanced Growth Fund</h3>
+<p class="text-on-surface-variant text-sm mb-6 flex-grow">Optimal mix of blue-chip equities and government bonds for steady appreciation.</p>
+<div class="mb-4">
+<div class="flex justify-between items-end mb-2">
+<span class="text-on-surface-variant font-label-caps">1Y Return</span>
+<span class="text-secondary font-data-mono text-lg font-bold">+12.4%</span>
+</div>
+<!-- Mini Sparkline SVG -->
+<svg class="w-full h-12" viewbox="0 0 200 50">
+<path class="sparkline-path stroke-secondary" d="M0,40 L20,35 L40,38 L60,30 L80,32 L100,20 L120,25 L140,15 L160,18 L180,10 L200,5"></path>
+</svg>
+</div>
+<button class="w-full py-3 bg-primary text-white rounded-lg font-label-caps hover:opacity-90 transition-opacity" onclick="navigate('InvestmentDetail_5.html')">Invest Now</button>
+</div>
+<!-- Equity Alpha ETF -->
+<div class="glass-card premium-shadow border border-slate-200/50 rounded-xl p-md flex flex-col h-full border-l-4 border-l-[#C5A059] hover:translate-y-[-4px] transition-transform">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-primary-container flex items-center justify-center rounded-lg">
+<span class="material-symbols-outlined text-primary-fixed">trending_up</span>
+</div>
+<span class="px-2 py-1 bg-error-container text-error text-[10px] font-bold rounded uppercase tracking-wider">High Risk</span>
+</div>
+<h3 class="font-title-sm text-title-sm text-primary mb-2">Equity Alpha ETF</h3>
+<p class="text-on-surface-variant text-sm mb-6 flex-grow">Aggressive technology-focused portfolio designed for maximum capital gains.</p>
+<div class="mb-4">
+<div class="flex justify-between items-end mb-2">
+<span class="text-on-surface-variant font-label-caps">1Y Return</span>
+<span class="text-secondary font-data-mono text-lg font-bold">+24.8%</span>
+</div>
+<svg class="w-full h-12" viewbox="0 0 200 50">
+<path class="sparkline-path stroke-secondary" d="M0,45 L30,42 L60,48 L90,20 L120,35 L150,10 L180,15 L200,2"></path>
+</svg>
+</div>
+<button class="w-full py-3 bg-primary text-white rounded-lg font-label-caps hover:opacity-90 transition-opacity" onclick="navigate('InvestmentDetail_5.html')">Invest Now</button>
+</div>
+<!-- Safe Haven Gold -->
+<div class="glass-card premium-shadow border border-slate-200/50 rounded-xl p-md flex flex-col h-full hover:translate-y-[-4px] transition-transform">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-tertiary-fixed flex items-center justify-center rounded-lg">
+<span class="material-symbols-outlined text-tertiary">diamond</span>
+</div>
+<span class="px-2 py-1 bg-surface-container text-outline text-[10px] font-bold rounded uppercase tracking-wider">Low Risk</span>
+</div>
+<h3 class="font-title-sm text-title-sm text-primary mb-2">Safe Haven Gold</h3>
+<p class="text-on-surface-variant text-sm mb-6 flex-grow">Protect your wealth against inflation with physical bullion backed digital assets.</p>
+<div class="mb-4">
+<div class="flex justify-between items-end mb-2">
+<span class="text-on-surface-variant font-label-caps">1Y Return</span>
+<span class="text-secondary font-data-mono text-lg font-bold">+8.2%</span>
+</div>
+<svg class="w-full h-12" viewbox="0 0 200 50">
+<path class="sparkline-path stroke-secondary" d="M0,25 L40,24 L80,26 L120,23 L160,20 L200,18"></path>
+</svg>
+</div>
+<button class="w-full py-3 bg-primary text-white rounded-lg font-label-caps hover:opacity-90 transition-opacity" onclick="navigate('InvestmentDetail_5.html')">Invest Now</button>
+</div>
+<!-- Liquid Debt Fund -->
+<div class="glass-card premium-shadow border border-slate-200/50 rounded-xl p-md flex flex-col h-full hover:translate-y-[-4px] transition-transform">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded-lg">
+<span class="material-symbols-outlined text-primary">payments</span>
+</div>
+<span class="px-2 py-1 bg-surface-container text-outline text-[10px] font-bold rounded uppercase tracking-wider">Low Risk</span>
+</div>
+<h3 class="font-title-sm text-title-sm text-primary mb-2">Liquid Debt Fund</h3>
+<p class="text-on-surface-variant text-sm mb-6 flex-grow">High liquidity fund focusing on short-term corporate paper and T-bills.</p>
+<div class="mb-4">
+<div class="flex justify-between items-end mb-2">
+<span class="text-on-surface-variant font-label-caps">1Y Return</span>
+<span class="text-secondary font-data-mono text-lg font-bold">+6.5%</span>
+</div>
+<svg class="w-full h-12" viewbox="0 0 200 50">
+<path class="sparkline-path stroke-secondary" d="M0,35 L50,33 L100,34 L150,32 L200,31"></path>
+</svg>
+</div>
+<button class="w-full py-3 bg-primary text-white rounded-lg font-label-caps hover:opacity-90 transition-opacity" onclick="navigate('InvestmentDetail_5.html')">Invest Now</button>
+</div>
+</div>
+<!-- Featured Market Insight -->
+<section class="mt-16 bg-white rounded-2xl p-8 border border-slate-200/50 premium-shadow flex flex-col md:flex-row items-center gap-8">
+<div class="flex-1">
+<span class="text-secondary font-label-caps mb-2 block">Market Insight</span>
+<h2 class="font-headline-md text-headline-md text-primary mb-4">Global Markets Pivot Towards Quality Assets</h2>
+<p class="text-on-surface-variant font-body-md mb-6 leading-relaxed">As interest rate volatility stabilizes, institutional investors are rotating into quality growth equities. Our 'Alpha ETF' has been rebalanced to capture this shift early.</p>
+<div class="flex gap-4">
+<button class="px-6 py-3 bg-primary text-white rounded-lg font-label-caps hover:opacity-90 transition-opacity">Read Full Report</button>
+<button class="px-6 py-3 border border-secondary text-secondary rounded-lg font-label-caps hover:bg-secondary-container transition-colors">Watch Analysis</button>
+</div>
+</div>
+<div class="w-full md:w-1/3">
+<div class="aspect-square bg-surface-container-low rounded-xl flex items-center justify-center p-8 relative overflow-hidden">
+<!-- Progress Ring Representation -->
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle class="text-slate-200" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-secondary" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="60" stroke-width="8" style="filter: drop-shadow(0 0 4px rgba(46, 125, 50, 0.4))"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+<span class="text-display-lg font-display-lg text-primary">76%</span>
+<span class="text-on-surface-variant font-label-caps">Bullish Sentiment</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-[0_-4px_20px_0_rgba(0,0,0,0.04)] border-t border-slate-200/50 dark:border-slate-800/50">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-teal-700 dark:hover:text-teal-300 cursor-pointer" onclick="navigate('WalletOverview_5609f92e5e924a72a75b627360229f5f.html')">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-manrope font-medium text-[10px]">Wallet</span>
+</a>
+<a class="flex flex-col items-center justify-center text-emerald-700 dark:text-emerald-400 font-bold scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-manrope font-medium text-[10px]">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-teal-700 dark:hover:text-teal-300 cursor-pointer" onclick="navigate('GoalsDashboard_d2c4550afb8042819ff8ba97840a52bf.html')">
+<span class="material-symbols-outlined">ads_click</span>
+<span class="font-manrope font-medium text-[10px]">Goals</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-teal-700 dark:hover:text-teal-300 cursor-pointer" onclick="navigate('TransactionHistory_f88ed653be0e4a189aa4a4ff33200138.html')">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-manrope font-medium text-[10px]">Insights</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-teal-700 dark:hover:text-teal-300 cursor-pointer" onclick="navigate('ProfileSettings_dbb3792156614cb5ae492572ff792679.html')">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-manrope font-medium text-[10px]">Settings</span>
+</a>
+</nav>

@@ -1,0 +1,86 @@
+
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white/80 backdrop-blur-md shadow-sm border-b border-slate-200/50">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden border border-primary/10">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="A professional headshot of a smiling young executive in a corporate setting. The lighting is soft and natural, reflecting a clean and modern high-key aesthetic. The background is a blurred office environment with hints of teal and white, aligning with a premium fintech brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdkXuGy7PZJYlpnhgq6ZYGM7jux8Vy_HRaoWfjX38T9DxD9be0ChAGWINjRnKfJk6dl7h7u8LcJT_7PGHx0FKiSAbQ7Fvnr1P3_q8G-5hEX2wnQ3P1dGdMPHTWpUJ05UMmE-HNE4GRVibFtCKW5M4UvgQgR1HS2LZYzs_sGEC2wOb1BpKwQ56ltK2UUwtCR1-y-qMMFERpFHFEpvGasXPHWRv7bnAB1Ibj4TOS1iBejZfBbM54KRfrTZqlUQpQ4sn1U3CDl2qUP-Mw"/>
+</div>
+<span class="text-teal-900 font-extrabold tracking-tight font-manrope text-lg">SpareGrow</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:opacity-80 transition-opacity text-teal-900 cursor-pointer" onclick="navigate('Notifications_4.html')">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<main class="pt-24 pb-32 px-gutter max-w-[1280px] mx-auto">
+<!-- Hero Section -->
+<section class="mb-lg">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-md">
+<div>
+<h1 class="font-headline-md text-headline-md text-primary mb-xs">Your Growth Journey</h1>
+<p class="text-on-surface-variant font-body-md">Cultivate your future, one contribution at a time.</p>
+</div>
+<button class="bg-primary text-on-primary px-6 py-3 rounded-xl font-label-caps flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all cursor-pointer" onclick="navigate('CreateGoal_482d0dbe0cdc4c869fdca13c8c94d606.html')">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+                    PLANT NEW GOAL
+                </button>
+</div>
+<!-- Stats Overview - Asymmetric Glass Card -->
+<div class="relative rounded-2xl overflow-hidden h-48 mb-lg border border-outline-variant/30">
+<img class="absolute inset-0 w-full h-full object-cover" data-alt="A serene, wide-angle landscape of a lush, emerald green mountain valley during the golden hour. The soft, warm sunlight filters through a light mist, highlighting the rich textures of the vegetation. The composition is balanced and peaceful, evoking a sense of long-term stability and organic growth, perfectly mirroring a high-end financial dashboard's aesthetic." src="/logo.png"/>
+<div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-transparent flex items-center px-md">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-xl">
+<div class="text-on-primary">
+<p class="font-label-caps opacity-80 mb-xs">TOTAL SEEDING</p>
+<p class="font-headline-md text-headline-md">₹24,500.00</p>
+</div>
+<div class="text-on-primary">
+<p class="font-label-caps opacity-80 mb-xs">ACTIVE HARVESTS</p>
+<p class="font-headline-md text-headline-md">3</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Goals Grid -->
+<section id="goals-grid" class="grid grid-cols-1 md:grid-cols-3 gap-md">
+    <!-- Goals will be populated dynamically by main.js -->
+    <div class="col-span-full p-md text-center text-outline">Loading goals...</div>
+</section>
+<!-- Wealth Insights - Horizontal Card -->
+<section class="mt-lg">
+<div class="bg-white rounded-2xl p-md border border-outline-variant/30 flex flex-col md:flex-row items-center gap-md">
+<div class="flex-1">
+<h4 class="font-title-sm text-title-sm text-primary mb-xs">Optimization Tip</h4>
+<p class="text-on-surface-variant">Based on your spending, redirecting ₹50/week would complete 'Euro Trip' 3 months earlier.</p>
+</div>
+<button class="border border-secondary text-secondary px-6 py-2 rounded-xl font-label-caps hover:bg-secondary/5 transition-colors">
+                    RECALIBRATE GOALS
+                </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/80 backdrop-blur-md shadow-[0_-4px_20px_0_rgba(0,0,0,0.04)] border-t border-slate-200/50">
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-700 transition-colors cursor-pointer" onclick="navigate('WalletOverview_5609f92e5e924a72a75b627360229f5f.html')">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-manrope font-medium text-[10px]">Wallet</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-700 transition-colors cursor-pointer" onclick="navigate('FundDiscovery_51b394d0132a49678292c68d6f05e315.html')">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-manrope font-medium text-[10px]">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-emerald-700 font-bold active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="ads_click" style="font-variation-settings: 'FILL' 1;">ads_click</span>
+<span class="font-manrope font-medium text-[10px]">Goals</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-700 transition-colors cursor-pointer" onclick="navigate('TransactionHistory_f88ed653be0e4a189aa4a4ff33200138.html')">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="font-manrope font-medium text-[10px]">Insights</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-700 transition-colors cursor-pointer" onclick="navigate('ProfileSettings_dbb3792156614cb5ae492572ff792679.html')">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-manrope font-medium text-[10px]">Settings</span>
+</a>
+</nav>

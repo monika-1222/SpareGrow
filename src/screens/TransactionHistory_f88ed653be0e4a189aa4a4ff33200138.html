@@ -1,0 +1,125 @@
+
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white/80 backdrop-blur-md border-b border-slate-200/50 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-primary/10">
+<img alt="User profile photo" data-alt="A professional headshot of a smiling business executive with soft lighting. The background is a clean, corporate office interior with a soft blur. The color palette is composed of natural skin tones, white, and subtle teal accents, maintaining a premium and trustworthy financial atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJ9YzL6CRKe8Pq7YMP_lPl0E7lOa5Hfz19zig85M1B2TOOekIDvupUimlvuYuTpt4r_SXPGhKKUK9povBBSuGvCvsIh9hL1GL5fTRUtO9aefzNXhVvNyibyP8tpYEy9UgqoOXP17V2TufYsBDr0xsLsI2ZPiz2X3uSkif-Pl2VQxa73PXNN1BQH25T23vTHpVvbp4bqR4qVb_Qk1B9BomxUUh2PWLuKGC4dd2XGiZm0yINbXezip4R0Us9_e8bPVtKAG4HHu8PeH7z"/>
+</div>
+<span class="text-teal-900 font-extrabold tracking-tight font-manrope text-lg">SpareGrow</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-teal-900 hover:opacity-80 transition-opacity cursor-pointer" onclick="navigate('Notifications_4.html')">notifications</button>
+<button class="hidden md:flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-xl font-bold transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Invest</span>
+</button>
+</div>
+</header>
+<main class="pt-24 pb-32 px-4 md:px-margin-safe max-w-[1280px] mx-auto">
+<!-- Hero Summary Section -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-md mb-xl">
+<div class="lg:col-span-2 relative overflow-hidden rounded-xl bg-primary-container p-md flex flex-col justify-between h-[280px] shadow-sm">
+<div class="absolute inset-0 z-0 opacity-40">
+<img class="w-full h-full object-cover" data-alt="A sophisticated panoramic view of a modern financial district at twilight. Glowing emerald and teal lights illuminate sleek glass skyscrapers, reflecting the concept of growth and security. The atmosphere is high-end corporate with a soft-focus lens effect, emphasizing a professional and serene financial environment." src="/logo.png"/>
+</div>
+<div class="relative z-10">
+<span class="font-label-caps text-on-primary-container opacity-80">MONTHLY SUMMARY</span>
+<h1 class="font-headline-md text-on-primary-container mt-xs">Total Saved &amp; Invested</h1>
+</div>
+<div class="relative z-10 flex items-baseline gap-2">
+<span class="text-on-primary-container font-display-lg text-display-lg">₹1,452.80</span>
+<span class="text-on-secondary-container flex items-center bg-secondary-fixed/30 px-2 py-1 rounded-full text-sm font-bold">
+<span class="material-symbols-outlined text-[16px] mr-1">trending_up</span>
+                        +12.4%
+                    </span>
+</div>
+</div>
+<div class="flex flex-col gap-md">
+<div class="bg-white p-md rounded-xl border border-slate-100 shadow-sm flex flex-col gap-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-emerald-700">ads_click</span>
+<span class="font-title-sm text-primary">Goal Progress</span>
+</div>
+<span class="text-data-mono font-bold text-emerald-700">72%</span>
+</div>
+<div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-emerald-700 rounded-full shadow-[0_0_8px_rgba(5,150,105,0.4)]" style="width: 72%"></div>
+</div>
+<p class="text-sm text-slate-500 font-body-md">On track for "Vacation 2024"</p>
+</div>
+<div class="bg-white p-md rounded-xl border border-slate-100 shadow-sm border-l-4 border-l-[#C5A059]">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-teal-900">workspace_premium</span>
+</div>
+<div>
+<p class="font-title-sm text-primary leading-tight">Growth Tier</p>
+<p class="text-sm text-slate-500">Premium Gold Member</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Search & Filter Controls -->
+<section class="flex flex-col md:flex-row gap-md items-center justify-between mb-md">
+<div class="relative w-full md:w-[400px]">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-body-md shadow-sm transition-all" placeholder="Search merchants or categories..." type="text"/>
+</div>
+<div class="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-hide">
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-full font-bold whitespace-nowrap shadow-sm">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+<span>All</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-full font-bold whitespace-nowrap hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-[18px]">restaurant</span>
+<span>Food</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-full font-bold whitespace-nowrap hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-[18px]">flight</span>
+<span>Travel</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-full font-bold whitespace-nowrap hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+<span>Retail</span>
+</button>
+</div>
+</section>
+<!-- Transaction List -->
+<section class="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
+<div class="p-md border-b border-slate-100 flex items-center justify-between">
+<h3 class="font-title-sm text-primary">Recent Transactions</h3>
+<span class="text-sm font-label-caps text-slate-400">MARCH 2024</span>
+</div>
+<div id="full-transaction-list" class="divide-y divide-slate-50">
+    <!-- Transactions will be injected here -->
+</div>
+<div class="p-md text-center bg-slate-50/50">
+<button class="text-primary font-bold hover:opacity-70 transition-opacity">Load More Transactions</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/80 backdrop-blur-md border-t border-slate-200/50 shadow-[0_-4px_20px_0_rgba(0,0,0,0.04)]">
+<div class="flex flex-col items-center justify-center text-emerald-700 font-bold transition-transform active:scale-90 cursor-pointer" onclick="navigate('WalletOverview_5609f92e5e924a72a75b627360229f5f.html')">
+<span class="material-symbols-outlined" data-weight="fill">account_balance_wallet</span>
+<span class="font-manrope font-medium text-[10px]">Wallet</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-700 transition-transform active:scale-90 cursor-pointer" onclick="navigate('FundDiscovery_51b394d0132a49678292c68d6f05e315.html')">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-manrope font-medium text-[10px]">Explore</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-700 transition-transform active:scale-90 cursor-pointer" onclick="navigate('GoalsDashboard_d2c4550afb8042819ff8ba97840a52bf.html')">
+<span class="material-symbols-outlined">ads_click</span>
+<span class="font-manrope font-medium text-[10px]">Goals</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-700 transition-transform active:scale-90">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-manrope font-medium text-[10px]">Insights</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-700 transition-transform active:scale-90 cursor-pointer" onclick="navigate('ProfileSettings_dbb3792156614cb5ae492572ff792679.html')">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-manrope font-medium text-[10px]">Settings</span>
+</div>
+</nav>

@@ -1,0 +1,125 @@
+
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white/80 backdrop-blur-md border-b border-slate-200/50 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-fixed overflow-hidden border border-outline-variant">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="A professional headshot of a smiling male user with soft studio lighting, representing a premium member profile. The aesthetic is clean and modern, with a neutral background that fits seamlessly into a high-end financial application interface focused on growth and stability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsIjsnl-KBnLS9xDyOHvUylV2Aa9qD3X4H646udKvVELizUAJm2iH_wg_Cvm5rpTJd725OiJgEP1tyliwPq57j53wxKtHAstjxjU8D8-X2d16agcZQLScMD_cY0RJ7NQHqCXlJyaLGjzX0YHUv9EyV6WlsRuqxIoFf3_9f0SNiEEAK-09OoNC48cbZ2OjLhrjyHeKTAf90iKFg2pl8j9fX3vb5Yfc0UGy4tsLnLlUqnmf2Yb2DIC6OMplA_MH56Pn-sOxYPOqd3Inv"/>
+</div>
+<span class="text-teal-900 font-extrabold tracking-tight font-manrope text-lg">SpareGrow</span>
+</div>
+<button class="text-teal-900 hover:opacity-80 transition-opacity p-2 rounded-full hover:bg-surface-container cursor-pointer" onclick="navigate('Notifications_4.html')">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 px-gutter max-w-[1280px] mx-auto space-y-md">
+<!-- Hero Balance Section -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-md items-stretch">
+<div class="md:col-span-8 p-md rounded-xl bg-white border border-slate-200/50 shadow-sm relative overflow-hidden flex flex-col justify-between min-h-[320px]">
+<div class="relative z-10">
+<p class="font-label-caps text-label-caps text-outline mb-xs">AVAILABLE BALANCE</p>
+<h1 id="wallet-balance" class="font-display-lg text-display-lg text-primary">₹0.00</h1>
+<div class="mt-xs flex items-center gap-2 text-on-secondary-container">
+<span class="material-symbols-outlined text-[18px]" data-icon="trending_up">trending_up</span>
+<span id="wallet-growth" class="font-data-mono text-data-mono">+ ₹0.00 since yesterday</span>
+</div>
+</div>
+<div class="mt-lg grid grid-cols-3 gap-sm relative z-10">
+<button class="flex flex-col items-center justify-center p-md bg-primary text-on-primary rounded-xl hover:opacity-90 transition-all active:scale-95 shadow-md cursor-pointer" onclick="navigate('PaymentUPI_7.html')">
+<span class="material-symbols-outlined mb-xs" data-icon="add_circle">add_circle</span>
+<span class="font-label-caps text-[10px]">TOP UP</span>
+</button>
+<button class="flex flex-col items-center justify-center p-md bg-white border border-secondary text-secondary rounded-xl hover:bg-secondary/5 transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined mb-xs" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-label-caps text-[10px]">WITHDRAW</span>
+</button>
+<button class="flex flex-col items-center justify-center p-md bg-surface-container-low text-on-surface-variant rounded-xl hover:bg-surface-container-high transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined mb-xs" data-icon="pause_circle">pause_circle</span>
+<span class="font-label-caps text-[10px]">PAUSE ROUND-UPS</span>
+</button>
+</div>
+<!-- Abstract Visual Background for Card -->
+<div class="absolute -right-16 -top-16 w-64 h-64 bg-secondary-container/20 rounded-full blur-3xl"></div>
+<div class="absolute right-10 bottom-10 w-32 h-32 border-l border-b border-gold-500/20 rounded-bl-full"></div>
+</div>
+<!-- Progress Ring Card -->
+<div class="md:col-span-4 p-md rounded-xl bg-white border border-slate-200/50 shadow-sm flex flex-col items-center justify-center text-center">
+<p class="font-title-sm text-title-sm text-primary mb-md">Auto-Invest Goal</p>
+<div class="relative w-48 h-48 flex items-center justify-center mb-md">
+<canvas id="walletChart" width="160" height="160"></canvas>
+<div class="absolute flex flex-col items-center">
+<span class="font-headline-md text-headline-md text-primary">75%</span>
+<span class="font-label-caps text-outline">REACHED</span>
+</div>
+</div>
+<div class="space-y-xs">
+<p class="font-body-md text-body-md text-on-surface-variant">₹375.40 collected</p>
+<p class="font-data-mono text-data-mono text-secondary">Next invest at ₹500.00</p>
+</div>
+</div>
+</section>
+<!-- Insights Bento Section -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<!-- Premium Banner -->
+<div class="md:col-span-2 relative h-48 rounded-xl overflow-hidden shadow-lg border-l-4 border-[#C5A059]">
+<img class="w-full h-full object-cover" data-alt="A luxurious lifestyle photograph showcasing a high-end architectural interior with soft natural light streaming through large windows. The scene includes a sleek minimalist desk with a premium smartphone and a high-performance tablet, emphasizing a sense of professional success and wealth management. The color palette is dominated by soft creams, warm wood tones, and deep teal accents, creating a calm and sophisticated corporate modern mood." src="/logo.png"/>
+<div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-transparent flex flex-col justify-center px-md text-white">
+<h2 class="font-title-sm text-title-sm mb-xs">Unlock Premium Growth</h2>
+<p class="font-body-md text-body-md opacity-90 max-w-[320px]">Earn 2% higher yields on your spare change with SpareGrow Gold.</p>
+<button class="mt-md px-md py-2 bg-[#C5A059] text-primary font-bold rounded-lg w-fit text-sm hover:opacity-90 transition-all">
+                        UPGRADE NOW
+                    </button>
+</div>
+</div>
+<!-- Mini Analytics Card -->
+<div class="bg-white border border-slate-200/50 rounded-xl p-md shadow-sm">
+<div class="flex justify-between items-center mb-md">
+<span class="font-title-sm text-title-sm text-primary">Monthly Insight</span>
+<span class="material-symbols-outlined text-secondary" data-icon="insights">insights</span>
+</div>
+<div class="space-y-md">
+<div class="flex items-end gap-2">
+<div class="w-full h-12 bg-surface-container rounded-t-sm"></div>
+<div class="w-full h-20 bg-surface-container rounded-t-sm"></div>
+<div class="w-full h-16 bg-surface-container rounded-t-sm"></div>
+<div class="w-full h-24 bg-secondary rounded-t-sm shadow-[0_-4px_10px_rgba(46,125,50,0.2)]"></div>
+<div class="w-full h-14 bg-surface-container rounded-t-sm"></div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Your savings rate increased by <span class="text-secondary font-bold">12%</span> this month compared to last.</p>
+</div>
+</div>
+</section>
+<!-- Transaction List Section -->
+<section class="bg-white border border-slate-200/50 rounded-xl overflow-hidden shadow-sm">
+<div class="p-md border-b border-surface-container flex justify-between items-center">
+<h3 class="font-title-sm text-title-sm text-primary">Recent Spare Activity</h3>
+<button class="text-secondary font-bold text-sm hover:underline cursor-pointer" onclick="navigate('TransactionHistory_f88ed653be0e4a189aa4a4ff33200138.html')">View All</button>
+</div>
+<div id="recent-transactions-list" class="divide-y divide-surface-container">
+    <div class="p-md text-center text-outline text-sm">Loading transactions...</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/80 backdrop-blur-md border-t border-slate-200/50 shadow-[0_-4px_20px_0_rgba(0,0,0,0.04)]">
+<button class="flex flex-col items-center justify-center text-emerald-700 font-bold transition-transform active:scale-90">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-manrope font-medium text-[10px]">Wallet</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-700 transition-colors cursor-pointer" onclick="navigate('FundDiscovery_51b394d0132a49678292c68d6f05e315.html')">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-manrope font-medium text-[10px]">Explore</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-700 transition-colors cursor-pointer" onclick="navigate('GoalsDashboard_d2c4550afb8042819ff8ba97840a52bf.html')">
+<span class="material-symbols-outlined" data-icon="ads_click">ads_click</span>
+<span class="font-manrope font-medium text-[10px]">Goals</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-700 transition-colors">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="font-manrope font-medium text-[10px]">Insights</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 hover:text-teal-700 transition-colors cursor-pointer" onclick="navigate('ProfileSettings_dbb3792156614cb5ae492572ff792679.html')">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-manrope font-medium text-[10px]">Settings</span>
+</button>
+</nav>

@@ -1,0 +1,163 @@
+
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm border-b border-slate-200/50 dark:border-slate-800/50">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center">
+<img alt="User profile photo" class="w-full h-full rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiBgI-94Flal_CmRZGZ19pLiS-JsP8v0e71bpZevLE0SNomNfYU9hxhk1fzoLlv182MIPsgnlkitwqHycW3c3NomQ3CryH9ejPqppYOYHWINVajRMJdtjq6xVEZzNTQ270ylhq7HIE9_ylC1jTAezbqd8P0I6UpHdk4tFAzXzzx7K5JtmW9PTLicqDyVMRnupYZy2BhdJoYHV8MucHTq2QrSyAK1UFh3rwRMPDe6U9UO753J-RL_8-DjeXeNxp_Qm0xuyivgK7-079"/>
+</div>
+<span class="text-teal-900 dark:text-teal-50 font-extrabold tracking-tight font-manrope text-lg">SpareGrow</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-teal-900 dark:text-teal-50 hover:opacity-80 transition-opacity cursor-pointer" onclick="navigate('Notifications_4.html')">notifications</button>
+</div>
+</header>
+<main class="min-h-screen pt-24 pb-32 px-6 md:px-12 max-w-[896px] mx-auto">
+<!-- Progress Stepper -->
+<div class="mb-12">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-caps text-label-caps text-primary uppercase">Step 1 of 3</span>
+<span class="font-label-caps text-label-caps text-outline">Configuration</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-1/3 rounded-full shadow-[0_0_8px_rgba(46,125,50,0.3)]"></div>
+</div>
+</div>
+<!-- Multi-step Form Content -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Form Header -->
+<div class="lg:col-span-5 flex flex-col justify-center">
+<h1 class="font-display-lg text-display-lg text-primary mb-4 leading-tight">Create your next big goal</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8">Let's set up the guardrails for your future wealth. Tell us what you're flourishing towards.</p>
+<div class="hidden lg:block relative rounded-xl overflow-hidden shadow-2xl h-64 border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional, high-end financial environment featuring soft ambient lighting and clean lines. The image displays a sense of premium security and upward mobility with a palette of deep teals and emerald greens. A subtle gold accent highlights the growth motif, maintaining a glassmorphic corporate aesthetic that feels both modern and serene." src="/logo.png"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent flex items-end p-6">
+<p class="text-white font-title-sm text-title-sm">"The best time to plant a tree was 20 years ago. The second best time is now."</p>
+</div>
+</div>
+</div>
+<!-- Right Column: Step 1 Form -->
+<div class="lg:col-span-7">
+<div class="glass-card rounded-xl p-md shadow-sm border border-slate-200">
+<form id="create-goal-form" class="space-y-8">
+<!-- Category Selection -->
+<section>
+<label class="font-label-caps text-label-caps text-outline mb-4 block">WHAT ARE YOU SAVING FOR?</label>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<!-- Travel -->
+<button class="group flex flex-col items-center p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary-container transition-all text-center" type="button">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center mb-3 group-hover:bg-primary-fixed-dim transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="flight">flight</span>
+</div>
+<span class="font-label-caps text-[10px] text-on-surface-variant group-hover:text-primary-fixed font-bold">Travel</span>
+</button>
+<!-- Tech -->
+<button class="group flex flex-col items-center p-4 rounded-xl border-primary bg-primary-container active-ring transition-all text-center" type="button">
+<div class="w-12 h-12 rounded-full bg-primary-fixed-dim flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-primary" data-icon="devices" data-weight="fill" style="font-variation-settings: 'FILL' 1;">devices</span>
+</div>
+<span class="font-label-caps text-[10px] text-primary-fixed font-bold">Tech</span>
+</button>
+<!-- Education -->
+<button class="group flex flex-col items-center p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary-container transition-all text-center" type="button">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center mb-3 group-hover:bg-primary-fixed-dim transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="school">school</span>
+</div>
+<span class="font-label-caps text-[10px] text-on-surface-variant group-hover:text-primary-fixed font-bold">Education</span>
+</button>
+<!-- Other -->
+<button class="group flex flex-col items-center p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary-container transition-all text-center" type="button">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center mb-3 group-hover:bg-primary-fixed-dim transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="more_horiz">more_horiz</span>
+</div>
+<span class="font-label-caps text-[10px] text-on-surface-variant group-hover:text-primary-fixed font-bold">Other</span>
+</button>
+</div>
+</section>
+<!-- Input Details -->
+<section class="space-y-6">
+<div class="relative">
+<label class="font-label-caps text-label-caps text-outline mb-2 block" for="goal-name">GOAL NAME</label>
+<input class="w-full h-12 px-4 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface-container-lowest font-body-md transition-all outline-none" id="goal-name" placeholder="e.g., Dream Home Fund" type="text" value="New Gaming Setup"/>
+<span class="absolute right-4 top-10 material-symbols-outlined text-outline text-sm" data-icon="edit">edit</span>
+</div>
+<div class="relative">
+<label class="font-label-caps text-label-caps text-outline mb-2 block" for="target-amount">TARGET AMOUNT</label>
+<div class="relative flex items-center">
+<span class="absolute left-4 font-title-sm text-primary">₹</span>
+<input class="w-full h-14 pl-10 pr-4 rounded-lg border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface-container-lowest font-headline-md text-primary transition-all outline-none" id="target-amount" placeholder="0.00" type="number" value="2500"/>
+</div>
+<p class="mt-2 text-[12px] text-on-secondary-container flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="info">info</span>
+                                    Suggested based on your current savings rate.
+                                </p>
+</div>
+</section>
+<!-- Wealth Card Accent Footer -->
+<div class="pt-6 border-t border-slate-100 flex items-center justify-between">
+<button class="px-6 py-3 font-label-caps text-primary hover:bg-primary/5 rounded-lg transition-colors cursor-pointer" type="button" onclick="navigate('GoalsDashboard_d2c4550afb8042819ff8ba97840a52bf.html')">BACK</button>
+<button id="create-goal-btn" class="px-10 py-4 bg-primary text-white rounded-lg font-title-sm shadow-lg hover:shadow-primary/20 active:scale-95 transition-all cursor-pointer" type="submit">CONTINUE</button>
+</div>
+</form>
+<!-- Wealth Card Gold Accent -->
+<div class="absolute left-0 top-1/4 w-1 h-1/2 bg-[#C5A059] rounded-r-full"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-[0_-4px_20px_0_rgba(0,0,0,0.04)] border-t border-slate-200/50 dark:border-slate-800/50 md:hidden">
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-teal-700 transition-colors cursor-pointer" onclick="navigate('WalletOverview_5609f92e5e924a72a75b627360229f5f.html')">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-manrope font-medium text-[10px]">Wallet</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-teal-700 transition-colors cursor-pointer" onclick="navigate('FundDiscovery_51b394d0132a49678292c68d6f05e315.html')">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-manrope font-medium text-[10px]">Explore</span>
+</button>
+<button class="flex flex-col items-center justify-center text-emerald-700 dark:text-emerald-400 font-bold">
+<span class="material-symbols-outlined" data-icon="ads_click" data-weight="fill" style="font-variation-settings: 'FILL' 1;">ads_click</span>
+<span class="font-manrope font-medium text-[10px]">Goals</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-teal-700 transition-colors cursor-pointer" onclick="navigate('TransactionHistory_f88ed653be0e4a189aa4a4ff33200138.html')">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="font-manrope font-medium text-[10px]">Insights</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-teal-700 transition-colors cursor-pointer" onclick="navigate('ProfileSettings_dbb3792156614cb5ae492572ff792679.html')">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-manrope font-medium text-[10px]">Settings</span>
+</button>
+</nav>
+<!-- Desktop Navigation Drawer (Conditional) -->
+<aside class="hidden md:flex fixed inset-y-0 left-0 w-20 lg:w-64 z-[60] flex-col bg-white dark:bg-slate-900 border-r border-slate-100 dark:divide-slate-800 shadow-2xl">
+<div class="p-6 mb-8">
+<span class="font-manrope font-black text-teal-900 text-xl hidden lg:block">SpareGrow</span>
+<span class="font-manrope font-black text-teal-900 text-xl lg:hidden text-center block">S</span>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="flex items-center gap-4 p-3 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="hidden lg:block font-manrope text-sm">Wallet</span>
+</a>
+<a class="flex items-center gap-4 p-3 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="hidden lg:block font-manrope text-sm">Explore</span>
+</a>
+<a class="flex items-center gap-4 p-3 rounded-lg bg-teal-50 text-teal-900 border-l-4 border-emerald-500 font-bold transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="ads_click" data-weight="fill" style="font-variation-settings: 'FILL' 1;">ads_click</span>
+<span class="hidden lg:block font-manrope text-sm">Goals</span>
+</a>
+<a class="flex items-center gap-4 p-3 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="hidden lg:block font-manrope text-sm">Insights</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-100">
+<div class="flex items-center gap-3 p-2">
+<img alt="User Avatar" class="w-10 h-10 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtCCCSk-LLl9XtvLy_0WcZM7DWrWhoOWjH-OwJuPU-4zf3iccCVBLkejH-q_fBUhRgqsYTIskFYd7pURMHFfC_eD8F-36wYQL8yxafVgElLfHtSM7OLKO8X_ed28-du9qJ3S8PElMLxgqzVZmvch2rK2E4n2T-SZDYZmf7EPKD_NahU4J8LtT8yThhdJ2PejxWH9iaCLOZi747c30haTZ9_vwtm3tDwb9D6fhZ0UaJZZZ9K1Nr_NgpXpWrGSSPXzIV-0RUH_CrWplm"/>
+<div class="hidden lg:block">
+<p class="text-xs font-bold text-teal-900">Felix Growth</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-wider">Premium Member</p>
+</div>
+</div>
+</div>
+</aside>

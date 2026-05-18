@@ -1,0 +1,76 @@
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white/80 backdrop-blur-md border-b border-slate-200/50 shadow-sm">
+    <div class="flex items-center gap-3">
+        <button class="material-symbols-outlined text-teal-900 hover:opacity-80 transition-opacity cursor-pointer" data-icon="arrow_back" onclick="navigate('WalletOverview_5609f92e5e924a72a75b627360229f5f.html')">arrow_back</button>
+        <span class="text-teal-900 font-extrabold tracking-tight font-manrope text-lg">Notifications</span>
+    </div>
+    <button class="text-primary hover:opacity-80 transition-opacity p-2 rounded-full hover:bg-surface-container font-label-caps text-xs font-bold">
+        MARK ALL READ
+    </button>
+</header>
+
+<main class="pt-24 px-gutter max-w-[672px] mx-auto space-y-4 pb-20">
+    
+    <!-- New Section -->
+    <h2 class="font-label-caps text-label-caps text-outline mb-3 ml-2 uppercase tracking-widest">New</h2>
+    
+    <!-- Notification Item 1 -->
+    <div class="bg-primary/5 border border-primary/20 rounded-xl p-4 flex gap-4 cursor-pointer hover:bg-primary/10 transition-colors">
+        <div class="w-10 h-10 rounded-full bg-secondary-container flex-shrink-0 flex items-center justify-center text-on-secondary-container">
+            <span class="material-symbols-outlined text-lg" data-icon="savings">savings</span>
+        </div>
+        <div class="flex-grow">
+            <div class="flex justify-between items-start mb-1">
+                <h3 class="font-title-sm text-sm text-primary">Goal Reached!</h3>
+                <span class="text-xs text-secondary font-bold">Just now</span>
+            </div>
+            <p class="font-body-md text-sm text-on-surface-variant">Congratulations! You've reached your "Emergency Fund" goal of ₹10,000.</p>
+        </div>
+    </div>
+
+    <!-- Notification Item 2 -->
+    <div class="bg-white border border-slate-200/50 rounded-xl p-4 flex gap-4 cursor-pointer hover:bg-slate-50 transition-colors shadow-sm">
+        <div class="w-10 h-10 rounded-full bg-surface-container-high flex-shrink-0 flex items-center justify-center text-on-surface-variant">
+            <span class="material-symbols-outlined text-lg" data-icon="coffee">coffee</span>
+        </div>
+        <div class="flex-grow">
+            <div class="flex justify-between items-start mb-1">
+                <h3 class="font-title-sm text-sm text-primary">Round-up Invested</h3>
+                <span class="text-xs text-outline font-data-mono">2h ago</span>
+            </div>
+            <p class="font-body-md text-sm text-on-surface-variant">₹42.50 was successfully rounded up and invested into the ESG Growth Fund.</p>
+        </div>
+    </div>
+
+    <!-- Earlier Section -->
+    <h2 class="font-label-caps text-label-caps text-outline mb-3 ml-2 uppercase tracking-widest mt-8">Earlier</h2>
+
+    <!-- Notification Item 3 -->
+    <div class="bg-white border border-slate-200/50 rounded-xl p-4 flex gap-4 cursor-pointer hover:bg-slate-50 transition-colors shadow-sm opacity-80">
+        <div class="w-10 h-10 rounded-full bg-error-container flex-shrink-0 flex items-center justify-center text-on-error-container">
+            <span class="material-symbols-outlined text-lg" data-icon="security">security</span>
+        </div>
+        <div class="flex-grow">
+            <div class="flex justify-between items-start mb-1">
+                <h3 class="font-title-sm text-sm text-primary">Security Alert</h3>
+                <span class="text-xs text-outline font-data-mono">Yesterday</span>
+            </div>
+            <p class="font-body-md text-sm text-on-surface-variant">New login detected from an unrecognized device in Mumbai. Please verify this activity.</p>
+        </div>
+    </div>
+
+    <!-- Notification Item 4 -->
+    <div class="bg-white border border-slate-200/50 rounded-xl p-4 flex gap-4 cursor-pointer hover:bg-slate-50 transition-colors shadow-sm opacity-80">
+        <div class="w-10 h-10 rounded-full bg-tertiary-container flex-shrink-0 flex items-center justify-center text-on-tertiary-container">
+            <span class="material-symbols-outlined text-lg" data-icon="article">article</span>
+        </div>
+        <div class="flex-grow">
+            <div class="flex justify-between items-start mb-1">
+                <h3 class="font-title-sm text-sm text-primary">Tax Document Available</h3>
+                <span class="text-xs text-outline font-data-mono">Apr 12</span>
+            </div>
+            <p class="font-body-md text-sm text-on-surface-variant">Your Q1 2025 consolidated tax statement is now available to download.</p>
+        </div>
+    </div>
+
+</main>

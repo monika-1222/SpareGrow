@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Linked Bank Accounts - SpareGrow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#29695b",
+                        "outline-variant": "#bfc9c4",
+                        "on-primary-container": "#7ebdac",
+                        "primary": "#00342b",
+                        "inverse-surface": "#2e3130",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d8dbd8",
+                        "surface-variant": "#e1e3e0",
+                        "primary-fixed": "#afefdd",
+                        "surface-container-high": "#e7e9e6",
+                        "secondary-fixed": "#a3f69c",
+                        "on-surface": "#191c1b",
+                        "surface-container-low": "#f2f4f1",
+                        "tertiary-container": "#693527",
+                        "on-error": "#ffffff",
+                        "outline": "#707975",
+                        "on-background": "#191c1b",
+                        "tertiary-fixed-dim": "#ffb5a1",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "primary-container": "#004d40",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#4e2013",
+                        "secondary": "#1b6d24",
+                        "on-surface-variant": "#3f4945",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#e1e3e0",
+                        "on-secondary-fixed": "#002204",
+                        "surface-bright": "#f8faf7",
+                        "primary-fixed-dim": "#94d3c1",
+                        "on-secondary-fixed-variant": "#005312",
+                        "inverse-primary": "#94d3c1",
+                        "surface-container": "#eceeec",
+                        "on-primary-fixed-variant": "#065043",
+                        "inverse-on-surface": "#eff1ef",
+                        "secondary-container": "#a0f399",
+                        "secondary-fixed-dim": "#88d982",
+                        "on-tertiary-fixed-variant": "#6d382a",
+                        "on-tertiary-fixed": "#370e04",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed": "#ffdbd1",
+                        "on-error-container": "#93000a",
+                        "surface": "#f8faf7",
+                        "on-secondary-container": "#217128",
+                        "on-primary-fixed": "#00201a",
+                        "on-tertiary-container": "#e89f8c",
+                        "background": "#f8faf7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "64px",
+                        "gutter": "24px",
+                        "sm": "12px",
+                        "md": "24px",
+                        "xs": "4px",
+                        "margin-safe": "32px",
+                        "lg": "40px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Manrope"],
+                        "body-md": ["Manrope"],
+                        "data-mono": ["Inter"],
+                        "title-sm": ["Manrope"],
+                        "label-caps": ["Manrope"],
+                        "display-lg": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                        "title-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #f8faf7;
+            font-family: 'Manrope', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+        }
+        .wealth-card-accent {
+            border-left: 4px solid #C5A059;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 shadow-sm">
+<div class="flex items-center gap-4">
+<span class="font-black text-teal-900 tracking-tighter text-2xl">SpareGrow</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-slate-50 transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-slate-500" data-icon="notifications">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed">
+<img alt="User Profile Photo" data-alt="A professional headshot of a person with a friendly smile, set against a clean corporate office background with soft bokeh. The lighting is bright and even, reinforcing a light-mode aesthetic. The individual wears professional attire, signaling trust and success in a premium financial services context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCmlOhiVP_m15pfQUnhE7CMvh-VAkDk_FkOC2Ya2ptobdJAqxw6A5yijRuADt2xV9vJCFdLFGMRt8khHQU9-79-CZ2PIenhyGrRH09zHCEOHOVvHHob-MRmzhfvYPvhKytY8UvH8GwBju4lBuCiEwAg8_yomgzpZ61tjFXTA6OVBdQdANggHx66qvuU7WmFhgN8K6TPMuISxRhJRg0-nwIT9AWNlsfBTgCuJyVjxY4UU8pRwLdrDOXHh4RkxzuoqUI08XiDk--UPln"/>
+</div>
+</div>
+</header>
+<div class="flex min-h-screen pt-16 pb-20 lg:pb-0">
+<!-- NavigationDrawer (Desktop Only) -->
+<aside class="hidden lg:flex flex-col h-screen fixed left-0 top-0 p-4 w-72 bg-white border-r border-slate-100 shadow-2xl z-40">
+<div class="pt-20 pb-8 px-4">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-12 h-12 rounded-xl bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-white" data-icon="person">person</span>
+</div>
+<div>
+<p class="font-manrope text-sm font-bold text-teal-900">Alex Sterling</p>
+<p class="font-manrope text-[11px] font-medium text-slate-500 uppercase tracking-wider">Premium Account</p>
+</div>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="shield">shield</span>
+<span class="font-manrope text-sm font-medium">Security</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-teal-50 text-teal-900 border-l-4 border-teal-900 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+<span class="font-manrope text-sm font-medium">Bank Accounts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="settings_suggest">settings_suggest</span>
+<span class="font-manrope text-sm font-medium">Round-ups</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-manrope text-sm font-medium">Documents</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto px-4 pb-8">
+<div class="rounded-2xl p-4 bg-surface-container-low border border-outline-variant/30">
+<p class="text-xs text-slate-400 mb-1">Member since 2021</p>
+<div class="h-1 w-full bg-slate-200 rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-3/4"></div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 lg:ml-72 p-6 md:p-10 max-w-7xl mx-auto w-full">
+<!-- Page Header Section -->
+<section class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="max-w-2xl">
+<h1 class="font-headline-md text-headline-md text-primary mb-2">Linked Bank Accounts</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage your connected financial institutions. We use bank-level security to keep your data encrypted and private.</p>
+</div>
+<button class="flex items-center justify-center gap-2 bg-primary text-white px-8 py-4 rounded-xl font-manrope font-bold active:scale-95 transition-all shadow-lg hover:shadow-primary/20">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                    Add New Bank Account
+                </button>
+</section>
+<!-- Hero/Featured Glass Card -->
+<section class="mb-10">
+<div class="relative overflow-hidden rounded-3xl glass-panel p-8 min-h-[240px] flex flex-col justify-center wealth-card-accent shadow-xl">
+<div class="absolute top-0 right-0 w-1/2 h-full opacity-10">
+<img alt="Premium Growth Visual" class="w-full h-full object-cover" data-alt="An abstract 3D visualization of golden coins and teal geometric prisms growing upward in a clean white space. The lighting is cinematic with soft shadows and high-key highlights, creating an atmosphere of wealth and professional growth. The aesthetic is clean, corporate, and minimalist, echoing a high-end fintech brand identity." src="https://lh3.googleusercontent.com/aida/ADBb0ugY85nnykAv7X3Lopw6iltMQSF6YtYg467yypFBuLwrd-IW84PatnajTnmtrW9aHuwG0FEuEMX8ZQw-DzQiGdD-jK552ycLNkOXPt71sJ1Xan6RZnsP-Jm6zAI2M5UtQoQMc43BJxe0iavju6xdvHBvIYn19_EGcJyJdgz4syMVak5JtsAZ5CkIKPd5bx6h952P_qLiVl9FXUiZi4PTsd2nQLbwyliZCuqByjjWJoAn5qk4r0g0uEs1nRy9QtnMfY-icuQtNYjXBzE"/>
+</div>
+<div class="relative z-10">
+<span class="inline-flex items-center gap-2 px-3 py-1 bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-widest rounded-full mb-4">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified_user">verified_user</span>
+                            Bank-Grade Security
+                        </span>
+<h2 class="text-3xl font-extrabold text-teal-900 mb-2 leading-tight">Your Assets are <br/>Automated &amp; Secure</h2>
+<p class="text-slate-600 max-w-md font-medium">SpareGrow uses 256-bit encryption to link your accounts. We never store your login credentials.</p>
+</div>
+</div>
+</section>
+<!-- Bank Cards Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-xl">
+<!-- Bank Card 1: HDFC -->
+<div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center p-2 border border-slate-200">
+<span class="material-symbols-outlined text-teal-900 text-3xl" data-icon="account_balance">account_balance</span>
+</div>
+<div>
+<h3 class="font-title-sm text-title-sm text-teal-900">HDFC Bank</h3>
+<p class="text-slate-500 text-sm font-data-mono">Savings Account •••• 8829</p>
+</div>
+</div>
+<span class="px-3 py-1 bg-green-50 text-green-700 text-[10px] font-bold uppercase tracking-widest rounded-lg border border-green-100">Active</span>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-slate-50">
+<div class="flex items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined text-sm" data-icon="sync">sync</span>
+<span class="text-xs font-medium">Synced 2h ago</span>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bank Card 2: ICICI -->
+<div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center p-2 border border-slate-200">
+<span class="material-symbols-outlined text-teal-900 text-3xl" data-icon="account_balance">account_balance</span>
+</div>
+<div>
+<h3 class="font-title-sm text-title-sm text-teal-900">ICICI Bank</h3>
+<p class="text-slate-500 text-sm font-data-mono">Current Account •••• 4410</p>
+</div>
+</div>
+<span class="px-3 py-1 bg-green-50 text-green-700 text-[10px] font-bold uppercase tracking-widest rounded-lg border border-green-100">Active</span>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-slate-50">
+<div class="flex items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined text-sm" data-icon="sync">sync</span>
+<span class="text-xs font-medium">Synced 5h ago</span>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Empty State / Add New Placeholder -->
+<div class="border-2 border-dashed border-slate-200 rounded-2xl p-6 flex flex-col items-center justify-center min-h-[160px] hover:border-teal-300 hover:bg-teal-50/20 transition-all cursor-pointer group">
+<div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center mb-3 group-hover:bg-teal-100 transition-colors">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-teal-700" data-icon="add_circle">add_circle</span>
+</div>
+<span class="text-slate-500 font-bold text-sm tracking-tight group-hover:text-teal-900">Link another institution</span>
+</div>
+</section>
+<!-- Bottom Information Section -->
+<section class="max-w-3xl">
+<div class="flex items-start gap-4 p-6 bg-slate-50 rounded-2xl border border-slate-100">
+<span class="material-symbols-outlined text-teal-700 mt-1" data-icon="info">info</span>
+<div>
+<h4 class="font-bold text-teal-900 mb-1">How linking works</h4>
+<p class="text-sm text-slate-500 leading-relaxed">By linking your account, you authorize SpareGrow to monitor transaction amounts for Round-up purposes. We only receive read-only access to transaction history and cannot initiate transfers from these accounts without your explicit secondary consent.</p>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center px-4 h-20 pb-safe bg-white/90 backdrop-blur-md border-t border-slate-200 shadow-[0_-4px_20px_rgba(0,0,0,0.04)]">
+<a class="flex flex-col items-center justify-center text-slate-400 py-1 px-3 active:opacity-80 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 py-1 px-3 active:opacity-80 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest mt-1">Invest</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 py-1 px-3 active:opacity-80 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest mt-1">Growth</span>
+</a>
+<a class="flex flex-col items-center justify-center text-teal-900 bg-teal-50/50 rounded-lg py-1 px-3 active:opacity-80 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest mt-1">Settings</span>
+</a>
+</nav>
+</body></html>
