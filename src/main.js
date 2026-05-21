@@ -125,28 +125,30 @@ async function checkAndTriggerAutoSweep() {
 
 function showToast(message) {
     const toast = document.createElement('div');
-    toast.className = 'fixed top-4 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-emerald-800 text-white px-6 py-4 rounded-2xl shadow-2xl z-[9999] font-body-md text-sm flex items-start gap-3 transition-all transform translate-y-[-100%] opacity-0';
+    toast.className = 'fixed bottom-24 left-1/2 -translate-x-1/2 w-[92%] max-w-[360px] bg-slate-900 text-white px-5 py-4 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.25)] z-[9999] font-body-md text-[15px] leading-snug flex items-center gap-4 transition-all transform translate-y-[150%] opacity-0 border border-slate-700/50';
     toast.innerHTML = `
-        <span class="material-symbols-outlined text-emerald-300">auto_awesome</span>
-        <p class="flex-1">${message}</p>
-        <button class="text-emerald-300 hover:text-white" onclick="this.parentElement.remove()">
-            <span class="material-symbols-outlined text-sm">close</span>
+        <div class="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-emerald-400" style="font-size: 20px;">check_circle</span>
+        </div>
+        <p class="flex-1 text-slate-50">${message}</p>
+        <button class="text-slate-400 hover:text-white transition-colors shrink-0 p-1" onclick="this.parentElement.remove()">
+            <span class="material-symbols-outlined text-lg">close</span>
         </button>
     `;
     document.body.appendChild(toast);
 
     // Animate in
     setTimeout(() => {
-        toast.classList.remove('translate-y-[-100%]', 'opacity-0');
+        toast.classList.remove('translate-y-[150%]', 'opacity-0');
         toast.classList.add('translate-y-0', 'opacity-100');
-    }, 100);
+    }, 50);
 
-    // Animate out after 5s
+    // Animate out after 4s
     setTimeout(() => {
         toast.classList.remove('translate-y-0', 'opacity-100');
-        toast.classList.add('translate-y-[-100%]', 'opacity-0');
+        toast.classList.add('translate-y-[150%]', 'opacity-0');
         setTimeout(() => toast.remove(), 300);
-    }, 5000);
+    }, 4000);
 }
 
 async function handleRoute(filename) {
@@ -419,16 +421,24 @@ function renderGoals() {
     const goalsGrid = document.getElementById('goals-grid');
     if (!goalsGrid) return;
 
+    const totalSeedingEl = document.getElementById('total-seeding');
+    const activeHarvestsEl = document.getElementById('active-harvests');
+    
+    let totalSeeding = 0;
+    
     goalsGrid.innerHTML = '';
     if (currentGoals.length === 0) {
         goalsGrid.innerHTML = `<div class="col-span-full p-md text-center text-outline">You haven't planted any goals yet!</div>`;
+        if (totalSeedingEl) totalSeedingEl.innerText = '₹0.00';
+        if (activeHarvestsEl) activeHarvestsEl.innerText = '0';
     } else {
         currentGoals.forEach(goal => {
+            totalSeeding += Number(goal.saved_amount);
             const progress = goal.target_amount > 0 ? (goal.saved_amount / goal.target_amount) * 100 : 0;
             const progressClamped = Math.min(100, Math.max(0, progress));
             
             goalsGrid.innerHTML += `
-                <div class="glass-card rounded-2xl p-md flex flex-col justify-between group transition-all hover:shadow-lg">
+                <div class="glass-card rounded-2xl p-md flex flex-col justify-between group transition-all hover:shadow-lg cursor-pointer" onclick="window.openGoalModal('${goal.id}')">
                     <div class="flex justify-between items-start mb-md">
                         <div class="p-3 bg-secondary-container rounded-xl text-on-secondary-container">
                             <span class="material-symbols-outlined text-2xl">${goal.icon || 'potted_plant'}</span>
@@ -452,6 +462,9 @@ function renderGoals() {
                 </div>
             `;
         });
+        
+        if (totalSeedingEl) totalSeedingEl.innerText = `₹${totalSeeding.toFixed(2)}`;
+        if (activeHarvestsEl) activeHarvestsEl.innerText = currentGoals.length.toString();
     }
 }
 
@@ -459,10 +472,43 @@ function attachCreateGoalListener() {
     const form = document.getElementById('create-goal-form');
     if (!form) return;
 
+    let selectedIcon = 'potted_plant';
+
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const nameInput = document.getElementById('goal-name');
+    const targetInput = document.getElementById('target-amount');
+
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Reset styles
+            categoryBtns.forEach(b => {
+                b.classList.remove('border-primary', 'bg-primary-container', 'active-ring');
+                b.classList.add('border-outline-variant');
+                b.querySelector('.icon-container').classList.remove('bg-primary-fixed-dim');
+                b.querySelector('.icon-container').classList.add('bg-surface-container');
+                b.querySelector('.text-span').classList.remove('text-primary-fixed');
+                b.querySelector('.text-span').classList.add('text-on-surface-variant');
+            });
+            
+            // Apply active styles
+            btn.classList.add('border-primary', 'bg-primary-container', 'active-ring');
+            btn.classList.remove('border-outline-variant');
+            btn.querySelector('.icon-container').classList.add('bg-primary-fixed-dim');
+            btn.querySelector('.icon-container').classList.remove('bg-surface-container');
+            btn.querySelector('.text-span').classList.add('text-primary-fixed');
+            btn.querySelector('.text-span').classList.remove('text-on-surface-variant');
+
+            // Update inputs
+            if (nameInput) nameInput.value = btn.dataset.presetTitle;
+            if (targetInput) targetInput.value = btn.dataset.presetAmount;
+            selectedIcon = btn.dataset.presetIcon;
+        });
+    });
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const title = document.getElementById('goal-name').value;
-        const target = document.getElementById('target-amount').value;
+        const title = nameInput.value;
+        const target = targetInput.value;
         const btn = document.getElementById('create-goal-btn');
         
         btn.innerHTML = 'PLANTING...';
@@ -473,7 +519,7 @@ function attachCreateGoalListener() {
             title: title,
             target_amount: parseFloat(target),
             saved_amount: 0,
-            icon: 'potted_plant'
+            icon: selectedIcon
         }]);
 
         if (error) {
@@ -495,20 +541,19 @@ function attachUPIListener() {
     btn.addEventListener('click', async () => {
         const amt = document.getElementById('amount').value || '500';
         
-        // Simulating manual merchant entry (AI categorize test)
-        const merchants = ['Starbucks', 'Uber Technologies', 'Amazon', 'UPI Top Up', 'Vanguard S&P 500'];
-        const randomMerchant = merchants[Math.floor(Math.random() * merchants.length)];
-        const category = aiCategorizeTransaction(randomMerchant);
+        // This is a direct wallet top-up
+        const merchant = 'UPI Top Up';
+        const category = 'Deposit';
         
         btn.innerHTML = 'PROCESSING...';
         btn.disabled = true;
 
         const { error } = await supabase.from('transactions').insert([{
             user_id: currentSession.user.id,
-            merchant_name: randomMerchant,
+            merchant_name: merchant,
             category: category,
             amount: parseFloat(amt),
-            type: category === 'Investment' ? 'investment' : 'expense'
+            type: category === 'Investment' ? 'investment' : (category === 'Deposit' ? 'deposit' : 'expense')
         }]);
 
         if (error) {
@@ -674,5 +719,189 @@ function setupMPINListeners(filename) {
 
 console.log('Available Screens:', indexData);
 
+// Global modal state
+let activeGoalId = null;
+
+window.openGoalModal = function(goalId) {
+    const goal = currentGoals.find(g => g.id === goalId);
+    if (!goal) return;
+    
+    activeGoalId = goalId;
+    
+    const modal = document.getElementById('goal-modal');
+    const content = document.getElementById('goal-modal-content');
+    if (!modal || !content) return;
+    
+    // Populate data
+    document.getElementById('modal-goal-icon').innerText = goal.icon || 'potted_plant';
+    document.getElementById('modal-goal-title').innerText = goal.title;
+    document.getElementById('modal-goal-saved').innerText = goal.saved_amount;
+    document.getElementById('modal-goal-target').innerText = goal.target_amount;
+    
+    const progress = goal.target_amount > 0 ? (goal.saved_amount / goal.target_amount) * 100 : 0;
+    const progressClamped = Math.min(100, Math.max(0, progress));
+    document.getElementById('modal-goal-progress').style.width = progressClamped + '%';
+    
+    document.getElementById('add-funds-amount').value = '';
+    
+    // Attach listener to add funds button
+    const addBtn = document.getElementById('btn-add-funds');
+    // Remove old listeners by cloning
+    const newBtn = addBtn.cloneNode(true);
+    addBtn.parentNode.replaceChild(newBtn, addBtn);
+    
+    newBtn.addEventListener('click', async () => {
+        const amtInput = document.getElementById('add-funds-amount').value;
+        const amount = parseFloat(amtInput);
+        if (isNaN(amount) || amount <= 0) return;
+        
+        newBtn.innerHTML = 'POURING...';
+        newBtn.disabled = true;
+        
+        const newSaved = Number(goal.saved_amount) + amount;
+        
+        const [goalRes, txRes] = await Promise.all([
+            supabase.from('goals').update({ saved_amount: newSaved }).eq('id', goal.id),
+            supabase.from('transactions').insert([{
+                user_id: currentSession.user.id,
+                merchant_name: `Funded ${goal.title}`,
+                category: 'Investment',
+                amount: amount,
+                type: 'investment'
+            }])
+        ]);
+        
+        if (goalRes.error || txRes.error) {
+            alert('Failed to add funds.');
+            newBtn.innerHTML = '<span class="material-symbols-outlined">water_drop</span> POUR FUNDS';
+            newBtn.disabled = false;
+        } else {
+            showToast(`Added ₹${amount} to ${goal.title}! 🌱`);
+            await fetchUserData();
+            window.closeGoalModal();
+            renderGoals(); // Refresh dashboard
+        }
+    });
+
+    // Show modal
+    modal.classList.remove('hidden');
+    // small delay for transition
+    setTimeout(() => {
+        content.classList.remove('translate-y-full');
+    }, 10);
+};
+
+window.closeGoalModal = function() {
+    const modal = document.getElementById('goal-modal');
+    const content = document.getElementById('goal-modal-content');
+    if (!modal || !content) return;
+    
+    content.classList.add('translate-y-full');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        activeGoalId = null;
+    }, 300);
+};
+
+window.setAddFundsAmount = function(amt) {
+    document.getElementById('add-funds-amount').value = amt;
+};
+
+window.confirmDeleteGoal = async function() {
+    if (!activeGoalId) return;
+    const confirmDelete = confirm('Are you sure you want to delete this goal?');
+    if (!confirmDelete) return;
+    
+    const { error } = await supabase.from('goals').delete().eq('id', activeGoalId);
+    if (error) {
+        alert('Failed to delete goal: ' + error.message);
+    } else {
+        showToast('Goal removed.');
+        await fetchUserData();
+        window.closeGoalModal();
+        renderGoals();
+    }
+};
+
+// Withdraw Modal State
+window.openWithdrawModal = function() {
+    const modal = document.getElementById('withdraw-modal');
+    const content = document.getElementById('withdraw-modal-content');
+    const availBalEl = document.getElementById('withdraw-available-balance');
+    if (!modal || !content) return;
+    
+    // Calculate current balance
+    let balance = 0;
+    currentTransactions.forEach(tx => {
+        if (tx.type === 'deposit') balance += Number(tx.amount);
+        else if (tx.type === 'expense' || tx.type === 'investment') balance -= Number(tx.amount);
+    });
+    
+    if (availBalEl) {
+        availBalEl.innerText = `₹${balance.toFixed(2)}`;
+    }
+    
+    document.getElementById('withdraw-amount').value = '';
+    
+    const confirmBtn = document.getElementById('btn-confirm-withdraw');
+    // Remove old listeners by cloning
+    const newBtn = confirmBtn.cloneNode(true);
+    confirmBtn.parentNode.replaceChild(newBtn, confirmBtn);
+    
+    newBtn.addEventListener('click', async () => {
+        const amtInput = document.getElementById('withdraw-amount').value;
+        const amount = parseFloat(amtInput);
+        if (isNaN(amount) || amount <= 0) return;
+        
+        if (amount > balance) {
+            alert('Insufficient funds to withdraw that amount.');
+            return;
+        }
+        
+        newBtn.innerHTML = 'PROCESSING...';
+        newBtn.disabled = true;
+        
+        const { error } = await supabase.from('transactions').insert([{
+            user_id: currentSession.user.id,
+            merchant_name: 'Bank Withdrawal',
+            category: 'Transfer',
+            amount: amount,
+            type: 'expense'
+        }]);
+        
+        if (error) {
+            alert('Failed to process withdrawal.');
+            newBtn.innerHTML = '<span class="material-symbols-outlined">account_balance</span> INITIATE WITHDRAWAL';
+            newBtn.disabled = false;
+        } else {
+            showToast(`Successfully withdrawn ₹${amount} to Bank.`);
+            await fetchUserData();
+            window.closeWithdrawModal();
+            renderWallet(); // Refresh dashboard
+        }
+    });
+
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        content.classList.remove('translate-y-full');
+    }, 10);
+};
+
+window.closeWithdrawModal = function() {
+    const modal = document.getElementById('withdraw-modal');
+    const content = document.getElementById('withdraw-modal-content');
+    if (!modal || !content) return;
+    
+    content.classList.add('translate-y-full');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 300);
+};
+
+window.setWithdrawAmount = function(amt) {
+    document.getElementById('withdraw-amount').value = amt;
+};
+
 // Start the app
 init();
+

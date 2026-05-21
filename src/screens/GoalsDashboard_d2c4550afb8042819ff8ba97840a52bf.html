@@ -5,7 +5,7 @@
 <div class="w-8 h-8 rounded-full overflow-hidden border border-primary/10">
 <img alt="User profile photo" class="w-full h-full object-cover" data-alt="A professional headshot of a smiling young executive in a corporate setting. The lighting is soft and natural, reflecting a clean and modern high-key aesthetic. The background is a blurred office environment with hints of teal and white, aligning with a premium fintech brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdkXuGy7PZJYlpnhgq6ZYGM7jux8Vy_HRaoWfjX38T9DxD9be0ChAGWINjRnKfJk6dl7h7u8LcJT_7PGHx0FKiSAbQ7Fvnr1P3_q8G-5hEX2wnQ3P1dGdMPHTWpUJ05UMmE-HNE4GRVibFtCKW5M4UvgQgR1HS2LZYzs_sGEC2wOb1BpKwQ56ltK2UUwtCR1-y-qMMFERpFHFEpvGasXPHWRv7bnAB1Ibj4TOS1iBejZfBbM54KRfrTZqlUQpQ4sn1U3CDl2qUP-Mw"/>
 </div>
-<span class="text-teal-900 font-extrabold tracking-tight font-manrope text-lg">SpareGrow</span>
+<img src="/sparegrow_logo_dark.png" alt="SpareGrow" class="h-6 object-contain" />
 </div>
 <div class="flex items-center gap-4">
 <button class="hover:opacity-80 transition-opacity text-teal-900 cursor-pointer" onclick="navigate('Notifications_4.html')">
@@ -33,11 +33,11 @@
 <div class="grid grid-cols-2 md:grid-cols-4 gap-xl">
 <div class="text-on-primary">
 <p class="font-label-caps opacity-80 mb-xs">TOTAL SEEDING</p>
-<p class="font-headline-md text-headline-md">₹24,500.00</p>
+<p class="font-headline-md text-headline-md" id="total-seeding">₹0.00</p>
 </div>
 <div class="text-on-primary">
 <p class="font-label-caps opacity-80 mb-xs">ACTIVE HARVESTS</p>
-<p class="font-headline-md text-headline-md">3</p>
+<p class="font-headline-md text-headline-md" id="active-harvests">0</p>
 </div>
 </div>
 </div>
@@ -60,6 +60,55 @@
                 </button>
 </div>
 </section>
+
+<!-- Goal Details Modal (Hidden by Default) -->
+<div id="goal-modal" class="fixed inset-0 z-[100] hidden">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onclick="closeGoalModal()"></div>
+    
+    <!-- Modal Content -->
+    <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-900 rounded-t-3xl p-6 shadow-2xl transform transition-transform duration-300 translate-y-full" id="goal-modal-content">
+        <div class="w-12 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-6"></div>
+        
+        <div class="flex justify-between items-start mb-6">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 bg-secondary-container rounded-2xl flex items-center justify-center text-on-secondary-container text-3xl">
+                    <span class="material-symbols-outlined" id="modal-goal-icon">potted_plant</span>
+                </div>
+                <div>
+                    <h2 class="font-title-lg text-primary" id="modal-goal-title">Goal Title</h2>
+                    <p class="text-on-surface-variant font-data-mono text-sm">₹<span id="modal-goal-saved">0</span> / ₹<span id="modal-goal-target">0</span></p>
+                </div>
+            </div>
+            <button class="text-error bg-error/10 w-10 h-10 rounded-full flex items-center justify-center hover:bg-error/20 transition-colors" onclick="confirmDeleteGoal()">
+                <span class="material-symbols-outlined">delete</span>
+            </button>
+        </div>
+
+        <div class="w-full h-3 bg-surface-container rounded-full overflow-hidden mb-6">
+            <div class="h-full bg-secondary progress-glow rounded-full transition-all duration-1000" id="modal-goal-progress" style="width: 0%"></div>
+        </div>
+
+        <div class="mb-6">
+            <label class="font-label-caps text-outline mb-2 block">ADD WATER (FUNDS) 💧</label>
+            <div class="relative flex items-center">
+                <span class="absolute left-4 font-title-sm text-primary">₹</span>
+                <input class="w-full h-14 pl-10 pr-4 rounded-xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface-container-lowest font-headline-md text-primary transition-all outline-none" id="add-funds-amount" placeholder="500" type="number" />
+            </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3 mb-6">
+            <button class="py-3 border border-outline-variant rounded-lg font-data-mono text-primary hover:bg-primary-container transition-colors" onclick="setAddFundsAmount(100)">+100</button>
+            <button class="py-3 border border-outline-variant rounded-lg font-data-mono text-primary hover:bg-primary-container transition-colors" onclick="setAddFundsAmount(500)">+500</button>
+            <button class="py-3 border border-outline-variant rounded-lg font-data-mono text-primary hover:bg-primary-container transition-colors" onclick="setAddFundsAmount(1000)">+1000</button>
+        </div>
+
+        <button class="w-full bg-primary text-white py-4 rounded-xl font-label-caps text-lg shadow-lg shadow-primary/30 hover:opacity-90 active:scale-95 transition-all flex justify-center items-center gap-2" id="btn-add-funds">
+            <span class="material-symbols-outlined">water_drop</span> POUR FUNDS
+        </button>
+    </div>
+</div>
+
 </main>
 <!-- BottomNavBar -->
 <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/80 backdrop-blur-md shadow-[0_-4px_20px_0_rgba(0,0,0,0.04)] border-t border-slate-200/50">
@@ -84,3 +133,4 @@
 <span class="font-manrope font-medium text-[10px]">Settings</span>
 </a>
 </nav>
+
