@@ -1,0 +1,119 @@
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white/80 backdrop-blur-md border-b border-slate-200/50 shadow-sm">
+    <div class="flex items-center gap-3">
+        <button class="material-symbols-outlined text-teal-900 hover:opacity-80 transition-opacity cursor-pointer" onclick="navigate('ProfileSettings_dbb3792156614cb5ae492572ff792679.html')">arrow_back</button>
+        <span class="text-teal-900 font-extrabold tracking-tight font-manrope text-lg">Auto-Invest Setup</span>
+    </div>
+</header>
+
+<!-- Main Content Canvas -->
+<main class="min-h-screen pt-20 pb-28 px-gutter flex flex-col items-center bg-surface w-full max-w-lg mx-auto">
+    <!-- Progress Indicator -->
+    <div class="w-full flex items-center justify-between mb-8 px-4">
+        <div class="flex flex-col items-center gap-2 flex-1">
+            <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shadow-md">1</div>
+            <span class="text-xs font-semibold text-primary">Bank</span>
+        </div>
+        <div class="h-[2px] bg-primary flex-1 mx-2"></div>
+        <div class="flex flex-col items-center gap-2 flex-1">
+            <div class="w-8 h-8 rounded-full bg-surface-container-highest text-slate-500 flex items-center justify-center font-bold text-sm" id="step2-indicator">2</div>
+            <span class="text-xs font-semibold text-slate-500" id="step2-text">Connect</span>
+        </div>
+        <div class="h-[2px] bg-surface-container-highest flex-1 mx-2" id="line2"></div>
+        <div class="flex flex-col items-center gap-2 flex-1">
+            <div class="w-8 h-8 rounded-full bg-surface-container-highest text-slate-500 flex items-center justify-center font-bold text-sm" id="step3-indicator">3</div>
+            <span class="text-xs font-semibold text-slate-500" id="step3-text">AutoPay</span>
+        </div>
+    </div>
+
+    <!-- Step 1: Select Bank -->
+    <div id="step-1" class="w-full animate-fade-in">
+        <h1 class="text-2xl font-display-md text-primary mb-2 text-center">Select your Primary Bank</h1>
+        <p class="text-on-surface-variant text-sm mb-6 text-center">We will safely read transactions to calculate spare change.</p>
+        
+        <div class="space-y-3">
+            <button class="w-full p-4 border border-outline-variant rounded-xl flex items-center gap-4 hover:border-primary hover:bg-primary-container/20 transition-all cursor-pointer text-left" onclick="window.nextAutoInvestStep(2)">
+                <div class="w-10 h-10 rounded-full bg-[#004A8F] flex items-center justify-center text-white font-bold">H</div>
+                <div>
+                    <h3 class="font-bold text-slate-800">HDFC Bank</h3>
+                    <p class="text-xs text-slate-500">Savings Account</p>
+                </div>
+                <span class="material-symbols-outlined ml-auto text-slate-400">chevron_right</span>
+            </button>
+            <button class="w-full p-4 border border-outline-variant rounded-xl flex items-center gap-4 hover:border-primary hover:bg-primary-container/20 transition-all cursor-pointer text-left" onclick="window.nextAutoInvestStep(2)">
+                <div class="w-10 h-10 rounded-full bg-[#003B73] flex items-center justify-center text-white font-bold">S</div>
+                <div>
+                    <h3 class="font-bold text-slate-800">State Bank of India</h3>
+                    <p class="text-xs text-slate-500">Savings Account</p>
+                </div>
+                <span class="material-symbols-outlined ml-auto text-slate-400">chevron_right</span>
+            </button>
+            <button class="w-full p-4 border border-outline-variant rounded-xl flex items-center gap-4 hover:border-primary hover:bg-primary-container/20 transition-all cursor-pointer text-left" onclick="window.nextAutoInvestStep(2)">
+                <div class="w-10 h-10 rounded-full bg-[#F58220] flex items-center justify-center text-white font-bold">I</div>
+                <div>
+                    <h3 class="font-bold text-slate-800">ICICI Bank</h3>
+                    <p class="text-xs text-slate-500">Savings Account</p>
+                </div>
+                <span class="material-symbols-outlined ml-auto text-slate-400">chevron_right</span>
+            </button>
+            <button class="w-full p-4 border border-outline-variant rounded-xl flex items-center justify-center gap-2 hover:bg-slate-50 transition-colors cursor-pointer text-primary font-semibold mt-4">
+                <span class="material-symbols-outlined">search</span>
+                Search Other Banks
+            </button>
+        </div>
+    </div>
+
+    <!-- Step 2: Grant Permissions -->
+    <div id="step-2" class="w-full hidden animate-slide-up">
+        <div class="w-20 h-20 bg-primary-container rounded-full mx-auto flex items-center justify-center mb-6">
+            <span class="material-symbols-outlined text-4xl text-primary">security</span>
+        </div>
+        <h1 class="text-2xl font-display-md text-primary mb-2 text-center">Secure Connection</h1>
+        <p class="text-on-surface-variant text-sm mb-8 text-center px-4">SpareGrow uses an RBI-regulated Account Aggregator to read your transactions safely. We never see your passwords.</p>
+        
+        <div class="bg-surface-container p-4 rounded-xl space-y-4 mb-8">
+            <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-primary">check_circle</span>
+                <p class="text-sm text-slate-700">Read-only access to calculate spare change</p>
+            </div>
+            <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-primary">check_circle</span>
+                <p class="text-sm text-slate-700">Bank-level 256-bit encryption</p>
+            </div>
+            <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-error">cancel</span>
+                <p class="text-sm text-slate-700">Cannot initiate withdrawals from your bank without authorization</p>
+            </div>
+        </div>
+
+        <button class="w-full py-4 bg-primary text-white rounded-full font-bold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all cursor-pointer" onclick="window.nextAutoInvestStep(3)">
+            Agree & Connect
+        </button>
+        <button class="w-full py-4 text-slate-500 font-bold mt-2 cursor-pointer" onclick="window.nextAutoInvestStep(1)">
+            Back
+        </button>
+    </div>
+
+    <!-- Step 3: AutoPay Mandate -->
+    <div id="step-3" class="w-full hidden animate-slide-up">
+        <div class="bg-gradient-to-br from-teal-800 to-emerald-900 rounded-2xl p-6 text-white mb-8 shadow-xl relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+            <div class="flex justify-between items-center mb-6">
+                <img src="/sparegrow_logo_dark.png" class="h-8 brightness-0 invert opacity-90"/>
+                <span class="material-symbols-outlined">contactless</span>
+            </div>
+            <p class="text-emerald-100 text-sm mb-1">Maximum Mandate Limit</p>
+            <h2 class="text-3xl font-data-mono font-bold tracking-tight">₹5,000<span class="text-lg text-emerald-200">/mo</span></h2>
+            <p class="text-xs text-emerald-200 mt-4 opacity-80">UPI AutoPay Setup</p>
+        </div>
+
+        <h1 class="text-xl font-display-md text-primary mb-2 text-center">Approve AutoPay</h1>
+        <p class="text-on-surface-variant text-sm mb-8 text-center px-2">Set up a UPI AutoPay mandate to automatically invest your accumulated spare change once it reaches ₹500.</p>
+
+        <button class="w-full py-4 bg-[#1A73E8] text-white rounded-full font-bold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all cursor-pointer flex items-center justify-center gap-2" onclick="window.completeAutoInvest()">
+            <span class="material-symbols-outlined text-lg">verified_user</span>
+            Approve via UPI App
+        </button>
+    </div>
+
+</main>

@@ -1,11 +1,8 @@
 
 <!-- TopAppBar -->
 <header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm border-b border-slate-200/50 dark:border-slate-800/50">
-<div class="flex items-center gap-4">
-<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
-<img alt="User profile photo" data-alt="A professional headshot of a middle-aged male executive with a confident expression, wearing a tailored navy suit and a white shirt. The background is a blurred high-end corporate office with soft, warm lighting. The image quality is crisp, maintaining a premium financial services aesthetic with natural skin tones and sharp details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAssTWnpu3wcffu28FTP7OS3ipeEBj_99dCzt7iOP-v2h8rXkdCPGgpDWBStVIKBuwmdqTL5hFhUVdjaIGcfH3sCYHJ8ygpUMvM-H0AEqpj2KxB7wN8LFp0llmoY_3nas1x5xxDkLBNIhPOL-MoDH4Kq-7eHdHSUJL1SBDPsYSpRBBLnoW4rxgCTMJCzjGD2T4lJgT56MruCtnQGytp5K53nteCakipnbBE7bHtXuthgek4tExDFY12pivcOJMdQi43PUEJ-uVy1WBm"/>
-</div>
-<span class="text-teal-900 dark:text-teal-50 font-manrope font-bold text-lg">SpareGrow</span>
+<div class="flex items-center gap-3">
+<img src="/sparegrow_logo_dark.png" alt="SpareGrow" class="h-6 object-contain" />
 </div>
 <div class="flex items-center gap-4">
 <button class="material-symbols-outlined text-teal-900 dark:text-teal-50 hover:opacity-80 transition-opacity cursor-pointer" onclick="navigate('Notifications_4.html')">notifications</button>
@@ -28,16 +25,16 @@
 <input class="w-full pl-12 pr-4 py-3 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-body-md" placeholder="Search funds..." type="text"/>
 </div>
 <div class="flex gap-3 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
-<button class="px-4 py-2 bg-primary text-white rounded-full font-label-caps whitespace-nowrap">All Funds</button>
-<button class="px-4 py-2 bg-white border border-outline-variant text-on-surface-variant rounded-full font-label-caps whitespace-nowrap hover:bg-surface-container transition-colors">High Growth</button>
-<button class="px-4 py-2 bg-white border border-outline-variant text-on-surface-variant rounded-full font-label-caps whitespace-nowrap hover:bg-surface-container transition-colors">Stable Income</button>
-<button class="px-4 py-2 bg-white border border-outline-variant text-on-surface-variant rounded-full font-label-caps whitespace-nowrap hover:bg-surface-container transition-colors">Tax Savers</button>
+<button class="px-4 py-2 bg-primary text-white rounded-full font-label-caps whitespace-nowrap filter-btn" onclick="window.filterFunds('all', this)">All Funds</button>
+<button class="px-4 py-2 bg-white border border-outline-variant text-on-surface-variant rounded-full font-label-caps whitespace-nowrap hover:bg-surface-container transition-colors filter-btn" onclick="window.filterFunds('high-growth', this)">High Growth</button>
+<button class="px-4 py-2 bg-white border border-outline-variant text-on-surface-variant rounded-full font-label-caps whitespace-nowrap hover:bg-surface-container transition-colors filter-btn" onclick="window.filterFunds('stable-income', this)">Stable Income</button>
+<button class="px-4 py-2 bg-white border border-outline-variant text-on-surface-variant rounded-full font-label-caps whitespace-nowrap hover:bg-surface-container transition-colors filter-btn" onclick="window.filterFunds('tax-savers', this)">Tax Savers</button>
 </div>
 </div>
 <!-- Investment Cards Grid -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
 <!-- Balanced Growth Fund -->
-<div class="glass-card premium-shadow border border-slate-200/50 rounded-xl p-md flex flex-col h-full hover:translate-y-[-4px] transition-transform">
+<div class="fund-card glass-card premium-shadow border border-slate-200/50 rounded-xl p-md flex flex-col h-full hover:translate-y-[-4px] transition-transform" data-category="stable-income">
 <div class="flex justify-between items-start mb-4">
 <div class="w-12 h-12 bg-secondary-container flex items-center justify-center rounded-lg">
 <span class="material-symbols-outlined text-on-secondary-container">account_balance</span>
@@ -59,7 +56,7 @@
 <button class="w-full py-3 bg-primary text-white rounded-lg font-label-caps hover:opacity-90 transition-opacity" onclick="navigate('InvestmentDetail_5.html')">Invest Now</button>
 </div>
 <!-- Equity Alpha ETF -->
-<div class="glass-card premium-shadow border border-slate-200/50 rounded-xl p-md flex flex-col h-full border-l-4 border-l-[#C5A059] hover:translate-y-[-4px] transition-transform">
+<div class="fund-card glass-card premium-shadow border border-slate-200/50 rounded-xl p-md flex flex-col h-full border-l-4 border-l-[#C5A059] hover:translate-y-[-4px] transition-transform" data-category="high-growth">
 <div class="flex justify-between items-start mb-4">
 <div class="w-12 h-12 bg-primary-container flex items-center justify-center rounded-lg">
 <span class="material-symbols-outlined text-primary-fixed">trending_up</span>
@@ -80,7 +77,7 @@
 <button class="w-full py-3 bg-primary text-white rounded-lg font-label-caps hover:opacity-90 transition-opacity" onclick="navigate('InvestmentDetail_5.html')">Invest Now</button>
 </div>
 <!-- Safe Haven Gold -->
-<div class="glass-card premium-shadow border border-slate-200/50 rounded-xl p-md flex flex-col h-full hover:translate-y-[-4px] transition-transform">
+<div class="fund-card glass-card premium-shadow border border-slate-200/50 rounded-xl p-md flex flex-col h-full hover:translate-y-[-4px] transition-transform" data-category="tax-savers">
 <div class="flex justify-between items-start mb-4">
 <div class="w-12 h-12 bg-tertiary-fixed flex items-center justify-center rounded-lg">
 <span class="material-symbols-outlined text-tertiary">diamond</span>
@@ -101,7 +98,7 @@
 <button class="w-full py-3 bg-primary text-white rounded-lg font-label-caps hover:opacity-90 transition-opacity" onclick="navigate('InvestmentDetail_5.html')">Invest Now</button>
 </div>
 <!-- Liquid Debt Fund -->
-<div class="glass-card premium-shadow border border-slate-200/50 rounded-xl p-md flex flex-col h-full hover:translate-y-[-4px] transition-transform">
+<div class="fund-card glass-card premium-shadow border border-slate-200/50 rounded-xl p-md flex flex-col h-full hover:translate-y-[-4px] transition-transform" data-category="stable-income">
 <div class="flex justify-between items-start mb-4">
 <div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded-lg">
 <span class="material-symbols-outlined text-primary">payments</span>

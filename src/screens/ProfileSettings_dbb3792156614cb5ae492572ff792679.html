@@ -22,12 +22,13 @@
 </div>
 <div>
 <div class="flex items-center gap-2 justify-center md:justify-start">
-<h1 class="font-headline-md text-headline-md text-primary">Alex Sterling</h1>
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-secondary-container text-on-secondary-container">
+<h1 class="font-headline-md text-headline-md text-primary" id="profile-name-display">Alex Sterling</h1>
+<button class="material-symbols-outlined text-lg text-outline hover:text-primary transition-colors cursor-pointer" onclick="window.openEditProfileModal()">edit</button>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-secondary-container text-on-secondary-container ml-2">
                         Premium Member
                     </span>
 </div>
-<p class="font-body-md text-outline mt-1">Growth Tier: Gold • Member since 2022</p>
+<p class="font-body-md text-outline mt-1" id="profile-email-display">alex@example.com • +91 9876543210</p>
 <div class="flex gap-4 mt-4 justify-center md:justify-start">
 <div class="text-center">
 <span class="block font-title-sm text-primary">₹4,280.45</span>
@@ -60,14 +61,14 @@
 <span class="material-symbols-outlined text-outline" data-icon="chevron_right">chevron_right</span>
 </a>
 <div class="h-px bg-outline-variant/30 mx-4"></div>
-<a class="flex items-center justify-between p-4 hover:bg-surface-container transition-colors active:scale-[0.98]" href="#">
+<a class="flex items-center justify-between p-4 hover:bg-surface-container transition-colors active:scale-[0.98] cursor-pointer" onclick="navigate('LinkBank.html')">
 <div class="flex items-center gap-4">
 <div class="w-10 h-10 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary">
 <span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
 </div>
 <div>
 <p class="font-title-sm text-body-md font-semibold">Linked Bank Accounts</p>
-<p class="text-xs text-outline">3 accounts connected</p>
+<p class="text-xs text-outline" id="bank-accounts-count">0 accounts connected</p>
 </div>
 </div>
 <span class="material-symbols-outlined text-outline" data-icon="chevron_right">chevron_right</span>
@@ -90,6 +91,19 @@
 <div class="group">
 <h2 class="font-label-caps text-label-caps text-outline mb-3 ml-2 uppercase tracking-widest">Automation</h2>
 <div class="glass-card rounded-xl border border-outline-variant/30 overflow-hidden shadow-sm">
+<a class="flex items-center justify-between p-4 hover:bg-surface-container transition-colors active:scale-[0.98] cursor-pointer" onclick="navigate('AutoInvestSetup.html')">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+</div>
+<div>
+<p class="font-title-sm text-body-md font-semibold">Auto-Invest Setup</p>
+<p class="text-xs text-outline">Open Banking / AutoPay Mandates</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="chevron_right">chevron_right</span>
+</a>
+<div class="h-px bg-outline-variant/30 mx-4"></div>
 <a class="flex items-center justify-between p-4 hover:bg-surface-container transition-colors active:scale-[0.98]" href="#">
 <div class="flex items-center gap-4">
 <div class="w-10 h-10 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary">
@@ -164,6 +178,43 @@
             SIGN OUT
         </button>
 </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div id="edit-profile-modal" class="fixed inset-0 z-[100] hidden">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onclick="window.closeEditProfileModal()"></div>
+    
+    <!-- Modal Content -->
+    <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-900 rounded-t-3xl p-6 shadow-2xl transform transition-transform duration-300 translate-y-full" id="edit-profile-modal-content">
+        <div class="w-12 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-6"></div>
+        
+        <div class="flex justify-between items-start mb-6">
+            <h2 class="font-title-lg text-primary">Edit Profile</h2>
+            <button class="text-slate-400 hover:text-slate-600 transition-colors cursor-pointer" onclick="window.closeEditProfileModal()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <div class="space-y-4 mb-8">
+            <div>
+                <label class="font-label-caps text-outline mb-1 block">Full Name</label>
+                <input id="edit-profile-name" type="text" class="w-full p-3 rounded-xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface-container-lowest text-on-surface outline-none" value="Alex Sterling">
+            </div>
+            <div>
+                <label class="font-label-caps text-outline mb-1 block">Email</label>
+                <input id="edit-profile-email" type="email" class="w-full p-3 rounded-xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface-container-lowest text-on-surface outline-none" value="alex@example.com">
+            </div>
+            <div>
+                <label class="font-label-caps text-outline mb-1 block">Phone Number</label>
+                <input id="edit-profile-phone" type="tel" class="w-full p-3 rounded-xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface-container-lowest text-on-surface outline-none" value="+91 9876543210">
+            </div>
+        </div>
+
+        <button class="w-full py-4 bg-primary text-white rounded-full font-bold text-lg hover:shadow-lg hover:-translate-y-0.5 transition-all cursor-pointer" onclick="window.saveProfile()">
+            Save Changes
+        </button>
+    </div>
 </div>
 </main>
 <!-- BottomNavBar -->

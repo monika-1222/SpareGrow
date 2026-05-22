@@ -308,6 +308,8 @@ function attachAuthListeners(filename) {
         renderTransactionHistory();
     } else if (filename.includes('VerifyMPIN') || filename.includes('SetMPIN')) {
         setupMPINListeners(filename);
+    } else if (filename.includes('ProfileSettings')) {
+        if(window.renderProfile) window.renderProfile();
     }
 }
 
@@ -905,3 +907,195 @@ window.setWithdrawAmount = function(amt) {
 // Start the app
 init();
 
+// --- NEW FEATURES ---
+
+window.openEditProfileModal = function() {
+    const modal = document.getElementById('edit-profile-modal');
+    const content = document.getElementById('edit-profile-modal-content');
+    if(modal) {
+        modal.classList.remove('hidden');
+        // small delay to allow display:block to apply before animating
+        setTimeout(() => {
+            content.classList.remove('translate-y-full');
+        }, 10);
+    }
+}
+
+window.closeEditProfileModal = function() {
+    const modal = document.getElementById('edit-profile-modal');
+    const content = document.getElementById('edit-profile-modal-content');
+    if(modal) {
+        content.classList.add('translate-y-full');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300); // match transition duration
+    }
+}
+
+window.saveProfile = async function() {
+    const name = document.getElementById('edit-profile-name').value;
+    const phone = document.getElementById('edit-profile-phone').value;
+    
+    if(!currentSession) return;
+    
+    // Show loading state on button
+    const btn = document.querySelector('#edit-profile-modal button.bg-primary');
+    const oldHtml = btn.innerHTML;
+    if(btn) { btn.innerHTML = 'Saving...'; btn.disabled = true; }
+    
+    const { data, error } = await supabase.auth.updateUser({
+        data: { full_name: name, phone: phone }
+    });
+    
+    if(btn) { btn.innerHTML = oldHtml; btn.disabled = false; }
+    
+    if (error) {
+        showToast(error.message, 'error');
+        return;
+    }
+    
+    currentSession.user = data.user;
+    window.renderProfile();
+    closeEditProfileModal();
+    showToast('Profile updated successfully!', 'success');
+}
+
+window.renderProfile = function() {
+    if(!currentSession) return;
+    
+    const meta = currentSession.user.user_metadata || {};
+    const name = meta.full_name || 'Add Name';
+    const phone = meta.phone || 'Add Phone';
+    const email = currentSession.user.email;
+    
+    const nameDisplay = document.getElementById('profile-name-display');
+    const emailDisplay = document.getElementById('profile-email-display');
+    
+    if(nameDisplay) nameDisplay.innerText = name;
+    if(emailDisplay) emailDisplay.innerText = `${email} • ${phone}`;
+    
+    const nameInput = document.getElementById('edit-profile-name');
+    const phoneInput = document.getElementById('edit-profile-phone');
+    const emailInput = document.getElementById('edit-profile-email');
+    
+    if(nameInput) nameInput.value = name !== 'Add Name' ? name : '';
+    if(phoneInput) phoneInput.value = phone !== 'Add Phone' ? phone : '';
+    if(emailInput) {
+        emailInput.value = email;
+        emailInput.disabled = true; 
+    }
+    
+    const bankAccounts = meta.bank_accounts || [];
+    const bankCountDisplay = document.getElementById('bank-accounts-count');
+    if(bankCountDisplay) {
+        bankCountDisplay.innerText = `${bankAccounts.length} accounts connected`;
+    }
+}
+
+window.nextAutoInvestStep = function(step) {
+    const s1 = document.getElementById('step-1');
+    const s2 = document.getElementById('step-2');
+    const s3 = document.getElementById('step-3');
+    
+    if(s1) s1.classList.add('hidden');
+    if(s2) s2.classList.add('hidden');
+    if(s3) s3.classList.add('hidden');
+    
+    const targetStep = document.getElementById(`step-${step}`);
+    if(targetStep) targetStep.classList.remove('hidden');
+    
+    // Update progress bar
+    if(step >= 2) {
+        const ind2 = document.getElementById('step2-indicator');
+        if(ind2) {
+            ind2.classList.replace('bg-surface-container-highest', 'bg-primary');
+            ind2.classList.replace('text-slate-500', 'text-white');
+        }
+        const text2 = document.getElementById('step2-text');
+        if(text2) text2.classList.replace('text-slate-500', 'text-primary');
+        const line2 = document.getElementById('line2');
+        if(line2) line2.classList.replace('bg-surface-container-highest', 'bg-primary');
+    }
+    if(step >= 3) {
+        const ind3 = document.getElementById('step3-indicator');
+        if(ind3) {
+            ind3.classList.replace('bg-surface-container-highest', 'bg-primary');
+            ind3.classList.replace('text-slate-500', 'text-white');
+        }
+        const text3 = document.getElementById('step3-text');
+        if(text3) text3.classList.replace('text-slate-500', 'text-primary');
+    }
+}
+
+window.completeAutoInvest = function() {
+    showToast('AutoPay Mandate Authorized!', 'success');
+    setTimeout(() => {
+        navigate('ProfileSettings_dbb3792156614cb5ae492572ff792679.html');
+    }, 1500);
+}
+
+window.filterFunds = function(category, btnElement) {
+    // Update button styles
+    const allButtons = document.querySelectorAll('.filter-btn');
+    allButtons.forEach(btn => {
+        btn.classList.remove('bg-primary', 'text-white');
+        btn.classList.add('bg-white', 'text-on-surface-variant');
+    });
+    
+    // Highlight clicked button
+    if (btnElement) {
+        btnElement.classList.remove('bg-white', 'text-on-surface-variant');
+        btnElement.classList.add('bg-primary', 'text-white');
+    }
+
+    // Filter cards
+    const cards = document.querySelectorAll('.fund-card');
+    cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+window.linkBankAccount = async function(event, form) {
+    event.preventDefault();
+    if(!currentSession) return;
+    
+    const btn = document.getElementById('saveBankBtn');
+    const oldHtml = btn.innerHTML;
+    btn.innerHTML = 'Linking...';
+    btn.disabled = true;
+    
+    const bankName = document.getElementById('bank-name').value;
+    const accountNo = document.getElementById('account-no').value;
+    const ifscCode = document.getElementById('ifsc-code').value;
+    
+    const meta = currentSession.user.user_metadata || {};
+    const bankAccounts = meta.bank_accounts || [];
+    
+    bankAccounts.push({
+        bankName,
+        accountNo: accountNo.slice(-4), // Only store last 4 for security
+        ifscCode,
+        linkedAt: new Date().toISOString()
+    });
+    
+    const { data, error } = await supabase.auth.updateUser({
+        data: { bank_accounts: bankAccounts }
+    });
+    
+    btn.innerHTML = oldHtml;
+    btn.disabled = false;
+    
+    if (error) {
+        showToast(error.message, 'error');
+        return;
+    }
+    
+    currentSession.user = data.user;
+    
+    document.getElementById('inputState').classList.add('hidden');
+    document.getElementById('successState').classList.remove('hidden');
+}
