@@ -24,11 +24,17 @@
 <!-- Input: Password -->
 <div class="group">
 <div class="flex justify-between items-center mb-xs">
-<a class="font-label-caps text-label-caps text-emerald-400 hover:text-emerald-300 transition-colors cursor-pointer" onclick="navigate('ForgotPassword_0.html')">Forgot Password?</a>
+<label class="font-label-caps text-label-caps text-slate-400" for="login-password">Password</label>
+<a class="font-label-caps text-[12px] text-emerald-400 hover:text-emerald-300 transition-colors cursor-pointer" onclick="navigate('ForgotPassword_0.html')">Forgot Password?</a>
+</div>
 <div class="relative">
 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" style="font-size: 20px;">lock</span>
-<input class="w-full h-[48px] pl-12 pr-4 bg-slate-900 border border-slate-700 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-all duration-200 font-body-md text-white placeholder-slate-600" id="login-password" placeholder="••••••••" type="password" required/>
-<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 cursor-pointer hover:text-white" style="font-size: 20px;">visibility_off</span>
+<input class="w-full h-[48px] pl-12 pr-12 bg-slate-900 border border-slate-700 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-all duration-200 font-body-md text-white placeholder-slate-600" id="login-password" placeholder="••••••••" type="password" required/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 cursor-pointer hover:text-white" style="font-size: 20px;" onclick="const el = document.getElementById('login-password'); if(el.type === 'password'){el.type='text'; this.innerText='visibility';} else {el.type='password'; this.innerText='visibility_off';}">visibility_off</span>
+</div>
+<div class="flex items-center mt-3">
+<input type="checkbox" id="remember-me" class="w-4 h-4 rounded border-slate-700 bg-slate-900 text-emerald-500 focus:ring-emerald-500/20 focus:ring-offset-0 cursor-pointer" />
+<label for="remember-me" class="ml-2 font-body-md text-sm text-slate-400 cursor-pointer select-none">Remember my password</label>
 </div>
 </div>
 <!-- Primary Action -->
