@@ -10,34 +10,36 @@
 </button>
 </div>
 </header>
-<main class="pt-24 pb-32 px-gutter max-w-[1280px] mx-auto">
+<main class="pt-24 pb-32 px-gutter max-w-[1280px] mx-auto screen-fade-in">
 <!-- Hero Section -->
 <section class="mb-lg">
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-md">
 <div>
-<h1 class="font-headline-md text-headline-md text-primary mb-xs">Your Growth Journey</h1>
+<h1 class="font-headline-md text-headline-md text-primary mb-xs font-bold">Your Growth Journey</h1>
 <p class="text-on-surface-variant font-body-md">Cultivate your future, one contribution at a time.</p>
 </div>
-<button class="bg-primary text-on-primary px-6 py-3 rounded-xl font-label-caps flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all cursor-pointer" onclick="navigate('CreateGoal_482d0dbe0cdc4c869fdca13c8c94d606.html')">
-<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+<button class="bg-primary text-on-primary px-6 py-3 rounded-2xl font-label-caps flex items-center gap-2 hover:bg-teal-950 active:scale-95 transition-all cursor-pointer shadow-md hover:shadow-lg" onclick="navigate('CreateGoal_482d0dbe0cdc4c869fdca13c8c94d606.html')">
+<span class="material-symbols-outlined text-[18px] text-emerald-300" data-icon="add">add</span>
                     PLANT NEW GOAL
                 </button>
 </div>
 <!-- Stats Overview - Asymmetric Glass Card -->
-<div class="relative rounded-2xl overflow-hidden h-48 mb-lg border border-outline-variant/30">
-<img class="absolute inset-0 w-full h-full object-cover" data-alt="A serene, wide-angle landscape of a lush, emerald green mountain valley during the golden hour. The soft, warm sunlight filters through a light mist, highlighting the rich textures of the vegetation. The composition is balanced and peaceful, evoking a sense of long-term stability and organic growth, perfectly mirroring a high-end financial dashboard's aesthetic." src="/logo.png"/>
-<div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-transparent flex items-center px-md">
+<div class="relative rounded-2xl overflow-hidden h-48 mb-lg border border-emerald-500/20 shadow-lg group cursor-pointer transition-all duration-300 hover:shadow-xl bg-gradient-to-br from-[#01251e] via-[#043e33] to-[#0b1311]">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_120%,rgba(16,185,129,0.15),transparent_60%)]"></div>
+<div class="absolute inset-0 flex items-center px-md">
 <div class="grid grid-cols-2 md:grid-cols-4 gap-xl">
-<div class="text-on-primary">
-<p class="font-label-caps opacity-80 mb-xs">TOTAL SEEDING</p>
-<p class="font-headline-md text-headline-md" id="total-seeding">₹0.00</p>
+<div class="text-on-primary select-none">
+<p class="font-label-caps text-emerald-300/80 mb-xs text-[10px] tracking-widest font-extrabold">TOTAL SEEDING</p>
+<p class="font-headline-md text-3xl font-black text-white" id="total-seeding">₹0.00</p>
 </div>
-<div class="text-on-primary">
-<p class="font-label-caps opacity-80 mb-xs">ACTIVE HARVESTS</p>
-<p class="font-headline-md text-headline-md" id="active-harvests">0</p>
+<div class="text-on-primary select-none">
+<p class="font-label-caps text-emerald-300/80 mb-xs text-[10px] tracking-widest font-extrabold">ACTIVE HARVESTS</p>
+<p class="font-headline-md text-3xl font-black text-white" id="active-harvests">0</p>
 </div>
 </div>
 </div>
+<!-- Premium Watermark logo style overlay -->
+<div class="absolute -right-8 -bottom-8 w-48 h-48 bg-emerald-500/5 rounded-full blur-2xl"></div>
 </div>
 </section>
 <!-- Goals Grid -->
@@ -47,12 +49,12 @@
 </section>
 <!-- Wealth Insights - Horizontal Card -->
 <section class="mt-lg">
-<div class="bg-white rounded-2xl p-md border border-outline-variant/30 flex flex-col md:flex-row items-center gap-md">
+<div class="glass-card rounded-2xl p-md border border-outline-variant/30 flex flex-col md:flex-row items-center gap-md shadow-md transition-all duration-300 hover:shadow-lg">
 <div class="flex-1">
-<h4 class="font-title-sm text-title-sm text-primary mb-xs">Optimization Tip</h4>
-<p class="text-on-surface-variant">Based on your spending, redirecting ₹50/week would complete 'Euro Trip' 3 months earlier.</p>
+<h4 class="font-title-sm text-title-sm text-primary mb-xs font-bold">Optimization Tip</h4>
+<p class="text-on-surface-variant text-sm">Based on your spending, redirecting ₹50/week would complete 'Euro Trip' 3 months earlier.</p>
 </div>
-<button class="border border-secondary text-secondary px-6 py-2 rounded-xl font-label-caps hover:bg-secondary/5 transition-colors">
+<button class="border border-secondary text-secondary px-6 py-2 rounded-2xl font-label-caps hover:bg-secondary/5 transition-colors cursor-pointer font-bold">
                     RECALIBRATE GOALS
                 </button>
 </div>
@@ -61,7 +63,7 @@
 <!-- Goal Details Modal (Hidden by Default) -->
 <div id="goal-modal" class="fixed inset-0 z-[100] hidden">
     <!-- Backdrop -->
-    <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onclick="closeGoalModal()"></div>
+    <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onclick="window.closeGoalModal()"></div>
     
     <!-- Modal Content -->
     <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-900 rounded-t-3xl p-6 shadow-2xl transform transition-transform duration-300 translate-y-full" id="goal-modal-content">
@@ -77,12 +79,15 @@
                     <p class="text-on-surface-variant font-data-mono text-sm">₹<span id="modal-goal-saved">0</span> / ₹<span id="modal-goal-target">0</span></p>
                 </div>
             </div>
-            <button class="text-error bg-error/10 w-10 h-10 rounded-full flex items-center justify-center hover:bg-error/20 transition-colors" onclick="confirmDeleteGoal()">
+            <button class="text-error bg-error/10 w-10 h-10 rounded-full flex items-center justify-center hover:bg-error/20 transition-colors" onclick="window.confirmDeleteGoal()">
                 <span class="material-symbols-outlined">delete</span>
             </button>
         </div>
+        
+        <!-- Interactive Procedural Plant Sprout Visualizer -->
+        <div id="modal-plant-visualizer" class="w-full h-32 flex justify-center items-center mb-6 relative bg-slate-50/50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800 p-2"></div>
 
-        <div class="w-full h-3 bg-surface-container rounded-full overflow-hidden mb-6">
+        <div class="w-full h-3 📄 shadow-inner bg-surface-container rounded-full overflow-hidden mb-6">
             <div class="h-full bg-secondary progress-glow rounded-full transition-all duration-1000" id="modal-goal-progress" style="width: 0%"></div>
         </div>
 
@@ -95,9 +100,9 @@
         </div>
 
         <div class="grid grid-cols-3 gap-3 mb-6">
-            <button class="py-3 border border-outline-variant rounded-lg font-data-mono text-primary hover:bg-primary-container transition-colors" onclick="setAddFundsAmount(100)">+100</button>
-            <button class="py-3 border border-outline-variant rounded-lg font-data-mono text-primary hover:bg-primary-container transition-colors" onclick="setAddFundsAmount(500)">+500</button>
-            <button class="py-3 border border-outline-variant rounded-lg font-data-mono text-primary hover:bg-primary-container transition-colors" onclick="setAddFundsAmount(1000)">+1000</button>
+            <button class="py-3 border border-outline-variant rounded-lg font-data-mono text-primary hover:bg-primary-container transition-colors" onclick="window.setAddFundsAmount(100)">+100</button>
+            <button class="py-3 border border-outline-variant rounded-lg font-data-mono text-primary hover:bg-primary-container transition-colors" onclick="window.setAddFundsAmount(500)">+500</button>
+            <button class="py-3 border border-outline-variant rounded-lg font-data-mono text-primary hover:bg-primary-container transition-colors" onclick="window.setAddFundsAmount(1000)">+1000</button>
         </div>
 
         <button class="w-full bg-primary text-white py-4 rounded-xl font-label-caps text-lg shadow-lg shadow-primary/30 hover:opacity-90 active:scale-95 transition-all flex justify-center items-center gap-2" id="btn-add-funds">

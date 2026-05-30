@@ -13,13 +13,13 @@
         <p class="font-label-caps text-outline mb-2">ENTER AMOUNT TO DEPOSIT</p>
         <div class="flex items-center justify-center text-primary font-display-lg text-5xl mb-6">
             <span class="text-3xl text-outline mr-1">₹</span>
-            <input type="number" id="amount" value="500" class="bg-transparent border-none outline-none w-32 text-center text-primary p-0 m-0" oninput="updateIntent()">
+            <input type="number" id="amount" value="500" class="bg-transparent border-none outline-none w-32 text-center text-primary p-0 m-0" oninput="window.updateIntent()">
         </div>
 
         <div class="flex gap-2 justify-center">
-            <button class="px-4 py-2 rounded-full border border-outline-variant font-data-mono text-sm text-on-surface-variant hover:bg-secondary/10 hover:border-secondary hover:text-secondary transition-colors" onclick="setAmount(500)">+₹500</button>
-            <button class="px-4 py-2 rounded-full border border-outline-variant font-data-mono text-sm text-on-surface-variant hover:bg-secondary/10 hover:border-secondary hover:text-secondary transition-colors" onclick="setAmount(1000)">+₹1,000</button>
-            <button class="px-4 py-2 rounded-full border border-outline-variant font-data-mono text-sm text-on-surface-variant hover:bg-secondary/10 hover:border-secondary hover:text-secondary transition-colors" onclick="setAmount(5000)">+₹5,000</button>
+            <button class="px-4 py-2 rounded-full border border-outline-variant font-data-mono text-sm text-on-surface-variant hover:bg-secondary/10 hover:border-secondary hover:text-secondary transition-colors" onclick="window.setAmount(500)">+₹500</button>
+            <button class="px-4 py-2 rounded-full border border-outline-variant font-data-mono text-sm text-on-surface-variant hover:bg-secondary/10 hover:border-secondary hover:text-secondary transition-colors" onclick="window.setAmount(1000)">+₹1,000</button>
+            <button class="px-4 py-2 rounded-full border border-outline-variant font-data-mono text-sm text-on-surface-variant hover:bg-secondary/10 hover:border-secondary hover:text-secondary transition-colors" onclick="window.setAmount(5000)">+₹5,000</button>
         </div>
     </div>
 
@@ -43,7 +43,7 @@
                 <span class="font-title-sm text-sm text-primary">Paytm</span>
             </a>
 
-            <button class="flex flex-col items-center justify-center p-4 bg-white border border-slate-200/50 rounded-xl hover:border-secondary transition-colors shadow-sm active:scale-95" onclick="document.getElementById('qr-modal').classList.remove('hidden')">
+            <button class="flex flex-col items-center justify-center p-4 bg-white border border-slate-200/50 rounded-xl hover:border-secondary transition-colors shadow-sm active:scale-95" onclick="window.updateIntent(); document.getElementById('qr-modal').classList.remove('hidden')">
                 <div class="w-12 h-12 bg-secondary-container rounded-full mb-2 flex items-center justify-center text-on-secondary-container">
                     <span class="material-symbols-outlined">qr_code_2</span>
                 </div>

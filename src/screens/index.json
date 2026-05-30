@@ -4,6 +4,10 @@
     "filename": "SplashScreen_b37f5eee45654168824003cd0baf2abc.html"
   },
   {
+    "title": "Onboarding",
+    "filename": "Onboarding_Walkthrough.html"
+  },
+  {
     "title": "Login",
     "filename": "Login_7b98119117794e4a97e4c84627fe9615.html"
   },
@@ -66,5 +70,9 @@
   {
     "title": "PaymentUPI",
     "filename": "PaymentUPI_7.html"
+  },
+  {
+    "title": "WealthSimulator",
+    "filename": "WealthSimulator.html"
   }
 ]

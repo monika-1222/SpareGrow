@@ -1,0 +1,173 @@
+<!-- Onboarding Walkthrough Screens Container -->
+<div class="relative min-h-screen w-full flex flex-col justify-between py-12 px-6 bg-slate-950 text-slate-100 overflow-hidden font-manrope">
+    <!-- Ambient Radial Background Glows -->
+    <div class="absolute -right-24 -top-24 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl z-0 pointer-events-none"></div>
+    <div class="absolute -left-24 bottom-12 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl z-0 pointer-events-none"></div>
+
+    <!-- Onboarding Header (Logo & Skip) -->
+    <header class="relative z-10 flex justify-between items-center w-full max-w-[480px] mx-auto">
+        <div class="flex items-center gap-2">
+            <img src="/sparegrow_logo_dark.png" alt="SpareGrow" class="h-6 object-contain" />
+        </div>
+        <button class="text-slate-400 hover:text-white font-bold text-xs uppercase tracking-widest px-4 py-2 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 active:scale-95 transition-all cursor-pointer" onclick="navigate('Login_7b98119117794e4a97e4c84627fe9615.html')">
+            Skip
+        </button>
+    </header>
+
+    <!-- Slides Carousel Wrapper -->
+    <main class="relative z-10 flex-1 flex flex-col justify-center items-center w-full max-w-[480px] mx-auto my-8">
+        
+        <!-- Slide 1: Micro Savings -->
+        <div id="onboarding-slide-1" class="onboarding-slide active flex flex-col items-center text-center space-y-6 w-full">
+            <div class="slide-visual-box flex justify-center items-center w-full aspect-square max-h-[280px] bg-slate-900/50 rounded-3xl border border-white/5 relative overflow-hidden select-none">
+                <!-- Visual Element: Interactive Split Transaction Mockup -->
+                <div class="w-11/12 max-w-[320px] bg-slate-950/80 backdrop-blur-md rounded-2xl p-5 border border-emerald-500/20 shadow-lg shadow-emerald-950/20 space-y-4">
+                    <div class="flex justify-between items-center pb-3 border-b border-white/5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                                <span class="material-symbols-outlined">restaurant</span>
+                            </div>
+                            <div class="text-left">
+                                <h4 class="font-bold text-sm text-slate-100 leading-tight">Chai Stall Tapri</h4>
+                                <span class="text-[10px] text-slate-400 font-label-caps">DAILY ESSENTIALS</span>
+                            </div>
+                        </div>
+                        <span class="text-slate-400 text-xs font-data-mono">Today</span>
+                    </div>
+                    <div class="space-y-2 text-left">
+                        <div class="flex justify-between text-xs text-slate-400">
+                            <span>Amount Spent:</span>
+                            <span class="font-data-mono text-slate-200">₹8.00</span>
+                        </div>
+                        <div class="flex justify-between text-xs text-slate-400">
+                            <span>Rounded To:</span>
+                            <span class="font-data-mono text-slate-200">₹10.00</span>
+                        </div>
+                        <div class="flex justify-between text-sm font-bold text-slate-200 bg-emerald-950/30 p-2.5 rounded-lg border border-emerald-500/10">
+                            <span>Spare Change:</span>
+                            <span class="font-data-mono text-emerald-400 font-black">+₹2.00 🌱</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-3">
+                <span class="font-label-caps text-emerald-400 text-xs tracking-[0.2em] font-extrabold block">MICRO-SAVINGS SYSTEM</span>
+                <h2 class="text-2xl font-black text-slate-50 tracking-tight leading-none">Save Small. Grow Big.</h2>
+                <p class="text-sm text-slate-400 leading-relaxed px-4">
+                    Every digital purchase is rounded up to the nearest ₹10. The tiny spare changes are collected automatically and put to work immediately.
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Plant Compounding Garden -->
+        <div id="onboarding-slide-2" class="onboarding-slide hidden flex flex-col items-center text-center space-y-6 w-full">
+            <div class="slide-visual-box flex justify-center items-center w-full aspect-square max-h-[280px] bg-slate-900/50 rounded-3xl border border-white/5 relative overflow-hidden select-none">
+                <!-- Visual Element: Interactive Sprout Growth Graphics -->
+                <div class="relative w-40 h-40 flex flex-col justify-center items-center bg-slate-950/40 rounded-full border border-teal-500/10 shadow-inner">
+                    <!-- Sprout SVG -->
+                    <svg viewBox="0 0 100 100" class="w-24 h-24 filter drop-shadow-md">
+                        <ellipse cx="50" cy="87" rx="22" ry="4" fill="#78350f" opacity="0.8"/>
+                        <path d="M 32 87 L 36 96 L 64 96 L 68 87 Z" fill="#92400e" stroke="#78350f" stroke-width="0.5"/>
+                        <path d="M 50 85 Q 48 55 52 35" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M 49 70 C 35 65, 30 55, 48 65 Z" fill="#10b981" stroke="#047857" stroke-width="0.5"/>
+                        <path d="M 51 55 C 65 50, 70 40, 52 50 Z" fill="#10b981" stroke="#047857" stroke-width="0.5"/>
+                        <path d="M 49 45 C 35 40, 32 30, 48 40 Z" fill="#34d399" stroke="#047857" stroke-width="0.5"/>
+                        <!-- Flowers and sparkles -->
+                        <g transform="translate(52, 35) scale(0.95)">
+                            <circle cx="0" cy="-8" r="6" fill="#C5A059" opacity="0.9"/>
+                            <circle cx="-8" cy="0" r="6" fill="#C5A059" opacity="0.9"/>
+                            <circle cx="8" cy="0" r="6" fill="#C5A059" opacity="0.9"/>
+                            <circle cx="0" cy="8" r="6" fill="#C5A059" opacity="0.9"/>
+                            <circle cx="0" cy="0" r="4.5" fill="#f59e0b"/>
+                        </g>
+                    </svg>
+                    <!-- Floating raindrops -->
+                    <div class="absolute inset-0 z-10 pointer-events-none">
+                        <span class="absolute top-4 left-1/3 text-emerald-400 text-xs opacity-75 animate-bounce">💧</span>
+                        <span class="absolute top-10 right-1/4 text-emerald-400 text-[10px] opacity-75 animate-bounce [animation-delay:0.3s]">💧</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-3">
+                <span class="font-label-caps text-amber-400 text-xs tracking-[0.2em] font-extrabold block">GAMIFIED HARVESTS</span>
+                <h2 class="text-2xl font-black text-slate-50 tracking-tight leading-none">Cultivate Your Savings.</h2>
+                <p class="text-sm text-slate-400 leading-relaxed px-4">
+                    Water your potted plants with accumulated funds! Watch them grow dynamically from seedlings into full golden flowers as you march towards your goals.
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 3: GrowBot AI -->
+        <div id="onboarding-slide-3" class="onboarding-slide hidden flex flex-col items-center text-center space-y-6 w-full">
+            <div class="slide-visual-box flex justify-center items-center w-full aspect-square max-h-[280px] bg-slate-900/50 rounded-3xl border border-white/5 relative overflow-hidden select-none">
+                <!-- Visual Element: GrowBot Smart Chat UI representation -->
+                <div class="w-11/12 max-w-[320px] bg-slate-950/80 backdrop-blur-md rounded-2xl p-4 border border-[#C5A059]/20 shadow-lg text-left space-y-3">
+                    <div class="flex items-center gap-3 pb-2 border-b border-white/5">
+                        <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center border border-emerald-400/30 text-emerald-400">
+                            <span class="material-symbols-outlined text-sm">psychology</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xs text-slate-100">GrowBot Advisor</h4>
+                            <span class="text-[8px] text-emerald-400 font-label-caps">WEALTH PLANNERS</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900/60 p-2.5 rounded-xl border border-white/5 text-[11px] text-slate-300 leading-normal">
+                        🤖 <strong>GrowBot suggestion:</strong><br>
+                        "ROUND-UP MULTIPLIER set at <strong>2.0x</strong> accelerates your Vacations goal completion by <strong>22 days</strong>!"
+                    </div>
+                    <div class="flex justify-end">
+                        <span class="text-[10px] text-emerald-400 bg-emerald-950/50 border border-emerald-500/20 px-2.5 py-1 rounded-full font-bold">✨ Apply Multiplier</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-3">
+                <span class="font-label-caps text-teal-400 text-xs tracking-[0.2em] font-extrabold block">AI WEALTH PLANNERS</span>
+                <h2 class="text-2xl font-black text-slate-50 tracking-tight leading-none">Smart Proactive Guidance.</h2>
+                <p class="text-sm text-slate-400 leading-relaxed px-4">
+                    Interact with GrowBot, your contextual AI copilot. Automatically rebalance portfolios, simulate top-ups, and receive budget optimization tips.
+                </p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Onboarding Footer (Slide Indicators & Navigation CTA) -->
+    <footer class="relative z-10 w-full max-w-[480px] mx-auto flex flex-col items-center gap-8">
+        <!-- Progress Indicators (Dots) -->
+        <div class="flex gap-2.5 items-center">
+            <span id="dot-1" class="onboarding-dot active w-6 h-1.5 bg-primary rounded-full transition-all duration-300"></span>
+            <span id="dot-2" class="onboarding-dot w-1.5 h-1.5 bg-white/20 rounded-full transition-all duration-300"></span>
+            <span id="dot-3" class="onboarding-dot w-1.5 h-1.5 bg-white/20 rounded-full transition-all duration-300"></span>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="w-full flex flex-col gap-4">
+            <button id="btn-next-slide" class="w-full h-14 bg-primary hover:bg-teal-950 text-white rounded-2xl font-label-caps text-sm tracking-wider font-bold shadow-lg shadow-primary/20 active:scale-[0.98] transition-all cursor-pointer flex justify-center items-center gap-2">
+                <span>NEXT</span>
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+            </button>
+        </div>
+    </footer>
+</div>
+
+<!-- Onboarding visual animations style scope -->
+<style>
+    .onboarding-slide {
+        transition: all 0.4s ease-in-out;
+        transform: translateY(0);
+        opacity: 1;
+    }
+    
+    .onboarding-slide.hidden {
+        display: none;
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    .slide-visual-box {
+        box-shadow: inset 0 0 40px 0 rgba(16, 185, 129, 0.05);
+    }
+</style>
