@@ -53,7 +53,7 @@
 <path class="sparkline-path stroke-secondary" d="M0,40 L20,35 L40,38 L60,30 L80,32 L100,20 L120,25 L140,15 L160,18 L180,10 L200,5"></path>
 </svg>
 </div>
-<button class="w-full py-3 bg-primary text-white rounded-lg font-label-caps hover:opacity-90 transition-opacity" onclick="navigate('InvestmentDetail_5.html')">Invest Now</button>
+<button class="w-full py-3 bg-primary text-white rounded-lg font-label-caps hover:opacity-90 transition-opacity cursor-pointer" onclick="window.viewFundDetail('Balanced Growth Fund')">Invest Now</button>
 </div>
 <!-- Equity Alpha ETF -->
 <div class="fund-card glass-card premium-shadow border border-slate-200/50 rounded-xl p-md flex flex-col h-full border-l-4 border-l-[#C5A059] hover:translate-y-[-4px] transition-transform" data-category="high-growth">
@@ -74,7 +74,7 @@
 <path class="sparkline-path stroke-secondary" d="M0,45 L30,42 L60,48 L90,20 L120,35 L150,10 L180,15 L200,2"></path>
 </svg>
 </div>
-<button class="w-full py-3 bg-primary text-white rounded-lg font-label-caps hover:opacity-90 transition-opacity" onclick="navigate('InvestmentDetail_5.html')">Invest Now</button>
+<button class="w-full py-3 bg-primary text-white rounded-lg font-label-caps hover:opacity-90 transition-opacity cursor-pointer" onclick="window.viewFundDetail('Equity Alpha ETF')">Invest Now</button>
 </div>
 <!-- Safe Haven Gold -->
 <div class="fund-card glass-card premium-shadow border border-slate-200/50 rounded-xl p-md flex flex-col h-full hover:translate-y-[-4px] transition-transform" data-category="tax-savers">
@@ -95,7 +95,7 @@
 <path class="sparkline-path stroke-secondary" d="M0,25 L40,24 L80,26 L120,23 L160,20 L200,18"></path>
 </svg>
 </div>
-<button class="w-full py-3 bg-primary text-white rounded-lg font-label-caps hover:opacity-90 transition-opacity" onclick="navigate('InvestmentDetail_5.html')">Invest Now</button>
+<button class="w-full py-3 bg-primary text-white rounded-lg font-label-caps hover:opacity-90 transition-opacity cursor-pointer" onclick="window.viewFundDetail('Safe Haven Gold')">Invest Now</button>
 </div>
 <!-- Liquid Debt Fund -->
 <div class="fund-card glass-card premium-shadow border border-slate-200/50 rounded-xl p-md flex flex-col h-full hover:translate-y-[-4px] transition-transform" data-category="stable-income">
@@ -116,7 +116,7 @@
 <path class="sparkline-path stroke-secondary" d="M0,35 L50,33 L100,34 L150,32 L200,31"></path>
 </svg>
 </div>
-<button class="w-full py-3 bg-primary text-white rounded-lg font-label-caps hover:opacity-90 transition-opacity" onclick="navigate('InvestmentDetail_5.html')">Invest Now</button>
+<button class="w-full py-3 bg-primary text-white rounded-lg font-label-caps hover:opacity-90 transition-opacity cursor-pointer" onclick="window.viewFundDetail('Liquid Debt Fund')">Invest Now</button>
 </div>
 </div>
 <!-- Featured Market Insight -->
@@ -126,8 +126,8 @@
 <h2 class="font-headline-md text-headline-md text-primary mb-4">Global Markets Pivot Towards Quality Assets</h2>
 <p class="text-on-surface-variant font-body-md mb-6 leading-relaxed">As interest rate volatility stabilizes, institutional investors are rotating into quality growth equities. Our 'Alpha ETF' has been rebalanced to capture this shift early.</p>
 <div class="flex gap-4">
-<button class="px-6 py-3 bg-primary text-white rounded-lg font-label-caps hover:opacity-90 transition-opacity">Read Full Report</button>
-<button class="px-6 py-3 border border-secondary text-secondary rounded-lg font-label-caps hover:bg-secondary-container transition-colors">Watch Analysis</button>
+<button class="px-6 py-3 bg-primary text-white rounded-lg font-label-caps hover:opacity-90 transition-opacity cursor-pointer shadow-sm active:scale-95" onclick="window.readFullReport()">Read Full Report</button>
+<button class="px-6 py-3 border border-secondary text-secondary rounded-lg font-label-caps hover:bg-secondary/5 transition-colors cursor-pointer active:scale-95" onclick="window.watchAnalysis()">Watch Analysis</button>
 </div>
 </div>
 <div class="w-full md:w-1/3">

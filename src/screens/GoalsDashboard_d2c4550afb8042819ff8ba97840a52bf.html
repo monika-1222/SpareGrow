@@ -54,7 +54,7 @@
 <h4 class="font-title-sm text-title-sm text-primary mb-xs font-bold">Optimization Tip</h4>
 <p class="text-on-surface-variant text-sm">Based on your spending, redirecting ₹50/week would complete 'Euro Trip' 3 months earlier.</p>
 </div>
-<button class="border border-secondary text-secondary px-6 py-2 rounded-2xl font-label-caps hover:bg-secondary/5 transition-colors cursor-pointer font-bold">
+<button class="border border-secondary text-secondary px-6 py-2 rounded-2xl font-label-caps hover:bg-secondary/5 transition-colors cursor-pointer font-bold" onclick="window.openRecalibrateModal()">
                     RECALIBRATE GOALS
                 </button>
 </div>
@@ -107,6 +107,75 @@
 
         <button class="w-full bg-primary text-white py-4 rounded-xl font-label-caps text-lg shadow-lg shadow-primary/30 hover:opacity-90 active:scale-95 transition-all flex justify-center items-center gap-2" id="btn-add-funds">
             <span class="material-symbols-outlined">water_drop</span> POUR FUNDS
+        </button>
+    </div>
+</div>
+
+<!-- Recalibrate Goals Modal (Hidden by Default) -->
+<div id="recalibrate-modal" class="fixed inset-0 z-[100] hidden">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onclick="window.closeRecalibrateModal()"></div>
+    
+    <!-- Modal Content -->
+    <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-900 rounded-t-3xl p-6 shadow-2xl transform transition-transform duration-300 translate-y-full" id="recalibrate-modal-content">
+        <div class="w-12 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-6"></div>
+        
+        <div class="flex justify-between items-start mb-6">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-600 text-3xl">
+                    <span class="material-symbols-outlined">insights</span>
+                </div>
+                <div>
+                    <h2 class="font-title-lg text-primary text-xl font-bold dark:text-emerald-400">AI Goal Optimizer</h2>
+                    <p class="text-on-surface-variant text-sm">Fine-tune your savings speed and target horizons</p>
+                </div>
+            </div>
+            <button class="text-slate-400 hover:text-slate-600 transition-colors cursor-pointer" onclick="window.closeRecalibrateModal()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <div class="space-y-6 mb-8 text-slate-800 dark:text-slate-200">
+            <!-- Goal Selector -->
+            <div>
+                <label class="font-label-caps text-outline mb-2 block text-xs">SELECT ACTIVE GOAL</label>
+                <select id="recalibrate-goal-select" class="w-full h-12 px-4 rounded-xl border border-outline-variant bg-surface-container-lowest text-primary outline-none" onchange="window.updateRecalibrateProjections()">
+                    <!-- Populated dynamically -->
+                </select>
+            </div>
+
+            <!-- Multiplier Selector -->
+            <div>
+                <label class="font-label-caps text-outline mb-2 block text-xs">ROUND-UP SPEED MULTIPLIER</label>
+                <div class="grid grid-cols-4 gap-3">
+                    <button class="py-2.5 border border-outline-variant rounded-xl font-bold text-sm text-primary dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors cursor-pointer speed-mult-btn" onclick="window.setRecalibrateMultiplier(1.0, this)">1.0x</button>
+                    <button class="py-2.5 border border-outline-variant rounded-xl font-bold text-sm text-primary dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors cursor-pointer speed-mult-btn" onclick="window.setRecalibrateMultiplier(1.5, this)">1.5x</button>
+                    <button class="py-2.5 border border-outline-variant rounded-xl font-bold text-sm text-primary dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors cursor-pointer speed-mult-btn" onclick="window.setRecalibrateMultiplier(2.0, this)">2.0x</button>
+                    <button class="py-2.5 border border-outline-variant rounded-xl font-bold text-sm text-primary dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors cursor-pointer speed-mult-btn" onclick="window.setRecalibrateMultiplier(3.0, this)">3.0x</button>
+                </div>
+            </div>
+
+            <!-- Weekly Boost Slider -->
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <label class="font-label-caps text-outline text-xs">ADDITIONAL WEEKLY BOOST</label>
+                    <span id="recalibrate-boost-val" class="font-data-mono text-emerald-600 font-bold">₹0/week</span>
+                </div>
+                <input type="range" min="0" max="500" step="50" value="0" class="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-600" id="recalibrate-boost-slider" oninput="window.updateRecalibrateProjections()"/>
+            </div>
+
+            <!-- AI Projection Readout Card -->
+            <div class="p-4 bg-emerald-500/10 rounded-2xl border border-emerald-500/20 text-slate-800 dark:text-slate-100 flex items-start gap-3">
+                <span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400 mt-0.5">auto_awesome</span>
+                <div class="text-xs leading-relaxed">
+                    <strong class="font-bold text-emerald-800 dark:text-emerald-400">AI Target projection:</strong>
+                    <span id="recalibrate-projection-text">Select a goal to generate compounding acceleration metrics.</span>
+                </div>
+            </div>
+        </div>
+
+        <button class="w-full bg-primary text-white py-4 rounded-xl font-label-caps text-lg shadow-lg shadow-primary/30 hover:opacity-90 active:scale-95 transition-all flex justify-center items-center gap-2 cursor-pointer" onclick="window.applyRecalibrateOptimizations()">
+            <span class="material-symbols-outlined">bolt</span> APPLY OPTIMIZATIONS
         </button>
     </div>
 </div>

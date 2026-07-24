@@ -205,9 +205,113 @@ async function loadScreen(filename) {
         const html = await loader();
         app.innerHTML = html;
         attachAuthListeners(filename);
+        
+        // Splash Screen Auto-Transition after 2.5s
+        if (filename === splashScreen?.filename) {
+            setTimeout(() => {
+                const currentHash = window.location.hash.slice(1);
+                if (currentHash === splashScreen.filename || !currentHash) {
+                    navigate('Onboarding_Walkthrough.html');
+                }
+            }, 2500);
+        }
     } else {
         console.error('Screen not found:', filename);
         app.innerHTML = '<div class="p-4 text-red-500">Screen not found</div>';
+    }
+}
+
+// Global biometric unlock simulation
+window.triggerBiometricUnlock = function() {
+    if (!currentSession) return;
+    showToast("🧬 Scanning biometric credentials...");
+    setTimeout(() => {
+        sessionStorage.setItem('mpin_verified_' + currentSession.user.id, 'true');
+        showToast("🔓 FaceID / Fingerprint recognized!");
+        navigate(walletScreen.filename);
+    }, 800);
+};
+
+// Mock Social Login handling
+async function handleMockSocialLogin() {
+    const email = 'student.demo@sparegrow.com';
+    const password = 'demostudent123';
+    
+    showToast('🔗 Simulating secure OAuth redirect...');
+    setTimeout(async () => {
+        let { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) {
+            // Auto-signup demo user if doesn't exist
+            const signUpRes = await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                    data: {
+                        full_name: 'Student Demo User',
+                        phone: '+91 9999999999'
+                    }
+                }
+            });
+            if (signUpRes.error) {
+                alert('Mock OAuth failed: ' + signUpRes.error.message);
+                return;
+            }
+            const signInRes = await supabase.auth.signInWithPassword({ email, password });
+            if (signInRes.error) {
+                alert('Mock OAuth failed: ' + signInRes.error.message);
+                return;
+            }
+            data = signInRes.data;
+        }
+        
+        showToast('🎉 Successfully logged in with Google/Apple! 🎓');
+        window.location.hash = walletScreen.filename;
+    }, 1000);
+}
+
+// Focus tabbing for Verify OTP screen
+function setupOTPListeners() {
+    const inputs = document.querySelectorAll('main input[maxlength="1"]');
+    if (inputs.length === 0) return;
+    
+    inputs.forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+            if (e.target.value.length === 1 && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+            }
+        });
+        
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                inputs[index - 1].focus();
+            }
+        });
+    });
+
+    const verifyBtn = document.querySelector('main button');
+    if (verifyBtn) {
+        verifyBtn.onclick = (e) => {
+            e.preventDefault();
+            let code = '';
+            inputs.forEach(input => code += input.value);
+            if (code.length !== 6) {
+                alert('Please enter the full 6-digit code sent to your email.');
+                return;
+            }
+            showToast('✅ Identity verified successfully!');
+            setTimeout(() => {
+                navigate(loginScreen.filename);
+            }, 1000);
+        };
+    }
+    
+    // Resend OTP trigger
+    const resendBtn = document.querySelector('main button.text-secondary');
+    if (resendBtn) {
+        resendBtn.onclick = (e) => {
+            e.preventDefault();
+            showToast('📩 A new OTP reset code has been sent!');
+        };
     }
 }
 
@@ -250,6 +354,12 @@ function attachAuthListeners(filename) {
                 }
             });
         }
+        
+        // Google & Apple Mock Social Login
+        const googleBtn = document.getElementById('login-google-btn');
+        const appleBtn = document.getElementById('login-apple-btn');
+        if (googleBtn) googleBtn.onclick = (e) => { e.preventDefault(); handleMockSocialLogin(); };
+        if (appleBtn) appleBtn.onclick = (e) => { e.preventDefault(); handleMockSocialLogin(); };
     }
 
     // 2. Sign Up Screen
@@ -261,12 +371,23 @@ function attachAuthListeners(filename) {
                 e.preventDefault();
                 const email = document.getElementById('signup-email').value;
                 const password = document.getElementById('signup-password').value;
+                const name = document.getElementById('name').value;
+                const phone = document.getElementById('phone').value;
                 
                 const originalText = submitBtn.innerHTML;
                 submitBtn.innerHTML = 'Creating account...';
                 submitBtn.disabled = true;
 
-                const { data, error } = await supabase.auth.signUp({ email, password });
+                const { data, error } = await supabase.auth.signUp({ 
+                    email, 
+                    password,
+                    options: {
+                        data: {
+                            full_name: name,
+                            phone: phone
+                        }
+                    }
+                });
                 
                 if (error) {
                     alert('Sign Up Failed: ' + error.message);
@@ -278,6 +399,12 @@ function attachAuthListeners(filename) {
                 }
             });
         }
+        
+        // Google & Apple Mock Social Sign Up
+        const googleBtn = document.getElementById('signup-google-btn');
+        const appleBtn = document.getElementById('signup-apple-btn');
+        if (googleBtn) googleBtn.onclick = (e) => { e.preventDefault(); handleMockSocialLogin(); };
+        if (appleBtn) appleBtn.onclick = (e) => { e.preventDefault(); handleMockSocialLogin(); };
     }
 
     // 3. Profile Settings (Sign Out & Dark Mode)
@@ -326,8 +453,14 @@ function attachAuthListeners(filename) {
         renderTransactionHistory();
     } else if (filename.includes('FundDiscovery')) {
         setupFundDiscovery();
+    } else if (filename.includes('InvestmentDetail')) {
+        setupInvestmentDetail();
     } else if (filename.includes('VerifyMPIN') || filename.includes('SetMPIN')) {
         setupMPINListeners(filename);
+    } else if (filename.includes('VerifyOTP')) {
+        setupOTPListeners();
+    } else if (filename.includes('Notifications')) {
+        setupNotificationsPage();
     } else if (filename.includes('ProfileSettings')) {
         if(window.renderProfile) window.renderProfile();
     } else if (filename.includes('WealthSimulator')) {
@@ -913,8 +1046,15 @@ let txSearchQuery = "";
 let txSelectedCategory = "all";
 let fundSearchQuery = "";
 let fundSelectedCategory = "all";
+let transactionsLimit = 5;
+
+window.loadMoreTransactions = function() {
+    transactionsLimit += 5;
+    if (window.applyTxFilters) window.applyTxFilters();
+};
 
 function renderTransactionHistory() {
+    transactionsLimit = 5;
     const list = document.getElementById('full-transaction-list');
     if (!list) return;
     list.innerHTML = '';
@@ -988,7 +1128,8 @@ function renderTransactionHistory() {
     });
     
     updateFilterButtonStyles();
-    
+    window.applyTxFilters = applyFilters;
+
     function applyFilters() {
         if (!list) return;
         list.innerHTML = '';
@@ -1049,12 +1190,25 @@ function renderTransactionHistory() {
         
         if (filtered.length === 0) {
             list.innerHTML = '<div class="p-md text-center text-slate-500 select-none">No transactions match your search or category.</div>';
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            if (loadMoreBtn) loadMoreBtn.classList.add('hidden');
             return;
         }
         
         const sortedTx = [...filtered].sort((a, b) => new Date(b.date) - new Date(a.date));
         
-        sortedTx.forEach(tx => {
+        // Show/hide Load More button depending on total matches
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        if (loadMoreBtn) {
+            if (sortedTx.length <= transactionsLimit) {
+                loadMoreBtn.classList.add('hidden');
+            } else {
+                loadMoreBtn.classList.remove('hidden');
+            }
+        }
+
+        const slicedTx = sortedTx.slice(0, transactionsLimit);
+        slicedTx.forEach(tx => {
             const isDeposit = tx.type === 'deposit';
             const isInvestment = tx.type === 'investment';
             let icon = 'shopping_bag';
@@ -1606,7 +1760,196 @@ window.renderProfile = function() {
     if(bankCountDisplay) {
         bankCountDisplay.innerText = `${bankAccounts.length} accounts connected`;
     }
+
+    // Dynamic Multiplier text
+    const multVal = localStorage.getItem('roundup_multiplier') || '2.0';
+    const multTextEl = document.getElementById('profile-roundup-rules-text');
+    if (multTextEl) multTextEl.innerText = `Smart round-up is active (${multVal}x)`;
+
+    // Dynamic notification preference summary
+    const emailPref = localStorage.getItem('notif_pref_email') !== 'false';
+    const pushPref = localStorage.getItem('notif_pref_push') !== 'false';
+    const smsPref = localStorage.getItem('notif_pref_sms') === 'true';
+    const activePrefs = [];
+    if (emailPref) activePrefs.push('Email');
+    if (pushPref) activePrefs.push('Push');
+    if (smsPref) activePrefs.push('SMS');
+    
+    const notifTextEl = document.getElementById('profile-notifications-text');
+    if (notifTextEl) notifTextEl.innerText = activePrefs.length > 0 ? activePrefs.join(', ') : 'All notifications disabled';
+
+    // Dynamic UPI VPAs count
+    const upiIds = meta.upi_ids || [];
+    const upiTextEl = document.querySelector('[onclick="navigate(\'LinkUPI_6.html\')"] p.text-xs');
+    if (upiTextEl) {
+        upiTextEl.innerText = upiIds.length > 0 ? `${upiIds.length} VPA connected (${upiIds.slice(-1)[0]})` : 'Manage VPAs';
+    }
 }
+
+// Settings: Round-up Multiplier Modal Actions
+window.openRoundupModal = function() {
+    const modal = document.getElementById('roundup-modal');
+    const content = document.getElementById('roundup-modal-content');
+    if (!modal || !content) return;
+
+    const storedMult = localStorage.getItem('roundup_multiplier') || '2.0';
+    const multVal = parseFloat(storedMult);
+
+    const speedBtns = document.querySelectorAll('.roundup-mult-opt-btn');
+    speedBtns.forEach(btn => {
+        if (parseFloat(btn.innerText) === multVal) {
+            btn.className = 'py-4 bg-primary text-white border border-transparent rounded-2xl font-bold text-sm cursor-pointer roundup-mult-opt-btn';
+        } else {
+            btn.className = 'py-4 border border-outline-variant rounded-2xl font-bold text-sm text-primary dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors cursor-pointer roundup-mult-opt-btn';
+        }
+    });
+
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        content.classList.remove('translate-y-full');
+        content.classList.add('translate-y-0');
+    }, 50);
+};
+
+window.closeRoundupModal = function() {
+    const modal = document.getElementById('roundup-modal');
+    const content = document.getElementById('roundup-modal-content');
+    if (!modal || !content) return;
+    content.classList.remove('translate-y-0');
+    content.classList.add('translate-y-full');
+    setTimeout(() => modal.classList.add('hidden'), 300);
+};
+
+window.saveRoundupMultiplier = function(mult, btnElement) {
+    localStorage.setItem('roundup_multiplier', mult.toString());
+    showToast(`⚡ Round-up multiplier set to ${mult}x`);
+    window.closeRoundupModal();
+    window.renderProfile();
+};
+
+// Settings: Notification Preferences Modal Actions
+window.openNotificationPreferencesModal = function() {
+    const modal = document.getElementById('notif-prefs-modal');
+    const content = document.getElementById('notif-prefs-modal-content');
+    if (!modal || !content) return;
+
+    const emailPref = localStorage.getItem('notif_pref_email') !== 'false';
+    const pushPref = localStorage.getItem('notif_pref_push') !== 'false';
+    const smsPref = localStorage.getItem('notif_pref_sms') === 'true';
+
+    const emailInput = document.getElementById('notif-pref-email');
+    const pushInput = document.getElementById('notif-pref-push');
+    const smsInput = document.getElementById('notif-pref-sms');
+
+    if(emailInput) emailInput.checked = emailPref;
+    if(pushInput) pushInput.checked = pushPref;
+    if(smsInput) smsInput.checked = smsPref;
+
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        content.classList.remove('translate-y-full');
+        content.classList.add('translate-y-0');
+    }, 50);
+};
+
+window.closeNotificationPreferencesModal = function() {
+    const modal = document.getElementById('notif-prefs-modal');
+    const content = document.getElementById('notif-prefs-modal-content');
+    if (!modal || !content) return;
+    content.classList.remove('translate-y-0');
+    content.classList.add('translate-y-full');
+    setTimeout(() => modal.classList.add('hidden'), 300);
+};
+
+window.saveNotificationPreferences = function() {
+    const email = document.getElementById('notif-pref-email').checked;
+    const push = document.getElementById('notif-pref-push').checked;
+    const sms = document.getElementById('notif-pref-sms').checked;
+
+    localStorage.setItem('notif_pref_email', email ? 'true' : 'false');
+    localStorage.setItem('notif_pref_push', push ? 'true' : 'false');
+    localStorage.setItem('notif_pref_sms', sms ? 'true' : 'false');
+
+    showToast('🔔 Notification settings updated!');
+    window.closeNotificationPreferencesModal();
+    window.renderProfile();
+};
+
+// Settings: Document Center Actions
+window.openDocumentCenterModal = function() {
+    const modal = document.getElementById('doc-center-modal');
+    const content = document.getElementById('doc-center-modal-content');
+    if (!modal || !content) return;
+
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        content.classList.remove('translate-y-full');
+        content.classList.add('translate-y-0');
+    }, 50);
+};
+
+window.closeDocumentCenterModal = function() {
+    const modal = document.getElementById('doc-center-modal');
+    const content = document.getElementById('doc-center-modal-content');
+    if (!modal || !content) return;
+    content.classList.remove('translate-y-0');
+    content.classList.add('translate-y-full');
+    setTimeout(() => modal.classList.add('hidden'), 300);
+};
+
+window.downloadMockStatement = function(docType) {
+    let content = "Date,Merchant,Category,Amount,Type\n";
+    currentTransactions.forEach(tx => {
+        content += `"${new Date(tx.date).toLocaleDateString()}","${tx.merchant_name}","${tx.category}",${tx.amount},"${tx.type}"\n`;
+    });
+
+    const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `sparegrow_${docType}_statement.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    showToast(`📥 Downloaded ${docType === 'june-2026' ? 'June 2026 Monthly Statement' : 'Q1 2025 Tax Report'}!`);
+};
+
+// Settings: Link UPI VPA Handler
+window.linkUPIAddress = async function(event, form) {
+    event.preventDefault();
+    if(!currentSession) return;
+    
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const oldHtml = submitBtn.innerHTML;
+    submitBtn.innerHTML = 'Linking...';
+    submitBtn.disabled = true;
+    
+    const upiId = document.getElementById('upi-id').value;
+    
+    const meta = currentSession.user.user_metadata || {};
+    const upiIds = meta.upi_ids || [];
+    
+    upiIds.push(upiId);
+    
+    const { data, error } = await supabase.auth.updateUser({
+        data: { upi_ids: upiIds }
+    });
+    
+    submitBtn.innerHTML = oldHtml;
+    submitBtn.disabled = false;
+    
+    if (error) {
+        showToast(error.message, 'error');
+        return;
+    }
+    
+    currentSession.user = data.user;
+    
+    document.getElementById('inputState').classList.add('hidden');
+    document.getElementById('successState').classList.remove('hidden');
+};
 
 window.nextAutoInvestStep = function(step) {
     const s1 = document.getElementById('step-1');
@@ -1643,8 +1986,34 @@ window.nextAutoInvestStep = function(step) {
     }
 }
 
-window.completeAutoInvest = function() {
-    showToast('AutoPay Mandate Authorized!', 'success');
+window.completeAutoInvest = async function() {
+    if(!currentSession) return;
+    
+    const bank = sessionStorage.getItem('selected_bank') || 'HDFC Bank';
+    const meta = currentSession.user.user_metadata || {};
+    const bankAccounts = meta.bank_accounts || [];
+    
+    // Add bank account if not already connected
+    if (!bankAccounts.some(b => b.name === bank)) {
+        bankAccounts.push({
+            name: bank,
+            account_number: '•••• ' + Math.floor(1000 + Math.random() * 9000),
+            mandate_limit: 5000
+        });
+    }
+    
+    const { data, error } = await supabase.auth.updateUser({
+        data: { bank_accounts: bankAccounts }
+    });
+    
+    if (error) {
+        alert('Failed to authorize mandate: ' + error.message);
+        return;
+    }
+    
+    currentSession.user = data.user;
+    
+    showToast('🎉 AutoPay Mandate Authorized! Bank account linked.');
     setTimeout(() => {
         navigate('ProfileSettings_dbb3792156614cb5ae492572ff792679.html');
     }, 1500);
@@ -2024,11 +2393,14 @@ async function simulateBotResponse(text, type) {
                 { merchant: 'Chai Stall Tapri', amount: 8.00, category: 'Daily Essentials' }
             ];
             
+            const mult = parseFloat(localStorage.getItem('roundup_multiplier') || '2.0');
             const inserts = [];
+            
             mockTxList.forEach(item => {
                 const spent = item.amount;
                 const next10 = Math.ceil(spent / 10) * 10;
-                const spare = next10 - spent === 0 ? 10 : next10 - spent;
+                const baseSpare = next10 - spent === 0 ? 10 : next10 - spent;
+                const spare = baseSpare * mult;
                 
                 // Insert the expense transaction
                 inserts.push(supabase.from('transactions').insert([{
@@ -2055,17 +2427,22 @@ async function simulateBotResponse(text, type) {
             if (hasError) {
                 response = "❌ Oops, I failed to process the mock transactions. Please check your Supabase network credentials.";
             } else {
-                response = `✅ **AI Simulation Success!** ⚡<br><br>
+                await fetchUserData();
+                
+                const hash = window.location.hash.slice(1);
+                if (hash.includes('WalletOverview')) renderWallet();
+                if (hash.includes('TransactionHistory')) renderTransactionHistory();
+                if (hash.includes('GoalsDashboard')) renderGoals();
+                
+                response = `✅ **AI Simulation Success!** ⚡ (Active Multiplier: **${mult.toFixed(1)}x**)<br><br>
                 I've successfully simulated **6 new purchases** (including daily essentials) in your account:<br><br>
-                🛒 **Daily Essentials Micro-Savings**:<br>
-                • 🥛 **Mother Dairy Milk**: spent ₹29.00 ➔ **Spare: +₹1.00**<br>
-                • 🍞 **Bread & Eggs**: spent ₹47.50 ➔ **Spare: +₹2.50**<br>
-                • ☕ **Chai Stall Tapri**: spent ₹8.00 ➔ **Spare: +₹2.00**<br><br>
-                🍔 **Lifestyle Micro-Savings**:<br>
-                • ☕ **Starbucks Latte**: spent ₹46.00 ➔ **Spare: +₹4.00**<br>
-                • 🚗 **Uber Ride**: spent ₹38.00 ➔ **Spare: +₹2.00**<br>
-                • 🍔 **Zomato Delivery**: spent ₹73.00 ➔ **Spare: +₹7.00**<br><br>
-                Notice how SpareGrow automatically rounds each daily transaction to the nearest ₹10, generating tiny, effortless spare changes! Check your transaction list—the real-time feed has already updated in the background! 🌿✨`;
+                🥛 **Mother Dairy Milk**: spent ₹29.00 ➔ **Spare: +₹${(1.00 * mult).toFixed(2)}**<br>
+                🍞 **Bread & Eggs**: spent ₹47.50 ➔ **Spare: +₹${(2.50 * mult).toFixed(2)}**<br>
+                ☕ **Chai Stall Tapri**: spent ₹8.00 ➔ **Spare: +₹${(2.00 * mult).toFixed(2)}**<br>
+                ☕ **Starbucks Latte**: spent ₹46.00 ➔ **Spare: +₹${(4.00 * mult).toFixed(2)}**<br>
+                🚗 **Uber Ride**: spent ₹38.00 ➔ **Spare: +₹${(2.00 * mult).toFixed(2)}**<br>
+                🍔 **Zomato Delivery**: spent ₹73.00 ➔ **Spare: +₹${(7.00 * mult).toFixed(2)}**<br><br>
+                Notice how SpareGrow automatically rounds each daily transaction and applies your **${mult.toFixed(1)}x multiplier**! The real-time feed has updated. 🌿✨`;
                 
                 triggerSproutAnimation();
             }
@@ -2388,6 +2765,7 @@ function triggerWateringAnimation() {
     }, 1400);
 }
 
+
 // Inject watering animation styles to DOM
 const wateringStyleSheet = document.createElement("style");
 wateringStyleSheet.innerText = `
@@ -2402,4 +2780,444 @@ wateringStyleSheet.innerText = `
 }
 `;
 document.head.appendChild(wateringStyleSheet);
+
+
+// --- AI GOAL OPTIMIZER MODAL METHODS ---
+let recalibrateMultiplier = 2.0;
+
+window.openRecalibrateModal = function() {
+    const modal = document.getElementById('recalibrate-modal');
+    const content = document.getElementById('recalibrate-modal-content');
+    const select = document.getElementById('recalibrate-goal-select');
+    
+    if (!modal || !content || !select) return;
+    
+    // Populate goals select
+    select.innerHTML = '';
+    if (currentGoals.length === 0) {
+        select.innerHTML = '<option value="">No active goals found</option>';
+    } else {
+        currentGoals.forEach(g => {
+            select.innerHTML += `<option value="${g.id}">${g.title} (₹${g.saved_amount} / ₹${g.target_amount})</option>`;
+        });
+    }
+    
+    // Set active values from localStorage/state
+    const storedMult = localStorage.getItem('roundup_multiplier') || '2.0';
+    recalibrateMultiplier = parseFloat(storedMult);
+    
+    // Set active speed multiplier button highlight
+    const speedBtns = document.querySelectorAll('.speed-mult-btn');
+    speedBtns.forEach(btn => {
+        if (parseFloat(btn.innerText) === recalibrateMultiplier) {
+            btn.className = 'py-2.5 bg-primary text-white border border-transparent rounded-xl font-bold text-sm cursor-pointer speed-mult-btn';
+        } else {
+            btn.className = 'py-2.5 border border-outline-variant rounded-xl font-bold text-sm text-primary dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors cursor-pointer speed-mult-btn';
+        }
+    });
+
+    const boostSlider = document.getElementById('recalibrate-boost-slider');
+    if (boostSlider) {
+        const storedBoost = localStorage.getItem('weekly_savings_boost') || '0';
+        boostSlider.value = storedBoost;
+        const valText = document.getElementById('recalibrate-boost-val');
+        if (valText) valText.innerText = `₹${storedBoost}/week`;
+    }
+    
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        content.classList.remove('translate-y-full');
+        content.classList.add('translate-y-0');
+        window.updateRecalibrateProjections();
+    }, 50);
+};
+
+window.closeRecalibrateModal = function() {
+    const modal = document.getElementById('recalibrate-modal');
+    const content = document.getElementById('recalibrate-modal-content');
+    if (!modal || !content) return;
+    
+    content.classList.remove('translate-y-0');
+    content.classList.add('translate-y-full');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 300);
+};
+
+window.setRecalibrateMultiplier = function(mult, btnElement) {
+    recalibrateMultiplier = mult;
+    const speedBtns = document.querySelectorAll('.speed-mult-btn');
+    speedBtns.forEach(btn => {
+        btn.className = 'py-2.5 border border-outline-variant rounded-xl font-bold text-sm text-primary dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors cursor-pointer speed-mult-btn';
+    });
+    if (btnElement) {
+        btnElement.className = 'py-2.5 bg-primary text-white border border-transparent rounded-xl font-bold text-sm cursor-pointer speed-mult-btn';
+    }
+    window.updateRecalibrateProjections();
+};
+
+window.updateRecalibrateProjections = function() {
+    const select = document.getElementById('recalibrate-goal-select');
+    const slider = document.getElementById('recalibrate-boost-slider');
+    const text = document.getElementById('recalibrate-projection-text');
+    const boostVal = document.getElementById('recalibrate-boost-val');
+    
+    if (!select || !text) return;
+    
+    const goalId = select.value;
+    if (!goalId) {
+        text.innerHTML = 'Plant a goal to generate compounding acceleration metrics.';
+        return;
+    }
+    
+    const goal = currentGoals.find(g => g.id === goalId);
+    if (!goal) return;
+    
+    const boost = slider ? parseFloat(slider.value) : 0;
+    if (boostVal) boostVal.innerText = `₹${boost}/week`;
+    
+    const targetLeft = Math.max(0, goal.target_amount - goal.saved_amount);
+    if (targetLeft === 0) {
+        text.innerHTML = '🎉 This goal is already fully grown!';
+        return;
+    }
+    
+    const baseWeekly = 75;
+    const totalWeekly = (baseWeekly * recalibrateMultiplier) + boost;
+    const weeksToGoal = targetLeft / totalWeekly;
+    const daysToGoal = Math.round(weeksToGoal * 7);
+    
+    const originalWeeks = targetLeft / (baseWeekly * 1.0);
+    const originalDays = Math.round(originalWeeks * 7);
+    const daysSaved = Math.max(0, originalDays - daysToGoal);
+    
+    text.innerHTML = `You will reach **${goal.title}** in approximately **${daysToGoal} days** (${Math.round(weeksToGoal)} weeks).<br><br>💡 By upgrading to a **${recalibrateMultiplier.toFixed(1)}x multiplier** and adding **₹${boost}/week**, you will save **${daysSaved} days sooner**!`;
+};
+
+window.applyRecalibrateOptimizations = function() {
+    const select = document.getElementById('recalibrate-goal-select');
+    const slider = document.getElementById('recalibrate-boost-slider');
+    if (!select) return;
+    
+    const goalId = select.value;
+    const boost = slider ? parseFloat(slider.value) : 0;
+    
+    localStorage.setItem('roundup_multiplier', recalibrateMultiplier.toString());
+    localStorage.setItem('weekly_savings_boost', boost.toString());
+    
+    showToast(`⚡ Settings applied! Multiplier: ${recalibrateMultiplier}x | Weekly Boost: ₹${boost}`);
+    
+    // Close modal
+    window.closeRecalibrateModal();
+    
+    // Re-render
+    const hash = window.location.hash.slice(1);
+    if (hash.includes('GoalsDashboard')) renderGoals();
+};
+
+
+// --- EXPLORE & DYNAMIC INVESTMENT DETAILS ---
+
+const fundData = {
+    'Balanced Growth Fund': {
+        category: 'High Growth',
+        subtitle: 'BAL-GRW-IDX • Moderate Risk',
+        icon: 'eco',
+        price: '₹142.80',
+        change: '+14.2%',
+        minInvest: '₹500.00',
+        expenseRatio: '0.45%',
+        fundSize: '₹4,200 Cr',
+        cagr3y: '+18.4%',
+        description: 'The Balanced Growth Fund focuses on high environmental, social, and governance (ESG) scores. It aims to generate long-term capital appreciation by investing predominantly in stable, sustainable companies.'
+    },
+    'Equity Alpha ETF': {
+        category: 'High Growth',
+        subtitle: 'EQT-ALPH-ETF • High Risk',
+        icon: 'trending_up',
+        price: '₹248.50',
+        change: '+24.8%',
+        minInvest: '₹500.00',
+        expenseRatio: '0.75%',
+        fundSize: '₹1,850 Cr',
+        cagr3y: '+28.2%',
+        description: 'Aggressive technology-focused portfolio designed for maximum capital gains. It rebalances dynamically to overweight high-quality growth leaders and capture emerging sector trends.'
+    },
+    'Safe Haven Gold': {
+        category: 'Stable Income',
+        subtitle: 'GOLD-HAVE-IDX • Low Risk',
+        icon: 'diamond',
+        price: '₹82.10',
+        change: '+8.2%',
+        minInvest: '₹500.00',
+        expenseRatio: '0.15%',
+        fundSize: '₹6,100 Cr',
+        cagr3y: '+7.8%',
+        description: 'Protect your wealth against inflation with physical bullion-backed digital assets. Offers extremely low volatility and high security during market turbulence.'
+    },
+    'Liquid Debt Fund': {
+        category: 'Stable Income',
+        subtitle: 'LIQ-DEBT-IDX • Low Risk',
+        icon: 'payments',
+        price: '₹106.50',
+        change: '+6.5%',
+        minInvest: '₹500.00',
+        expenseRatio: '0.25%',
+        fundSize: '₹8,900 Cr',
+        cagr3y: '+6.2%',
+        description: 'High-liquidity fund focusing on short-term corporate paper and government T-bills. Perfect for storing spare cash while generating yield superior to regular savings.'
+    }
+};
+
+window.viewFundDetail = function(fundName) {
+    sessionStorage.setItem('selected_fund_name', fundName);
+    navigate('InvestmentDetail_5.html');
+};
+
+window.setupFundDiscovery = function() {
+    const allBtn = document.querySelector('.filter-btn');
+    if (allBtn) {
+        window.filterFunds('all', allBtn);
+    }
+};
+
+window.setupInvestmentDetail = function() {
+    const fundName = sessionStorage.getItem('selected_fund_name') || 'Balanced Growth Fund';
+    const data = fundData[fundName] || fundData['Balanced Growth Fund'];
+    
+    const catEl = document.getElementById('detail-category');
+    const titleEl = document.getElementById('detail-title');
+    const subtitleEl = document.getElementById('detail-subtitle');
+    const iconEl = document.getElementById('detail-icon');
+    const priceEl = document.getElementById('detail-nav-price');
+    const returnEl = document.getElementById('detail-nav-return');
+    const minEl = document.getElementById('detail-min-investment');
+    const expEl = document.getElementById('detail-expense-ratio');
+    const sizeEl = document.getElementById('detail-fund-size');
+    const cagrEl = document.getElementById('detail-3y-return');
+    const descEl = document.getElementById('detail-description');
+    
+    if (catEl) catEl.innerText = data.category;
+    if (titleEl) titleEl.innerText = fundName;
+    if (subtitleEl) subtitleEl.innerText = data.subtitle;
+    if (iconEl) {
+        iconEl.innerText = data.icon;
+        iconEl.setAttribute('data-icon', data.icon);
+    }
+    if (priceEl) priceEl.innerText = data.price;
+    if (returnEl) returnEl.innerText = data.change;
+    if (minEl) minEl.innerText = data.minInvest;
+    if (expEl) expEl.innerText = data.expenseRatio;
+    if (sizeEl) sizeEl.innerText = data.fundSize;
+    if (cagrEl) cagrEl.innerText = data.cagr3y;
+    if (descEl) descEl.innerText = data.description;
+};
+
+window.openInvestModal = function() {
+    const modal = document.getElementById('invest-modal');
+    const content = document.getElementById('invest-modal-content');
+    const fundTitle = document.getElementById('invest-modal-fund-title');
+    const walletBalance = document.getElementById('invest-modal-wallet-balance');
+    const amountInput = document.getElementById('invest-amount-input');
+    
+    if (!modal || !content) return;
+    
+    const selectedFund = sessionStorage.getItem('selected_fund_name') || 'Balanced Growth Fund';
+    if (fundTitle) fundTitle.innerText = selectedFund;
+    
+    // Calculate balance
+    let balance = 0;
+    currentTransactions.forEach(tx => {
+        if (tx.type === 'deposit') balance += Number(tx.amount);
+        else if (tx.type === 'expense' || tx.type === 'investment') balance -= Number(tx.amount);
+    });
+    
+    if (walletBalance) {
+        walletBalance.innerText = `₹${balance.toFixed(2)}`;
+    }
+    
+    if (amountInput) {
+        amountInput.value = '500';
+    }
+    
+    const warning = document.getElementById('invest-min-warning');
+    if (warning) warning.classList.add('hidden');
+    
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        content.classList.remove('translate-y-full');
+        content.classList.add('translate-y-0');
+    }, 50);
+};
+
+window.closeInvestModal = function() {
+    const modal = document.getElementById('invest-modal');
+    const content = document.getElementById('invest-modal-content');
+    if (!modal || !content) return;
+    content.classList.remove('translate-y-0');
+    content.classList.add('translate-y-full');
+    setTimeout(() => modal.classList.add('hidden'), 300);
+};
+
+window.executeInstantInvestment = async function() {
+    if (!currentSession) return;
+    
+    const amountInput = document.getElementById('invest-amount-input');
+    const amount = amountInput ? parseFloat(amountInput.value) : 500;
+    const warning = document.getElementById('invest-min-warning');
+    
+    if (isNaN(amount) || amount < 500) {
+        if (warning) warning.classList.remove('hidden');
+        return;
+    } else {
+        if (warning) warning.classList.add('hidden');
+    }
+    
+    let balance = 0;
+    currentTransactions.forEach(tx => {
+        if (tx.type === 'deposit') balance += Number(tx.amount);
+        else if (tx.type === 'expense' || tx.type === 'investment') balance -= Number(tx.amount);
+    });
+    
+    if (amount > balance) {
+        alert('Insufficient wallet balance to perform this investment.');
+        return;
+    }
+    
+    const confirmBtn = document.getElementById('invest-confirm-btn');
+    const oldHtml = confirmBtn.innerHTML;
+    confirmBtn.innerHTML = 'PROCESSING INVESTMENT...';
+    confirmBtn.disabled = true;
+    
+    const selectedFund = sessionStorage.getItem('selected_fund_name') || 'Balanced Growth Fund';
+    
+    const { data: txData, error: txError } = await supabase
+        .from('transactions')
+        .insert([{
+            user_id: currentSession.user.id,
+            merchant_name: selectedFund,
+            category: 'Investment',
+            amount: amount,
+            type: 'investment'
+        }]);
+        
+    confirmBtn.innerHTML = oldHtml;
+    confirmBtn.disabled = false;
+    
+    if (txError) {
+        alert('Transaction logging failed: ' + txError.message);
+        return;
+    }
+    
+    await fetchUserData();
+    
+    showToast(`🎉 Invested ₹${amount.toFixed(2)} in ${selectedFund} successfully!`);
+    window.closeInvestModal();
+    
+    setTimeout(() => {
+        navigate(walletScreen.filename);
+    }, 1500);
+};
+
+window.readFullReport = function() {
+    showToast("📰 Loading Market Research Report... PDF opened in reader.");
+};
+
+window.watchAnalysis = function() {
+    showToast("🎥 Streaming Q2 Fund Manager Video Analysis...");
+};
+
+const indianBanks = [
+    'HDFC Bank', 'State Bank of India', 'ICICI Bank', 'Axis Bank', 
+    'Kotak Mahindra Bank', 'IndusInd Bank', 'Yes Bank', 
+    'Punjab National Bank', 'Bank of Baroda', 'Canara Bank', 
+    'Union Bank of India', 'Federal Bank', 'IDFC First Bank'
+];
+
+window.openBankSearchModal = function() {
+    const modal = document.getElementById('bank-search-modal');
+    const content = document.getElementById('bank-search-modal-content');
+    if (!modal || !content) return;
+    
+    const searchInput = document.getElementById('bank-search-input');
+    if (searchInput) searchInput.value = '';
+    window.filterBankList();
+    
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        content.classList.remove('translate-y-full');
+        content.classList.add('translate-y-0');
+    }, 50);
+};
+
+window.closeBankSearchModal = function() {
+    const modal = document.getElementById('bank-search-modal');
+    const content = document.getElementById('bank-search-modal-content');
+    if (!modal || !content) return;
+    content.classList.remove('translate-y-0');
+    content.classList.add('translate-y-full');
+    setTimeout(() => modal.classList.add('hidden'), 300);
+};
+
+window.filterBankList = function() {
+    const inputEl = document.getElementById('bank-search-input');
+    const query = inputEl ? inputEl.value.toLowerCase() : '';
+    const listContainer = document.getElementById('bank-search-list');
+    if (!listContainer) return;
+    
+    listContainer.innerHTML = '';
+    
+    const filtered = indianBanks.filter(b => b.toLowerCase().includes(query));
+    if (filtered.length === 0) {
+        listContainer.innerHTML = '<div class="p-4 text-center text-slate-500">No banks found.</div>';
+        return;
+    }
+    
+    filtered.forEach(bank => {
+        const item = document.createElement('button');
+        item.className = 'w-full p-4 border border-slate-100 dark:border-slate-800 rounded-xl flex items-center gap-4 hover:border-primary dark:hover:border-primary-fixed bg-surface-container-low transition-all cursor-pointer text-left text-slate-850 dark:text-slate-205';
+        item.innerHTML = `
+            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">${bank[0]}</div>
+            <span class="font-semibold text-sm">${bank}</span>
+            <span class="material-symbols-outlined ml-auto text-slate-400 text-sm">chevron_right</span>
+        `;
+        item.onclick = () => window.selectBankFromSearch(bank);
+        listContainer.appendChild(item);
+    });
+};
+
+window.selectBankFromSearch = function(bankName) {
+    sessionStorage.setItem('selected_bank', bankName);
+    window.closeBankSearchModal();
+    window.nextAutoInvestStep(2);
+};
+
+window.setupNotificationsPage = function() {
+    const markAllBtn = document.querySelector('header button.text-primary');
+    if (markAllBtn) {
+        markAllBtn.onclick = (e) => {
+            e.preventDefault();
+            window.markAllNotificationsRead();
+        };
+    }
+    
+    // Select all notification divs
+    const items = document.querySelectorAll('main > div');
+    items.forEach(item => {
+        item.onclick = () => {
+            // Mark this specific item as read
+            item.className = 'bg-white border border-slate-200/50 dark:border-slate-800 rounded-xl p-4 flex gap-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors shadow-sm opacity-80';
+            showToast('Notification marked as read.');
+        };
+    });
+};
+
+window.markAllNotificationsRead = function() {
+    const unreadItems = document.querySelectorAll('main > div');
+    unreadItems.forEach(item => {
+        item.className = 'bg-white border border-slate-200/50 dark:border-slate-800 rounded-xl p-4 flex gap-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors shadow-sm opacity-80';
+    });
+    showToast('All notifications marked as read.');
+};
+
 

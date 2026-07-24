@@ -32,7 +32,7 @@
         <p class="text-on-surface-variant text-sm mb-6 text-center">We will safely read transactions to calculate spare change.</p>
         
         <div class="space-y-3">
-            <button class="w-full p-4 border border-outline-variant rounded-xl flex items-center gap-4 hover:border-primary hover:bg-primary-container/20 transition-all cursor-pointer text-left" onclick="window.nextAutoInvestStep(2)">
+            <button class="w-full p-4 border border-outline-variant rounded-xl flex items-center gap-4 hover:border-primary hover:bg-primary-container/20 transition-all cursor-pointer text-left" onclick="sessionStorage.setItem('selected_bank', 'HDFC Bank'); window.nextAutoInvestStep(2)">
                 <div class="w-10 h-10 rounded-full bg-[#004A8F] flex items-center justify-center text-white font-bold">H</div>
                 <div>
                     <h3 class="font-bold text-slate-800">HDFC Bank</h3>
@@ -40,7 +40,7 @@
                 </div>
                 <span class="material-symbols-outlined ml-auto text-slate-400">chevron_right</span>
             </button>
-            <button class="w-full p-4 border border-outline-variant rounded-xl flex items-center gap-4 hover:border-primary hover:bg-primary-container/20 transition-all cursor-pointer text-left" onclick="window.nextAutoInvestStep(2)">
+            <button class="w-full p-4 border border-outline-variant rounded-xl flex items-center gap-4 hover:border-primary hover:bg-primary-container/20 transition-all cursor-pointer text-left" onclick="sessionStorage.setItem('selected_bank', 'State Bank of India'); window.nextAutoInvestStep(2)">
                 <div class="w-10 h-10 rounded-full bg-[#003B73] flex items-center justify-center text-white font-bold">S</div>
                 <div>
                     <h3 class="font-bold text-slate-800">State Bank of India</h3>
@@ -48,7 +48,7 @@
                 </div>
                 <span class="material-symbols-outlined ml-auto text-slate-400">chevron_right</span>
             </button>
-            <button class="w-full p-4 border border-outline-variant rounded-xl flex items-center gap-4 hover:border-primary hover:bg-primary-container/20 transition-all cursor-pointer text-left" onclick="window.nextAutoInvestStep(2)">
+            <button class="w-full p-4 border border-outline-variant rounded-xl flex items-center gap-4 hover:border-primary hover:bg-primary-container/20 transition-all cursor-pointer text-left" onclick="sessionStorage.setItem('selected_bank', 'ICICI Bank'); window.nextAutoInvestStep(2)">
                 <div class="w-10 h-10 rounded-full bg-[#F58220] flex items-center justify-center text-white font-bold">I</div>
                 <div>
                     <h3 class="font-bold text-slate-800">ICICI Bank</h3>
@@ -56,12 +56,39 @@
                 </div>
                 <span class="material-symbols-outlined ml-auto text-slate-400">chevron_right</span>
             </button>
-            <button class="w-full p-4 border border-outline-variant rounded-xl flex items-center justify-center gap-2 hover:bg-slate-50 transition-colors cursor-pointer text-primary font-semibold mt-4">
+            <button class="w-full p-4 border border-outline-variant rounded-xl flex items-center justify-center gap-2 hover:bg-slate-50 transition-colors cursor-pointer text-primary font-semibold mt-4" onclick="window.openBankSearchModal()">
                 <span class="material-symbols-outlined">search</span>
                 Search Other Banks
             </button>
         </div>
     </div>
+
+<!-- Bank Search Modal (Hidden by Default) -->
+<div id="bank-search-modal" class="fixed inset-0 z-[100] hidden">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onclick="window.closeBankSearchModal()"></div>
+    
+    <!-- Modal Content -->
+    <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-900 rounded-t-3xl p-6 shadow-2xl transform transition-transform duration-300 translate-y-full" id="bank-search-modal-content">
+        <div class="w-12 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-6"></div>
+        
+        <div class="flex justify-between items-start mb-4">
+            <h2 class="font-title-lg text-primary text-xl font-bold dark:text-emerald-400">Search Banks</h2>
+            <button class="text-slate-400 hover:text-slate-600 transition-colors cursor-pointer" onclick="window.closeBankSearchModal()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <div class="mb-6 relative">
+            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+            <input type="text" id="bank-search-input" class="w-full h-12 pl-12 pr-4 rounded-xl border border-outline-variant bg-surface-container-lowest text-primary dark:text-white outline-none" placeholder="Search your bank..." oninput="window.filterBankList()">
+        </div>
+
+        <div class="max-h-60 overflow-y-auto space-y-2 mb-6" id="bank-search-list">
+            <!-- Populated dynamically -->
+        </div>
+    </div>
+</div>
 
     <!-- Step 2: Grant Permissions -->
     <div id="step-2" class="w-full hidden animate-slide-up">

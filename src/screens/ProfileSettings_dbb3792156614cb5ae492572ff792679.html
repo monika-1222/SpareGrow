@@ -104,27 +104,27 @@
 <span class="material-symbols-outlined text-outline" data-icon="chevron_right">chevron_right</span>
 </a>
 <div class="h-px bg-outline-variant/30 mx-4"></div>
-<a class="flex items-center justify-between p-4 hover:bg-surface-container transition-colors active:scale-[0.98]" href="#">
+<a class="flex items-center justify-between p-4 hover:bg-surface-container transition-colors active:scale-[0.98] cursor-pointer" onclick="window.openRoundupModal()">
 <div class="flex items-center gap-4">
 <div class="w-10 h-10 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary">
 <span class="material-symbols-outlined" data-icon="ads_click">ads_click</span>
 </div>
 <div>
 <p class="font-title-sm text-body-md font-semibold">Round-up Rules</p>
-<p class="text-xs text-outline">Smart round-up is active (2.0x)</p>
+<p class="text-xs text-outline" id="profile-roundup-rules-text">Smart round-up is active (2.0x)</p>
 </div>
 </div>
 <span class="material-symbols-outlined text-outline" data-icon="chevron_right">chevron_right</span>
 </a>
 <div class="h-px bg-outline-variant/30 mx-4"></div>
-<a class="flex items-center justify-between p-4 hover:bg-surface-container transition-colors active:scale-[0.98]" href="#">
+<a class="flex items-center justify-between p-4 hover:bg-surface-container transition-colors active:scale-[0.98] cursor-pointer" onclick="window.openNotificationPreferencesModal()">
 <div class="flex items-center gap-4">
 <div class="w-10 h-10 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary">
 <span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
 </div>
 <div>
 <p class="font-title-sm text-body-md font-semibold">Notification Preferences</p>
-<p class="text-xs text-outline">Email, Push, and SMS</p>
+<p class="text-xs text-outline" id="profile-notifications-text">Email, Push, and SMS</p>
 </div>
 </div>
 <span class="material-symbols-outlined text-outline" data-icon="chevron_right">chevron_right</span>
@@ -135,7 +135,7 @@
 <div class="group">
 <h2 class="font-label-caps text-label-caps text-outline mb-3 ml-2 uppercase tracking-widest">Resources</h2>
 <div class="glass-card rounded-xl border border-outline-variant/30 overflow-hidden shadow-sm">
-<a class="flex items-center justify-between p-4 hover:bg-surface-container transition-colors active:scale-[0.98]" href="#">
+<a class="flex items-center justify-between p-4 hover:bg-surface-container transition-colors active:scale-[0.98] cursor-pointer" onclick="window.openDocumentCenterModal()">
 <div class="flex items-center gap-4">
 <div class="w-10 h-10 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary">
 <span class="material-symbols-outlined" data-icon="description">description</span>
@@ -216,6 +216,102 @@
         </button>
     </div>
 </div>
+
+<!-- Round-up Multiplier Selection Modal (Hidden by Default) -->
+<div id="roundup-modal" class="fixed inset-0 z-[100] hidden">
+    <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onclick="window.closeRoundupModal()"></div>
+    <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-900 rounded-t-3xl p-6 shadow-2xl transform transition-transform duration-300 translate-y-full" id="roundup-modal-content">
+        <div class="w-12 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-6"></div>
+        <div class="flex justify-between items-start mb-6">
+            <h2 class="font-title-lg text-primary text-xl font-bold dark:text-emerald-400">Configure Round-up Multiplier</h2>
+            <button class="text-slate-400 hover:text-slate-600 transition-colors cursor-pointer" onclick="window.closeRoundupModal()"><span class="material-symbols-outlined">close</span></button>
+        </div>
+        <p class="text-on-surface-variant text-sm mb-6">Select a multiplier to accelerate your spare change investments. A 2.0x multiplier means every rounded-up rupee is doubled.</p>
+        <div class="grid grid-cols-3 gap-4 mb-8">
+            <button class="py-4 border border-outline-variant rounded-2xl font-bold text-primary dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors cursor-pointer roundup-mult-opt-btn" onclick="window.saveRoundupMultiplier(1.0, this)">1.0x (Base)</button>
+            <button class="py-4 border border-outline-variant rounded-2xl font-bold text-primary dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors cursor-pointer roundup-mult-opt-btn" onclick="window.saveRoundupMultiplier(2.0, this)">2.0x (Double)</button>
+            <button class="py-4 border border-outline-variant rounded-2xl font-bold text-primary dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors cursor-pointer roundup-mult-opt-btn" onclick="window.saveRoundupMultiplier(3.0, this)">3.0x (Triple)</button>
+        </div>
+    </div>
+</div>
+
+<!-- Notification Preferences Modal (Hidden by Default) -->
+<div id="notif-prefs-modal" class="fixed inset-0 z-[100] hidden">
+    <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onclick="window.closeNotificationPreferencesModal()"></div>
+    <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-900 rounded-t-3xl p-6 shadow-2xl transform transition-transform duration-300 translate-y-full" id="notif-prefs-modal-content">
+        <div class="w-12 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-6"></div>
+        <div class="flex justify-between items-start mb-6">
+            <h2 class="font-title-lg text-primary text-xl font-bold dark:text-emerald-400">Notification Preferences</h2>
+            <button class="text-slate-400 hover:text-slate-600 transition-colors cursor-pointer" onclick="window.closeNotificationPreferencesModal()"><span class="material-symbols-outlined">close</span></button>
+        </div>
+        <div class="space-y-4 mb-8 text-slate-850 dark:text-slate-200">
+            <div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800">
+                <div>
+                    <h4 class="font-bold text-sm">Email Alerts</h4>
+                    <p class="text-xs text-outline">Weekly digests and investment confirmations</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="notif-pref-email" class="sr-only peer" checked>
+                    <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                </label>
+            </div>
+            <div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800">
+                <div>
+                    <h4 class="font-bold text-sm">Push Notifications</h4>
+                    <p class="text-xs text-outline">Real-time round-up sweeps and milestones</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="notif-pref-push" class="sr-only peer" checked>
+                    <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                </label>
+            </div>
+            <div class="flex justify-between items-center py-2">
+                <div>
+                    <h4 class="font-bold text-sm">SMS alerts</h4>
+                    <p class="text-xs text-outline">Important withdrawals and security notifications</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="notif-pref-sms" class="sr-only peer">
+                    <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                </label>
+            </div>
+        </div>
+        <button class="w-full py-4 bg-primary text-white rounded-full font-bold text-lg cursor-pointer" onclick="window.saveNotificationPreferences()">Save Notification Settings</button>
+    </div>
+</div>
+
+<!-- Document Center Modal (Hidden by Default) -->
+<div id="doc-center-modal" class="fixed inset-0 z-[100] hidden">
+    <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onclick="window.closeDocumentCenterModal()"></div>
+    <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-900 rounded-t-3xl p-6 shadow-2xl transform transition-transform duration-300 translate-y-full" id="doc-center-modal-content">
+        <div class="w-12 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-6"></div>
+        <div class="flex justify-between items-start mb-6">
+            <h2 class="font-title-lg text-primary text-xl font-bold dark:text-emerald-400">Document Center</h2>
+            <button class="text-slate-400 hover:text-slate-600 transition-colors cursor-pointer" onclick="window.closeDocumentCenterModal()"><span class="material-symbols-outlined">close</span></button>
+        </div>
+        <div class="space-y-3 mb-8 text-slate-850 dark:text-slate-200">
+            <div class="p-4 bg-surface-container rounded-2xl flex items-center justify-between">
+                <div>
+                    <h4 class="font-bold text-sm">June 2026 Monthly Statement</h4>
+                    <p class="text-xs text-outline">Consolidated account summary (.csv)</p>
+                </div>
+                <button class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary/20 transition-colors cursor-pointer" onclick="window.downloadMockStatement('june-2026')">
+                    <span class="material-symbols-outlined">download</span>
+                </button>
+            </div>
+            <div class="p-4 bg-surface-container rounded-2xl flex items-center justify-between">
+                <div>
+                    <h4 class="font-bold text-sm">Q1 2025 Consolidated Tax Report</h4>
+                    <p class="text-xs text-outline">End of quarter statement (.csv)</p>
+                </div>
+                <button class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary/20 transition-colors cursor-pointer" onclick="window.downloadMockStatement('q1-2025')">
+                    <span class="material-symbols-outlined">download</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </main>
 <!-- BottomNavBar -->
 <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-[0_-4px_20px_0_rgba(0,0,0,0.04)] border-t border-slate-200/50 dark:border-slate-800/50">

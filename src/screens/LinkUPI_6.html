@@ -19,7 +19,7 @@
 
     <!-- Input Form -->
     <div class="bg-white p-6 rounded-2xl border border-slate-200/50 shadow-sm">
-        <form class="space-y-6" onsubmit="event.preventDefault(); document.getElementById('successState').classList.remove('hidden'); document.getElementById('inputState').classList.add('hidden');">
+        <form class="space-y-6" onsubmit="window.linkUPIAddress(event, this)">
             
             <div id="inputState" class="space-y-6 transition-all">
                 <div class="group">
