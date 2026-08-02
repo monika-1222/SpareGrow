@@ -1,0 +1,18 @@
+{
+  "name": "sparegrow-security-engine",
+  "version": "1.0.0",
+  "description": "Comprehensive SAST, DAST, and Dependency Security Audit Engine for SpareGrow",
+  "main": "run_security_audit.js",
+  "type": "module",
+  "scripts": {
+    "audit": "node run_security_audit.js",
+    "sast": "node sast_scanner.js",
+    "dast": "node dast_scanner.js",
+    "deps": "node dependency_scanner.js",
+    "report": "node generate_all_reports.js"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "express": "^4.21.2"
+  }
+}

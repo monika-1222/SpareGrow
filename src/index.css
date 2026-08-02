@@ -99,9 +99,33 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.dark {
+  --color-primary: #10b981;
+  --color-on-primary: #022c22;
+  --color-primary-container: #064e3b;
+  --color-on-primary-container: #a7f3d0;
+  --color-secondary: #f59e0b;
+  --color-on-secondary: #451a03;
+  --color-surface: #030712;
+  --color-on-surface: #f8fafc;
+  --color-surface-container-lowest: #020617;
+  --color-surface-container-low: #0b0f19;
+  --color-surface-container: #111827;
+  --color-surface-container-high: #1f2937;
+  --color-surface-container-highest: #374151;
+  --color-outline-variant: #1f2937;
+  --color-outline: #4b5563;
+  --color-on-surface-variant: #9ca3af;
+}
+
 .dark body {
-  background-color: #020813;
-  color: #f8fafc;
+  background-color: #030712;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.07) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.07) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(197, 160, 89, 0.05) 0px, transparent 50%);
+  background-attachment: fixed;
+  color: #f1f5f9;
 }
 
 .material-symbols-outlined {
@@ -115,9 +139,10 @@ body {
 }
 
 .dark .glass-panel {
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(10, 15, 30, 0.85);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(16, 185, 129, 0.12);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
 .glass-card {
@@ -128,10 +153,10 @@ body {
 }
 
 .dark .glass-card {
-  background: rgba(30, 41, 59, 0.65);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(16, 185, 129, 0.12);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(16, 185, 129, 0.03);
 }
 
 .wealth-card-accent {

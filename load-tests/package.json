@@ -1,0 +1,30 @@
+{
+  "name": "sparegrow-load-tests",
+  "version": "1.0.0",
+  "description": "Baseline & Concurrency Load Testing Suite for SpareGrow (100 VUs, 60s Duration)",
+  "main": "run_load_test.js",
+  "type": "module",
+  "scripts": {
+    "test": "node run_load_test.js",
+    "load:quick": "node run_load_test.js --vus=100 --duration=10",
+    "load:baseline": "node run_load_test.js --vus=100 --duration=60",
+    "load:stress": "node run_load_test.js --vus=250 --duration=60",
+    "report:standalone": "node generate_report_standalone.js",
+    "server": "node server.js"
+  },
+  "keywords": [
+    "load-testing",
+    "baseline-testing",
+    "performance-testing",
+    "concurrency",
+    "sparegrow",
+    "excel-report",
+    "node.js"
+  ],
+  "author": "SpareGrow QA & DevOps Team",
+  "license": "ISC",
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "express": "^4.22.2"
+  }
+}

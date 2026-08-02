@@ -1,0 +1,19 @@
+{
+  "name": "sparegrow-appium-mobile-tests",
+  "version": "1.0.0",
+  "description": "SpareGrow Mobile E2E Appium Automation Suite in Node.js with 310 tests & Excel report",
+  "main": "run_appium_tests.js",
+  "type": "module",
+  "scripts": {
+    "test": "node run_appium_tests.js",
+    "report:standalone": "node generate_report_standalone.js"
+  },
+  "dependencies": {
+    "appium": "^2.11.3",
+    "exceljs": "^4.4.0",
+    "webdriverio": "^8.46.0"
+  },
+  "devDependencies": {
+    "appium-uiautomator2-driver": "^3.7.6"
+  }
+}

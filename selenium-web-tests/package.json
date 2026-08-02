@@ -1,0 +1,27 @@
+{
+  "name": "sparegrow-selenium-web-tests",
+  "version": "1.0.0",
+  "description": "End-to-End Selenium Web Automation Suite and Excel Analysis for SpareGrow",
+  "main": "run_tests.js",
+  "type": "module",
+  "scripts": {
+    "test": "node run_tests.js",
+    "report:standalone": "node generate_report_standalone.js",
+    "server": "node server.js"
+  },
+  "keywords": [
+    "selenium",
+    "webdriver",
+    "e2e-testing",
+    "sparegrow",
+    "excel-report",
+    "node.js"
+  ],
+  "author": "SpareGrow QA Team",
+  "license": "ISC",
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "express": "^4.21.2",
+    "selenium-webdriver": "^4.28.0"
+  }
+}
