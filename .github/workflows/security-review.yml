@@ -25,12 +25,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
       - name: Install Dependencies
         run: |
-          npm ci || npm install
-          cd security-engine && npm install && cd ..
+          npm install --no-audit
+          cd security-engine && npm install --no-audit && cd ..
 
       - name: Automated Technology Stack Discovery
         id: tech-detect
@@ -80,3 +79,4 @@ jobs:
           name: sparegrow-security-review-reports
           path: "Vulnerability Test Results/"
           retention-days: 30
+          if-no-files-found: warn

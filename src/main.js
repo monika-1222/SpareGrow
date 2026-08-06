@@ -3,10 +3,8 @@ import indexData from './screens/index.json';
 import { supabase } from './supabaseClient.js';
 import Chart from 'chart.js/auto';
 
-// Use Vite's import.meta.glob to import all HTML files as raw strings
-const htmlModules = import.meta.glob('./screens/*.html', { query: '?raw', import: 'default' });
-
-const app = document.getElementById('root');
+// Eagerly bundle all HTML screen templates as raw strings so rendering is 100% offline & instantaneous
+const htmlModules = import.meta.glob('./screens/*.html', { eager: true, query: '?raw', import: 'default' });
 
 // Define screens
 const splashScreen = indexData.find(s => s.title.toLowerCase().includes('splash')) || indexData[0];
@@ -32,37 +30,70 @@ let pendingMPIN = ''; // state for MPIN screens
 let goalsSubscription = null;
 let transactionsSubscription = null;
 
+// Global navigation function declared immediately
+function navigate(filename) {
+    window.location.hash = filename;
+}
+window.navigate = navigate;
+globalThis.navigate = navigate;
+
 async function init() {
-    // Dark Mode initialization (Default to Dark theme to make it look premium and attract students)
-    if (localStorage.getItem('theme') !== 'light') {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-    }
-
-    // Check for existing session
-    const { data: { session }, error } = await supabase.auth.getSession();
-    currentSession = session;
-    
-    // Inject the interactive GrowBot assistant into the global DOM
-    injectGrowBot();
-
-    if (currentSession) {
-        setupRealtimeSubscriptions();
-    }
-    
-    // Listen for auth changes
-    supabase.auth.onAuthStateChange((event, session) => {
-        currentSession = session;
-        if (session) {
-            setupRealtimeSubscriptions();
-        } else {
-            unsubscribeRealtime();
+    try {
+        // Dark Mode initialization
+        if (localStorage.getItem('theme') !== 'light') {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
         }
-    });
 
-    // Initial load
-    const initialHash = window.location.hash.slice(1);
-    handleRoute(initialHash || splashScreen.filename);
+        // 1. Render initial route immediately so screen is NEVER blank
+        const initialHash = window.location.hash.slice(1);
+        await handleRoute(initialHash || splashScreen.filename);
+
+        // 2. Inject GrowBot AI assistant
+        try {
+            if (typeof injectGrowBot === 'function') {
+                injectGrowBot();
+            }
+        } catch (e) {
+            console.warn('GrowBot injection deferred:', e);
+        }
+
+        // 3. Background async session check with fast fallback
+        try {
+            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 1200));
+            const sessionPromise = supabase.auth.getSession();
+            const { data } = await Promise.race([sessionPromise, timeoutPromise]);
+            if (data?.session) {
+                currentSession = data.session;
+                setupRealtimeSubscriptions();
+                fetchUserData();
+            }
+        } catch (e) {
+            console.log('Using offline or initial guest state:', e?.message || e);
+        }
+
+        // 4. Listen for ongoing auth state changes
+        try {
+            supabase.auth.onAuthStateChange((event, session) => {
+                currentSession = session;
+                if (session) {
+                    setupRealtimeSubscriptions();
+                    fetchUserData();
+                } else {
+                    unsubscribeRealtime();
+                }
+            });
+        } catch (e) {
+            console.warn('Auth listener registration error:', e);
+        }
+    } catch (err) {
+        console.error('Fatal initialization error, rendering fallback:', err);
+        const rootEl = document.getElementById('root');
+        if (rootEl && splashScreen?.filename) {
+            const splashHtml = htmlModules[`./screens/${splashScreen.filename}`];
+            if (splashHtml) rootEl.innerHTML = splashHtml;
+        }
+    }
 }
 
 async function fetchUserData() {
@@ -281,24 +312,36 @@ async function handleRoute(filename) {
 }
 
 async function loadScreen(filename) {
-    const loader = htmlModules[`./screens/${filename}`];
-    if (loader) {
-        const html = await loader();
-        app.innerHTML = html;
-        attachAuthListeners(filename);
+    const rootEl = document.getElementById('root');
+    if (!rootEl) return;
+    
+    let htmlContent = htmlModules[`./screens/${filename}`];
+    if (typeof htmlContent === 'function') {
+        htmlContent = await htmlContent();
+    } else if (htmlContent && typeof htmlContent === 'object' && htmlContent.default) {
+        htmlContent = htmlContent.default;
+    }
+    
+    if (htmlContent) {
+        rootEl.innerHTML = htmlContent;
+        try {
+            attachAuthListeners(filename);
+        } catch (e) {
+            console.warn('attachAuthListeners warning:', e);
+        }
         
-        // Splash Screen Auto-Transition after 2.5s
+        // Splash Screen Auto-Transition after 2s
         if (filename === splashScreen?.filename) {
             setTimeout(() => {
                 const currentHash = window.location.hash.slice(1);
                 if (currentHash === splashScreen.filename || !currentHash) {
                     navigate('Onboarding_Walkthrough.html');
                 }
-            }, 2500);
+            }, 2000);
         }
     } else {
         console.error('Screen not found:', filename);
-        app.innerHTML = '<div class="p-4 text-red-500">Screen not found</div>';
+        rootEl.innerHTML = `<div class="min-h-screen flex items-center justify-center p-4 text-amber-400 bg-slate-900">Screen not found: ${filename}</div>`;
     }
 }
 
