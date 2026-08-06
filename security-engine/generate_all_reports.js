@@ -525,7 +525,7 @@ The SpareGrow application demonstrates strong architectural security, excellent 
   console.log('[Report] Saved dependency-report.md');
 }
 
-async function main() {
+export async function generateAllSecurityReports() {
   console.log('======================================================================');
   console.log('  🛡️  SPAREGROW SECURITY REPORT GENERATOR');
   console.log('======================================================================');
@@ -537,7 +537,10 @@ async function main() {
   console.log('======================================================================');
 }
 
-main().catch(err => {
-  console.error('Error generating reports:', err);
-  process.exit(1);
-});
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  generateAllSecurityReports().catch(err => {
+    console.error('Error generating reports:', err);
+    process.exit(1);
+  });
+}
+
