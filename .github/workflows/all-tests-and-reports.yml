@@ -8,196 +8,120 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   actions: read
-  security-events: write
 
 jobs:
-  # =========================================================================
-  # 1. SELENIUM WEB E2E TEST SUITE (310 Tests)
-  # =========================================================================
-  selenium-web-tests:
-    name: 🌐 1. Selenium Web E2E Test Suite (310 Tests)
+  run-all-test-suites-and-generate-reports:
+    name: 🚀 Execute 310 Web, 310 Mobile, Load & Security Test Suites
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Source Code
+      - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js Environment
+      - name: ⚙️ Setup Node.js 20 Environment
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install Dependencies
+      - name: 📦 Install Root & Sub-Suite Dependencies
         run: |
           npm install --no-audit
           cd selenium-web-tests && npm install --no-audit && cd ..
+          cd appium-mobile-tests && npm install --no-audit && cd ..
+          cd load-tests && npm install --no-audit && cd ..
+          cd security-engine && npm install --no-audit && cd ..
 
-      - name: Run 310 Selenium Web E2E Test Cases & Generate Excel
+      # =========================================================================
+      # 1. SELENIUM WEB E2E TEST SUITE (310 Tests)
+      # =========================================================================
+      - name: 🌐 1. Run 310 Selenium Web E2E Test Cases & Generate Excel
         run: |
           cd selenium-web-tests
           node generate_report_standalone.js
+          cd ..
 
-      - name: Upload Selenium Web Excel Report Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: 01-selenium-web-test-report
-          path: selenium-web-tests/reports/SpareGrow_Web_E2E_Test_Report.xlsx
-          retention-days: 30
-          if-no-files-found: warn
-
-  # =========================================================================
-  # 2. APPIUM MOBILE E2E TEST SUITE (310 Tests)
-  # =========================================================================
-  appium-mobile-tests:
-    name: 📱 2. Appium Mobile E2E Test Suite (310 Tests)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js Environment
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install Mobile Test Dependencies
-        run: |
-          cd appium-mobile-tests && npm install --no-audit && cd ..
-
-      - name: Run 310 Appium Mobile Test Cases & Generate Excel
+      # =========================================================================
+      # 2. APPIUM MOBILE E2E TEST SUITE (310 Tests)
+      # =========================================================================
+      - name: 📱 2. Run 310 Appium Mobile E2E Test Cases & Generate Excel
         run: |
           cd appium-mobile-tests
           node generate_report_standalone.js
+          cd ..
 
-      - name: Upload Appium Mobile Excel Report Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: 02-appium-mobile-test-report
-          path: appium-mobile-tests/reports/SpareGrow_Mobile_Appium_E2E_Test_Report.xlsx
-          retention-days: 30
-          if-no-files-found: warn
-
-  # =========================================================================
-  # 3. BASELINE / LOAD TESTING (100 Concurrent VUs, 60 Seconds)
-  # =========================================================================
-  load-performance-tests:
-    name: ⚡ 3. Baseline & Load Test (100 VUs • 60s)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js Environment
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install Load Test Dependencies
-        run: |
-          cd load-tests && npm install --no-audit && cd ..
-
-      - name: Execute Baseline Load Test & Generate Excel
+      # =========================================================================
+      # 3. BASELINE / LOAD TESTING (100 Concurrent VUs, 60s)
+      # =========================================================================
+      - name: ⚡ 3. Execute 100 VU Baseline Load Test & Generate Excel
         run: |
           cd load-tests
           node generate_report_standalone.js
+          cd ..
 
-      - name: Upload Baseline Load Test Excel Report Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: 03-baseline-load-test-report
-          path: load-tests/reports/SpareGrow_Baseline_Load_Test_Report.xlsx
-          retention-days: 30
-          if-no-files-found: warn
-
-  # =========================================================================
-  # 4. APPLICATION SECURITY, SAST/DAST & PENETRATION AUDIT (305 Tests)
-  # =========================================================================
-  security-vulnerability-audit:
-    name: 🛡️ 4. Security, SAST, DAST & SCA Audit (305 Tests)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js Environment
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install Security Engine Dependencies
-        run: |
-          npm install --no-audit
-          cd security-engine && npm install --no-audit && cd ..
-
-      - name: Run SAST, DAST, SCA & Generate Reports
+      # =========================================================================
+      # 4. APPLICATION SECURITY, SAST/DAST & PENETRATION AUDIT (305 Tests)
+      # =========================================================================
+      - name: 🛡️ 4. Run SAST, DAST, SCA Security Audit & Generate Excel
         run: |
           node security-engine/run_security_audit.js
 
-      - name: Upload Security Findings & Inventory Excel Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: 04-security-and-endpoint-excel-reports
-          path: |
-            Vulnerability Test Results/findings.xlsx
-            Vulnerability Test Results/endpoint-inventory.xlsx
-            Vulnerability Test Results/*.md
-          retention-days: 30
-          if-no-files-found: warn
-
-  # =========================================================================
-  # 5. MASTER BUNDLE CONSOLIDATION & GITHUB SUMMARY DASHBOARD
-  # =========================================================================
-  consolidate-all-reports:
-    name: 📦 5. Master Bundle: Download All 4 Excel Reports in 1 Artifact
-    needs: [selenium-web-tests, appium-mobile-tests, load-performance-tests, security-vulnerability-audit]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js Environment
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Download Selenium Web Report
-        uses: actions/download-artifact@v4
-        with:
-          name: 01-selenium-web-test-report
-          path: selenium-web-tests/reports/
-
-      - name: Download Appium Mobile Report
-        uses: actions/download-artifact@v4
-        with:
-          name: 02-appium-mobile-test-report
-          path: appium-mobile-tests/reports/
-
-      - name: Download Load Test Report
-        uses: actions/download-artifact@v4
-        with:
-          name: 03-baseline-load-test-report
-          path: load-tests/reports/
-
-      - name: Download Security Reports
-        uses: actions/download-artifact@v4
-        with:
-          name: 04-security-and-endpoint-excel-reports
-          path: Vulnerability Test Results/
-
-      - name: Consolidate All Reports into Unified Folder
+      # =========================================================================
+      # 5. CONSOLIDATION & PACKAGING
+      # =========================================================================
+      - name: 📦 Package & Consolidate All Reports
         run: |
+          node prepare_downloadable_reports.js
           node collect_reports.js
 
-      - name: Publish Consolidated Master Excel Artifact (All 4 Suites)
+      # =========================================================================
+      # ARTIFACT UPLOADS
+      # =========================================================================
+      - name: 📤 Upload Report 1 - Selenium Web E2E Excel
+        uses: actions/upload-artifact@v4
+        with:
+          name: 01_SpareGrow_Selenium_Web_E2E_Test_Report
+          path: selenium-web-tests/reports/SpareGrow_Web_E2E_Test_Report.xlsx
+          retention-days: 60
+          if-no-files-found: warn
+
+      - name: 📤 Upload Report 2 - Appium Mobile E2E Excel
+        uses: actions/upload-artifact@v4
+        with:
+          name: 02_SpareGrow_Appium_Mobile_E2E_Test_Report
+          path: appium-mobile-tests/reports/SpareGrow_Mobile_Appium_E2E_Test_Report.xlsx
+          retention-days: 60
+          if-no-files-found: warn
+
+      - name: 📤 Upload Report 3 - Baseline Load Test Excel
+        uses: actions/upload-artifact@v4
+        with:
+          name: 03_SpareGrow_Baseline_Load_Test_Report
+          path: load-tests/reports/SpareGrow_Baseline_Load_Test_Report.xlsx
+          retention-days: 60
+          if-no-files-found: warn
+
+      - name: 📤 Upload Report 4 - Application Security Audit Excel
+        uses: actions/upload-artifact@v4
+        with:
+          name: 04_SpareGrow_Application_Security_Test_Report
+          path: Vulnerability Test Results/findings.xlsx
+          retention-days: 60
+          if-no-files-found: warn
+
+      - name: 📦 Upload Master Bundle (All 4 Excel Files in 1 Zip)
         uses: actions/upload-artifact@v4
         with:
           name: sparegrow-all-excel-test-reports
           path: all-excel-reports/
-          retention-days: 30
+          retention-days: 60
           if-no-files-found: warn
 
-      - name: Publish GitHub Action Dashboard Summary
+      # =========================================================================
+      # PUBLISH DASHBOARD SUMMARY
+      # =========================================================================
+      - name: 📋 Publish GitHub Action Dashboard Summary
         run: |
           echo "## 🚀 SpareGrow QA, Performance & Security Verification Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY

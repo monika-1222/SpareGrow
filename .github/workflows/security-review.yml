@@ -8,8 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  security-events: write
+  contents: write
   actions: read
 
 jobs:
@@ -46,27 +45,14 @@ jobs:
             echo "- **Mobile Runtime:** Capacitor Android / iOS Container" >> $GITHUB_STEP_SUMMARY
           fi
 
-      - name: Run Dependency Vulnerability Audit (SCA)
-        id: sca
+      - name: Run Full-Spectrum Security Audit (SAST, DAST & SCA)
         run: |
-          echo "Running Software Composition Analysis..."
-          npm audit --audit-level=critical || true
-
-      - name: Run Static Application Security Testing (SAST)
-        run: |
-          node security-engine/sast_scanner.js
-
-      - name: Run Dynamic Application Security Testing (DAST)
-        run: |
-          node security-engine/dast_scanner.js
-
-      - name: Generate Multi-Sheet Excel Workbooks & Markdown Deliverables
-        run: |
-          node security-engine/generate_all_reports.js
+          node security-engine/run_security_audit.js
 
       - name: Publish GitHub Action Summary
         run: |
           cat "Vulnerability Test Results/executive-summary.md" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📑 Generated Security Artifacts in Workflow:" >> $GITHUB_STEP_SUMMARY
           echo "- **findings.xlsx** (305 Comprehensive Test Cases across 4 Sheets)" >> $GITHUB_STEP_SUMMARY
           echo "- **endpoint-inventory.xlsx** (Complete API & Route Catalog)" >> $GITHUB_STEP_SUMMARY
@@ -77,6 +63,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: sparegrow-security-review-reports
-          path: "Vulnerability Test Results/"
-          retention-days: 30
+          path: Vulnerability Test Results/
+          retention-days: 60
           if-no-files-found: warn
