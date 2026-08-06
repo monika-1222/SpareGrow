@@ -542,21 +542,30 @@ function attachAuthListeners(filename) {
                         window.location.hash = walletScreen.filename;
                     }, 1200);
                 } else {
-                    showToast('✨ Account created! Logging into Demo Mode...');
-                    setTimeout(() => {
-                        currentSession = {
-                            user: {
-                                id: '00000000-0000-0000-0000-000000000000',
-                                email: email,
-                                user_metadata: {
-                                    full_name: name,
-                                    phone: phone
-                                }
-                            }
-                        };
+                    if (data?.session) {
+                        currentSession = data.session;
+                        showToast('🎉 Account created & signed in via Supabase!');
+                        setupRealtimeSubscriptions();
+                        await fetchUserData();
                         sessionStorage.setItem('mpin_verified_' + currentSession.user.id, 'true');
                         window.location.hash = walletScreen.filename;
-                    }, 1200);
+                    } else {
+                        showToast('✨ Account registered in Supabase! Entering app...');
+                        setTimeout(() => {
+                            currentSession = {
+                                user: data.user || {
+                                    id: '00000000-0000-0000-0000-000000000000',
+                                    email: email,
+                                    user_metadata: {
+                                        full_name: name,
+                                        phone: phone
+                                    }
+                                }
+                            };
+                            sessionStorage.setItem('mpin_verified_' + currentSession.user.id, 'true');
+                            window.location.hash = walletScreen.filename;
+                        }, 1200);
+                    }
                 }
             });
         }
